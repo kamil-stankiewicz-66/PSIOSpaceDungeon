@@ -13,10 +13,10 @@ public:
     virtual void onUpdate(float dt) override
     {
         //VDebuger::print("deltatime =", dt);
-        get_window()->set_BGColor(sf::Color::Blue);
+        //get_window()->set_BGColor(sf::Color::Blue);
 
         if (_flag){
-            VDebuger::print("dt =", dt);
+            //VDebuger::print("dt =", dt);
         }
         _flag = !_flag;
     }

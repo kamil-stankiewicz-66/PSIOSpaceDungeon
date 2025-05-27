@@ -13,6 +13,8 @@ link_directories(${SFML_ROOT}/lib)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 add_executable(PSIOSpaceDungeon main.cpp
+    include/engine/core/Input.h
+    source/engine/core/Input.cpp
     include/engine/core/Debuger.h
     include/engine/core/Engine.h
     include/engine/core/Vector2.h
