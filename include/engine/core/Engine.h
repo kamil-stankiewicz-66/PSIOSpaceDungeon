@@ -9,6 +9,7 @@
 #include <memory>
 
 //engine
+#include "engine/core/Vector2.h"
 #include "engine/core/Debuger.h"
 
 using namespace std;
@@ -26,9 +27,25 @@ class VWindow
 {
     friend class Engine;
 
+    ///
+    /// \brief Struktura przechowujaca pozycje rogow okna.
+    /// \details Przeznaczone do pozycjonowania elementow interfejsu.
+    ///
+
+    struct CornerPositions
+    {
+        Vector2 leftUp;
+        Vector2 rightUp;
+        Vector2 leftDown;
+        Vector2 rightDown;
+
+        void init(const sf::VideoMode&);
+    };
+
 private:
     unique_ptr<sf::RenderWindow> sfwindow;
     sf::VideoMode displayMode;
+    CornerPositions cornerPositions;
     sf::Color m_background;
 
     bool init(const string WINDOW_TITLE);
@@ -46,6 +63,7 @@ public:
     //gettery
     sf::RenderWindow* get_renderwindow() const;
     const sf::VideoMode& get_displaymode() const;
+    const CornerPositions& get_cornerPositions() const;
     const sf::Color& get_BGColor() const;
 
     void set_BGColor(const sf::Color&);

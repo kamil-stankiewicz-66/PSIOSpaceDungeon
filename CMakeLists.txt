@@ -15,6 +15,8 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 add_executable(PSIOSpaceDungeon main.cpp
     include/engine/core/Debuger.h
     include/engine/core/Engine.h
+    include/engine/core/Vector2.h
+    source/engine/core/Vector2.cpp
     source/engine/core/Engine.cpp
 )
 

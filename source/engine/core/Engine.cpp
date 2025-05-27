@@ -3,6 +3,21 @@
 
 
 
+///
+/// corners positions
+///
+
+void VWindow::CornerPositions::init(const sf::VideoMode& displayMode)
+{
+    float _h_half = (float)displayMode.height / 2.0f;
+    float _w_half = (float)displayMode.width / 2.0f;
+    leftUp = Vector2(-_w_half, _h_half);
+    rightUp = Vector2(_w_half, _h_half);
+    leftDown = Vector2(-_w_half, -_h_half);
+    rightDown = Vector2(_w_half, -_h_half);
+}
+
+
 
 ///
 /// window
@@ -29,7 +44,10 @@ bool VWindow::init(const string WINDOW_TITLE)
 
     //window
     this->sfwindow = make_unique<sf::RenderWindow>(this->displayMode, WINDOW_TITLE, sf::Style::Close);
-    this->sfwindow->clear(this->m_background);
+    this->sfwindow->clear(this->m_background);;
+
+    //corner positions
+    this->cornerPositions.init(this->displayMode);
 
     //result
     return this->isInited();
@@ -54,6 +72,10 @@ sf::RenderWindow* VWindow::get_renderwindow() const {
 
 const sf::VideoMode& VWindow::get_displaymode() const {
     return this->displayMode;
+}
+
+const VWindow::CornerPositions& VWindow::get_cornerPositions() const {
+    return this->cornerPositions;
 }
 
 const sf::Color& VWindow::get_BGColor() const {
@@ -97,6 +119,8 @@ Engine::Engine(const string WINDOW_TITLE) : m_isRunning(false)
     {
         VDebuger::print("<ERROR> ENGINE :: WINDOW INIT ERROR");
     }
+
+    //miejsce na init dla input
 }
 
 Engine::~Engine()
@@ -160,6 +184,8 @@ int Engine::run(const unsigned int MAX_FPS)
 
         //clear window
         window->clear();
+
+        //miejsce na update input
 
         //update silnika
         this->taskHandling();
