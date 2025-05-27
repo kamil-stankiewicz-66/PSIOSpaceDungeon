@@ -1,0 +1,23 @@
+# skip all
+/*
+!bin/
+
+# code
+!include/
+!include/**
+!source/
+!source/**
+!*.cpp
+!*.h
+
+# bin
+!bin/release/
+!bin/release/**
+!bin/debug/
+!bin/debug/**
+*bin/debug/*.exe
+
+#files
+!CMakeLists.txt
+!*.md
+!*.gitignore
