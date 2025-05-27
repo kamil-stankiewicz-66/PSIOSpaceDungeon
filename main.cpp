@@ -1,12 +1,12 @@
 #include "engine/core/Engine.h"
-#include <iostream>
+#include "engine/core/Debuger.h"
 
 class Game : public Engine
 {
 public:
     Game(string _name) : Engine(_name)
     {
-        std::cout << "Game()" <<std::endl;
+        VDebuger::print("Game()");
         this->get_window()->set_BGColor(sf::Color::Green);
     }
 
@@ -14,7 +14,7 @@ public:
     virtual void onUpdate(float dt) override
     {
         if (_flag){
-            std::cout << "dt =" << dt << std::endl;
+            VDebuger::print("dt =", dt);
         }
         _flag = !_flag;
     }

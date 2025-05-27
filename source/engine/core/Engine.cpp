@@ -1,5 +1,5 @@
 #include "engine/core/Engine.h"
-#include <iostream>
+#include "engine/core/Debuger.h"
 
 
 
@@ -17,6 +17,8 @@ VWindow::~VWindow()
         sfwindow->close();
         sfwindow = nullptr;
     }
+
+    VDebuger::print("WINDOW :: DESTRUCTOR :: cleared");
 }
 
 
@@ -86,18 +88,22 @@ void VWindow::set_BGColor(const sf::Color& _bgcolor) {
 
 
 Engine::Engine(const string WINDOW_TITLE) : m_isRunning(false)
-{
+{    
+    VDebuger::print("ENGINE :: INIT");
+
     //window
     window = make_unique<VWindow>();
     if (!window->init(WINDOW_TITLE))
     {
-        std::cout << "<ERROR> :: window init error" << std::endl;
+        VDebuger::print("<ERROR> ENGINE :: WINDOW INIT ERROR");
     }
 }
 
 Engine::~Engine()
 {
     window = nullptr;
+
+    VDebuger::print("ENGINE :: DESTRUCTOR :: cleared");
 }
 
 
@@ -120,6 +126,7 @@ int Engine::run(const unsigned int MAX_FPS)
 {
     if (!this->window || !this->window->isInited())
     {
+        VDebuger::print("<ERROR> ENGINE :: YOU HAVE TO INIT THE WINDOW !!!");
         return -1;
     }
 
