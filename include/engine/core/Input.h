@@ -3,9 +3,13 @@
 #include <SFML/Graphics.hpp>
 #include "engine\core\Vector2.h"
 
-class Input //do obslugi wejscia z klawiatury i myszy
+///
+/// \brief Klasa obsługująca dane wejściowe z klawiatury i myszy.
+///
 
+class Input
 {
+
 private:
 
     static sf::RenderWindow* window; //wskaznik na okno SFML,  do pobierania pozycji myszy
@@ -14,13 +18,23 @@ private:
 
 public:
 
-    static void init(sf::RenderWindow* win);
-    static void update(); //aktualizacja danych  wejsciowych
+    static void init(sf::RenderWindow* win);  //Ta metoda jest wywolywana przez silnik.
+    static void update(); //aktualizacja danych wejsciowych - Ta metoda jest wywolywana przez silnik.
 
-    class Keyboard {
+    ///
+    /// \brief Klasa obslugujaca dane wejsciowe z klawiatury.
+    ///
+
+    class Keyboard
+    {
 
     public:
-        enum Key { // lista obslgiwanych klawiszy
+
+        ///
+        /// \brief Enum przechowujacy numery wybranych przyciskow klawiatury, zgodne z SFML.
+        ///
+
+        enum Key {
             A = sf::Keyboard::A, B = sf::Keyboard::B, C = sf::Keyboard::C, D = sf::Keyboard::D,
             E = sf::Keyboard::E, F = sf::Keyboard::F, G = sf::Keyboard::G, H = sf::Keyboard::H,
             I = sf::Keyboard::I, J = sf::Keyboard::J, K = sf::Keyboard::K, L = sf::Keyboard::L,
@@ -72,11 +86,21 @@ public:
             Pause = sf::Keyboard::Pause
         };
 
+        ///
+        /// \brief Metoda zwraca true, gdy przycisk podany w argumencie jest wcisniety.
+        /// \param key Numer przycisku pochodzacy z enum Keyboard::Key.
+        /// \return bool
+        ///
 
         static bool isPressed(Key key); //sprawdza czy klawisz wcisniety
     };
 
-    class Mouse {
+    ///
+    /// \brief Klasa obslugujaca dane wejsciowe myszy.
+    ///
+
+    class Mouse
+    {
 
     private:
 
@@ -85,8 +109,26 @@ public:
     public:
 
         static void update(); //aktualizacja pozycji myszy
+
+        ///
+        /// \brief Metoda zwraca aktualna pozycje kursora w oknie.
+        /// \details Kiedy kursor jest w srodku okna jego pozycja wynosi (0, 0).
+        ///
+
         static const Vector2& AXIS();
+
+        ///
+        /// \brief Metoda zwraca true jesli lewy przycisk myszy zostal wcisniety.
+        /// \return bool
+        ///
+
         static bool LEFT_BUTTON();
+
+        ///
+        /// \brief Metoda zwraca true jesli prawy przycisk myszy zostal wcisniety.
+        /// \return bool
+        ///
+
         static bool RIGHT_BUTTON();
     };
 

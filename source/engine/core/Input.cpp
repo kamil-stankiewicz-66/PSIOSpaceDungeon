@@ -1,6 +1,6 @@
 #include "engine/core/Input.h"
 
-sf::RenderWindow* Input::window = nullptr; //wskaznik na główne okno SFML ktorey jest potrzebny do odczytu pozycji kursora
+sf::RenderWindow* Input::window = nullptr; //wskaznik na glowne okno SFML ktory jest potrzebny do odczytu pozycji kursora
 
 
 Vector2 Input::Mouse::pos; // przechowuje biezace pozycje  kursora wzgledem srodka okna
@@ -25,7 +25,7 @@ void Input::Mouse::update() {
 
     if (window) {
 
-        auto pixel = sf::Mouse::getPosition(*window); //pobiera pozycje okna wzgledem okna
+        auto pixel = sf::Mouse::getPosition(*window); //pobiera pozycje kursora wzgledem okna
         auto size = window->getSize();
         pos.x = pixel.x - size.x / 2.f;
         pos.y = -(pixel.y - size.y / 2.f); //obliczenie pozycji wzgledem srodka okna
