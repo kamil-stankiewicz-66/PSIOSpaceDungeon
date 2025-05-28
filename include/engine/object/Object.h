@@ -34,6 +34,8 @@ private:
     bool m_enable;
     ObjectState m_state;
     Engine* game;
+    Object* parent;
+    vector<Object*> childs;
     size_t hashId;
     unsigned int id;
 
@@ -57,6 +59,21 @@ public:
     void setEnable(bool);
     const bool isEnable() const;
     const ObjectState& getState() const;
+
+
+    //hierarchy
+
+    void setParent(Object*);
+    void addChild(Object*);
+    void dispose_asChild();
+    void dispose_childs();
+
+    const Object* getParent() const;
+    const vector<Object*>& getChilds() const;
+
+    bool isChild();
+    bool isChildOf(Object*);
+    bool try_getParent(Object*& out);
 
     const size_t& getHashID() const;
     const unsigned int& getID() const;

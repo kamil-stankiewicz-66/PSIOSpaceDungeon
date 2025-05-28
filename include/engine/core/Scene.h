@@ -117,11 +117,12 @@ public:
 
     template <typename T>
     typename enable_if<is_base_of<Object, T>::value, T*>::type
-    createObject(unsigned int _renderLayer = 0)
+    createObject(unsigned int _renderLayer = 0, Object* _parent = nullptr)
     {
         shared_ptr<Object> go_ptr = make_shared<T>();
 
         //init
+        go_ptr->setParent(_parent);
         bool m_init = go_ptr->init(
             this->game,
             typeid(T).hash_code(),
