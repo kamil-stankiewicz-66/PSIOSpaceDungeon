@@ -2,6 +2,7 @@
 #include "engine/core/Debuger.h"
 #include "engine/core/Scene.h"
 #include "engine/object/Object.h"
+#include <SFML/Window/Keyboard.hpp>
 
 class Entity : public GameObject
 {
@@ -41,6 +42,15 @@ public:
             //VDebuger::print("dt =", dt);
         }
         _flag = !_flag;
+
+        //obsluga klawiszy (zmiana koloru tla) b-niebieski, r-czerwony
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::B)) {
+            get_window()->set_BGColor(sf::Color::Blue);
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+            get_window()->set_BGColor(sf::Color::Red);
+        }
     }
 
 };
