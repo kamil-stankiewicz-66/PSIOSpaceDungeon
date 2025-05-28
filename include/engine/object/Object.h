@@ -2,6 +2,8 @@
 #define OBJECT_H
 
 #include <vector>
+#include <set>
+#include <string>
 
 #include "engine/core/Debuger.h"
 
@@ -38,6 +40,7 @@ private:
     vector<Object*> childs;
     size_t hashId;
     unsigned int id;
+    set<string> tags;
 
     bool init(Engine* game, const size_t& hashID, const unsigned int& id); //Ta metoda jest wywolywana przez silnik.
     void set_state(ObjectState); //Ta metoda jest wywolywana przez silnik.
@@ -75,8 +78,20 @@ public:
     bool isChildOf(Object*);
     bool try_getParent(Object*& out);
 
+
+    //identify
+
+    void setTags(const vector<string>&);
+    void addTags(const vector<string>&);
+    void addTag(const string&);
+    void removeTag(const string&);
+
     const size_t& getHashID() const;
     const unsigned int& getID() const;
+    const set<string>& getTags() const;
+    const string getTag(const unsigned char& index) const;
+
+    const bool checkTag(const string&) const;
 };
 
 
