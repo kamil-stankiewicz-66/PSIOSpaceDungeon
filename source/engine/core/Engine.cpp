@@ -321,6 +321,17 @@ void Engine::loadScene()
 
     this->currentScene = this->scenes[this->sceneLoadData.getName()].get();
 
+    if (this->currentScene->isEmpty())
+    {
+        //load and start()
+        this->currentScene->load();
+    }
+    else
+    {
+        //only start()
+        VDebuger::print("start()");
+    }
+
     //log
     VDebuger::print("ENGINE :: TASK_HANDLING :: SCENE_CHANGER :: SCENE_LOADER :: set current scene to", this->sceneLoadData.getName(), "completed");
 }

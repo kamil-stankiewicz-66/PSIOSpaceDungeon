@@ -1,13 +1,20 @@
 #include "engine/core/Engine.h"
 #include "engine/core/Debuger.h"
 #include "engine/core/Scene.h"
+#include "engine/object/Object.h"
+
+class Entity : public GameObject
+{
+    virtual void onUpdate(float dt) override{
+        std::cout << "update" << endl;
+    }
+};
 
 class TestScene : public Scene
 {
-public:
-    TestScene()
+    void loadObjects() override
     {
-        VDebuger::print("TEST_SCENE");
+        VDebuger::print("loadObjects()");
     }
 };
 
