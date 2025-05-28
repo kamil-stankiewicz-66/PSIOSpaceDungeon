@@ -9,17 +9,15 @@
 
 class Input
 {
+friend class Engine;
 
 private:
-
     static sf::RenderWindow* window; //wskaznik na okno SFML,  do pobierania pozycji myszy
-
-
-
-public:
 
     static void init(sf::RenderWindow* win);  //Ta metoda jest wywolywana przez silnik.
     static void update(); //aktualizacja danych wejsciowych - Ta metoda jest wywolywana przez silnik.
+
+public:
 
     ///
     /// \brief Klasa obslugujaca dane wejsciowe z klawiatury.
@@ -101,14 +99,15 @@ public:
 
     class Mouse
     {
+    friend class Input;
 
     private:
 
         static Vector2 pos; //pozycja myszy wzgledem srodek okna
 
-    public:
-
         static void update(); //aktualizacja pozycji myszy
+
+    public:        
 
         ///
         /// \brief Metoda zwraca aktualna pozycje kursora w oknie.

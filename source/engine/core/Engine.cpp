@@ -121,9 +121,8 @@ Engine::Engine(const string WINDOW_TITLE) : currentScene(nullptr), m_isRunning(f
         VDebuger::print("<ERROR> ENGINE :: WINDOW INIT ERROR");
     }
 
-    Input::init(window->get_renderwindow()); //input init
-
-
+    //input init
+    Input::init(window->get_renderwindow());
 }
 
 Engine::~Engine()
@@ -188,9 +187,8 @@ int Engine::run(const unsigned int MAX_FPS)
         //clear window
         window->clear();
 
-        Input::update();
-
         //update silnika
+        Input::update();
         this->taskHandling();
         this->onUpdate(deltaTime);
 
