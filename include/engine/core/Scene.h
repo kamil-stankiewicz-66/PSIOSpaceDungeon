@@ -49,6 +49,16 @@ private:
     void load();
     void dispose();
 
+    //objects operations
+    void forEachObject(const function<void(Object*)>& func);
+    void callOnStartOnObjects();
+    void callOnUpdateOnObjects(float deltaTime);
+    void refreshStatesOnObjects();
+    void spawnObjectsFromBuffor();
+    bool spawnObjectsFromBufforHelper(const shared_ptr<Object>&);
+    void killObjectsFromBuffor();
+    void render();
+
 protected:
 
     ///

@@ -198,6 +198,7 @@ int Engine::run(const unsigned int MAX_FPS)
         if (this->currentScene)
         {
             this->currentScene->update(deltaTime);
+            this->currentScene->render();
         }
 
         //display
@@ -331,7 +332,7 @@ void Engine::loadScene()
     else
     {
         //only start()
-        VDebuger::print("start()");
+        this->currentScene->callOnStartOnObjects();
     }
 
     //log

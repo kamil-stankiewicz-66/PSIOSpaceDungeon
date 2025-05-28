@@ -98,6 +98,218 @@ void Scene::dispose()
 
 
 ///
+/// objects operations
+///
+
+void Scene::forEachObject(const function<void(Object*)>& func)
+{
+    for (const auto& renderLayerPair : objects)
+    {
+        const auto& hashMap = renderLayerPair.second;
+        for (const auto& hashIDPair : hashMap)
+        {
+            const auto& idMap = hashIDPair.second;
+            for (const auto& idPair : idMap)
+            {
+                const auto& obj = idPair.second;
+                func(obj.get());
+            }
+        }
+    }
+}
+
+void Scene::callOnStartOnObjects()
+{
+    //log
+    VDebuger::print("SCENE :: LOAD :: calling start() on objects in scene:", this->name, "started");
+
+
+    //call start
+    forEachObject([](Object* obj)
+                  {
+                      if (obj)
+                      {
+                          obj->onStart();
+                      }
+                  });
+
+
+    //log
+    VDebuger::print("SCENE :: LOAD :: calling start() on objects in scene:", this->name, "completed");
+}
+
+void Scene::callOnUpdateOnObjects(float deltaTime)
+{
+    forEachObject([&deltaTime](Object* obj)
+                  {
+                      if (obj)
+                      {
+                          obj->onUpdate(deltaTime);
+                      }
+                  });
+}
+
+
+void Scene::spawnObjectsFromBuffor()
+{
+    for (const auto& newObj : buffor_objectsToCreate)
+    {
+        if (!newObj) {
+            continue;
+        }
+
+        //try add
+        bool _result = spawnObjectsFromBufforHelper(newObj);
+
+        //log
+        if (_result)
+        {
+            newObj->setEnable(true);
+
+            VDebuger::print("SCENE_MANAGER :: SPAWN_OBJECT_FROM_BUFFOR :: obj:", newObj.get(), "id =", newObj->id, "hash_id =", newObj->hashId, "added to scene:", this->name);
+        }
+        else
+        {
+            VDebuger::print("<ERROR> :: SCENE_MANAGER :: SPAWN_OBJECT_FROM_BUFFOR :: obj:", newObj.get(), "id =", newObj->id, "hash_id =", newObj->hashId, "adding to scene:", this->name);
+        }
+    }
+
+    buffor_objectsToCreate.clear();
+}
+
+bool Scene::spawnObjectsFromBufforHelper(const shared_ptr<Object>& newObj)
+{
+    auto renderLayer = 0;
+    auto hashID = newObj->getHashID();
+    auto id = newObj->getID();
+
+
+    auto it_renderLayer = objects.find(renderLayer);
+
+    if (it_renderLayer == objects.end())
+    {
+        objects.emplace(renderLayer, map<size_t, map<unsigned int, shared_ptr<Object>>>	{
+                                         {hashID, { {id, newObj} }}
+                                     });
+
+        return true;
+    }
+
+
+    auto& hashMap = it_renderLayer->second;
+    auto it_hashLayer = hashMap.find(hashID);
+
+    if (it_hashLayer == hashMap.end())
+    {
+        hashMap.emplace(hashID, map<unsigned int, shared_ptr<Object>> {
+                                    {id, newObj}
+                                });
+
+        return true;
+    }
+
+
+    auto& idMap = it_hashLayer->second;
+    auto it_idLayer = idMap.find(id);
+
+    if (it_idLayer == idMap.end())
+    {
+        idMap.emplace(id, newObj);
+
+        return true;
+    }
+
+
+    return false;
+}
+
+void Scene::killObjectsFromBuffor()
+{
+    for (auto& objectToKill : this->buffor_objectsToKill)
+    {
+        if (!objectToKill) {
+            continue;
+        }
+
+
+        unsigned int renderLayer = 0;
+
+        bool _found = false;
+        for (const auto& renderPair : objects)
+        {
+            for (const auto& hashPair : renderPair.second)
+            {
+                auto it = hashPair.second.find(objectToKill->id);
+                if (it != hashPair.second.end())
+                {
+                    //found
+                    renderLayer = renderPair.first;
+                    _found = true;
+                    break;
+                }
+            }
+
+            if (_found)
+            {
+                break;
+            }
+        }
+
+        //skip this obj if not found
+        if (!_found)
+        {
+            continue;
+        }
+
+
+        //set object state
+        objectToKill->set_state(ObjectState::PermaDead);
+
+        //delete object
+        auto it = objects[renderLayer][objectToKill->hashId].find(objectToKill->id);
+        if (it != objects[renderLayer][objectToKill->hashId].end()) {
+            objects[renderLayer][objectToKill->hashId].erase(it);
+        }
+    }
+
+    buffor_objectsToKill.clear();
+}
+
+void Scene::refreshStatesOnObjects()
+{
+    for (const auto& renderLayerPair : objects)
+    {
+        for (const auto& hashIDPair : renderLayerPair.second)
+        {
+            for (const auto& idPair : hashIDPair.second)
+            {
+                Object* object = idPair.second.get();
+
+                if (!object) {
+                    return;
+                }
+
+                if (object->getState() == ObjectState::Reborn) {
+                    object->set_state(ObjectState::Normal);
+                }
+                else if (object->getState() == ObjectState::Undead) {
+                    object->set_state(ObjectState::Dead);
+                }
+            }
+        }
+    }
+}
+
+void Scene::render()
+{
+
+}
+
+
+
+
+
+///
 /// scene
 ///
 
@@ -169,8 +381,18 @@ void Scene::update(float deltaTime)
 {
     if (m_isThisFirstFrame)
     {
+        callOnStartOnObjects();
         m_isThisFirstFrame = false;
     }
+
+    spawnObjectsFromBuffor();
+
+    killObjectsFromBuffor();
+
+    //normal, undead, dead, reborn ...
+    refreshStatesOnObjects();
+
+    callOnUpdateOnObjects(deltaTime);
 }
 
 
