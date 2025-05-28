@@ -17,9 +17,11 @@ add_executable(PSIOSpaceDungeon main.cpp
     source/engine/core/Input.cpp
     include/engine/core/Debuger.h
     include/engine/core/Engine.h
+    include/engine/core/Scene.h
     include/engine/core/Vector2.h
     source/engine/core/Vector2.cpp
     source/engine/core/Engine.cpp
+    source/engine/core/Scene.cpp
 )
 
 set_target_properties(

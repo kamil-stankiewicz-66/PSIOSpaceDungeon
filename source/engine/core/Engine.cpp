@@ -110,7 +110,7 @@ void VWindow::set_BGColor(const sf::Color& _bgcolor) {
 
 
 
-Engine::Engine(const string WINDOW_TITLE) : m_isRunning(false)
+Engine::Engine(const string WINDOW_TITLE) : currentScene(nullptr), m_isRunning(false)
 {    
     VDebuger::print("ENGINE :: INIT");
 
@@ -192,6 +192,12 @@ int Engine::run(const unsigned int MAX_FPS)
         this->taskHandling();
         this->onUpdate(deltaTime);
 
+        //update sceny
+        if (this->currentScene)
+        {
+            this->currentScene->update(deltaTime);
+        }
+
         //display
         window->get_renderwindow()->display();
 
@@ -217,7 +223,12 @@ void Engine::shutdown()
 
 void Engine::taskHandling()
 {
-
+    //scene changer
+    if (this->sceneLoadData.isInited())
+    {
+        this->loadScene();
+        this->sceneLoadData.dispose();
+    }
 }
 
 
@@ -233,3 +244,83 @@ VWindow* Engine::get_window() const
     return this->window.get();
 }
 
+Scene* Engine::get_currentScene() const {
+    return currentScene;
+}
+
+
+
+
+///
+/// scene manager
+///
+
+
+void Engine::SceneLoadData::set(string _name, bool _keepChanges) {
+    this->name = _name;
+    this->keepChanges = _keepChanges;
+}
+
+void Engine::SceneLoadData::dispose() {
+    this->name = string();
+    this->keepChanges = bool(false);
+}
+
+bool Engine::SceneLoadData::isInited() {
+    return this->name != string();
+}
+
+const string& Engine::SceneLoadData::getName() const {
+    return this->name;
+}
+
+const bool& Engine::SceneLoadData::getKeepChanges() const {
+    return this->keepChanges;
+}
+
+
+void Engine::changeScene(const string _name, bool _keepChanges)
+{
+    if (this->sceneLoadData.isInited())
+    {
+        VDebuger::print("ENGINE :: CHANGE_SCENE :: Task is overflowing. Cannot load scene:", _name);
+
+        return;
+    }
+
+    if (this->scenes.find(_name) == this->scenes.end())
+    {
+        VDebuger::print("ENGINE :: CHANGE_SCENE :: There is no scene called:", _name);
+
+        return;
+    }
+
+    if (this->currentScene &&
+        _name == this->currentScene->get_name())
+    {
+        VDebuger::print("ENGINE :: CHANGE_SCENE :: This scene [ name =", _name, "] is already loaded. To reload, call Scene::reload()");
+
+        return;
+    }
+
+    //set
+    this->sceneLoadData.set(_name, _keepChanges);
+}
+
+
+void Engine::loadScene()
+{
+    //log
+    VDebuger::print("ENGINE :: TASK_HANDLING :: SCENE_CHANGER :: SCENE_LOADER :: setting current scene to", this->sceneLoadData.getName(), "started");
+
+    if (this->currentScene &&
+        !this->sceneLoadData.getKeepChanges())
+    {
+        this->currentScene->dispose();
+    }
+
+    this->currentScene = this->scenes[this->sceneLoadData.getName()].get();
+
+    //log
+    VDebuger::print("ENGINE :: TASK_HANDLING :: SCENE_CHANGER :: SCENE_LOADER :: set current scene to", this->sceneLoadData.getName(), "completed");
+}

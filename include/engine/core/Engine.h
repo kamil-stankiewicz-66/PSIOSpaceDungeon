@@ -9,6 +9,7 @@
 #include <memory>
 
 //engine
+#include "engine/core/Scene.h"
 #include "engine/core/Vector2.h"
 #include "engine/core/Debuger.h"
 
@@ -118,7 +119,84 @@ private:
 
 public:
     VWindow* get_window() const;
+    Scene* get_currentScene() const;
 
+
+    //Menadzer scen.
+    //Fragment klasy zarzadzajacy scenami.
+
+private:
+    struct SceneLoadData
+    {
+    private:
+        string name = string();
+        bool keepChanges = bool(false);
+
+    public:
+        void set(string name, bool keepChanges);
+        void dispose();
+        bool isInited();
+        const string& getName() const;
+        const bool& getKeepChanges() const;
+    };
+
+private:
+    map<string, unique_ptr<Scene>> scenes;
+    Scene* currentScene;
+    SceneLoadData sceneLoadData;
+
+protected:
+
+    ///
+    /// \brief Metoda budujaca obiekt sceny w pamieci. Zwraca surowy wskaznik na utworzona scene.
+    /// \details Po zakonczeniu programu pamiec jest zwalniana automatycznie. WSKAZNIKA NIE NALEZY CZYSZCIC RECZNIE SLOWEM DELETE.
+    /// Aby stworzyc nowa scene:
+    /// 1. Utworz klase dziedziczaca publicznie po klasie Scene - przykladowo class MainScene.
+    /// 2. W kontruktorze klasy bedacej rodzajem klasy Engine wywolaj metode createScene<T>(string) - przykladowo createScene<MainScene>("SceneGlowna")
+    /// \tparam T* Klasa bedaca rodzajem klasy Scene.
+    /// \param name Nazwa sceny musi byc unikalna, proba utworzenia sceny o istniejacej nazwie zwroci blad.
+    /// \param chunkSize Dlugosc krawedzi kwadratowych komorek tworzacych siatke. Optymalizuje obslugiwanie interakcji miedzy obiektami.
+    /// \return
+    ///
+
+    template <typename SCENE_TYPE>
+    typename enable_if<is_base_of<Scene, SCENE_TYPE>::value, Scene*>::type
+    createScene(const string& name, unsigned int chunkSize = 500)
+    {
+        //check
+        if (this->scenes.find(name) != this->scenes.end())
+        {
+            VDebuger::print("<ERROR> ENGINE :: CREATE_SCENE :: scene with name '", name, "' already exist");
+
+            throw runtime_error("ENGINE :: CREATE_SCENE :: scene create error");
+            return nullptr;
+        }
+
+        //create
+        this->scenes[name] = make_unique<SCENE_TYPE>();
+        this->scenes[name]->init(this, name, chunkSize);
+
+        //log
+        VDebuger::print("ENGINE :: CREATE_SCENE :: scene", name, "created");
+
+        //return
+        return this->scenes[name].get();
+    }
+
+public:
+
+    ///
+    /// \brief Metoda zmienia scene na podana w argumencie.
+    /// \details Argument bool okresla czy poprzednio uzywana scena ma zostac wyczyszczona czy zachowana w pamieci wraz ze wszystkimi zmianami.
+    /// \param name Nazwa wczytywanej sceny.
+    /// \param keepChanges True - zachowanie zmian, False - zwolnienie pamieci.
+    ///
+
+    void changeScene(const string name, bool keepChanges = false);
+
+
+private:
+    void loadScene(); //Ta metoda jest wywolywana przez silnik.
 };
 
 #endif // ENGINE_H

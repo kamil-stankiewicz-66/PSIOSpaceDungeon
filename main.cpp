@@ -1,12 +1,23 @@
 #include "engine/core/Engine.h"
 #include "engine/core/Debuger.h"
+#include "engine/core/Scene.h"
+
+class TestScene : public Scene
+{
+public:
+    TestScene()
+    {
+        VDebuger::print("TEST_SCENE");
+    }
+};
 
 class Game : public Engine
 {
 public:
     Game(string _name) : Engine(_name)
     {
-        VDebuger::print("Game()");
+        createScene<TestScene>("test_scene");
+        this->changeScene("test_scene");
     }
 
     bool _flag = false;
