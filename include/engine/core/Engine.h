@@ -11,7 +11,6 @@
 //engine
 #include "engine/core/Scene.h"
 #include "engine/core/Vector2.h"
-#include "engine/core/Debuger.h"
 
 using namespace std;
 

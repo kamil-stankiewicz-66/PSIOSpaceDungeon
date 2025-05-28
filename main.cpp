@@ -14,7 +14,10 @@ class TestScene : public Scene
 {
     void loadObjects() override
     {
-        VDebuger::print("loadObjects()");
+        //test
+        {
+            createObject<Entity>();
+        }
     }
 };
 

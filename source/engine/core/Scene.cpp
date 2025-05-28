@@ -1,9 +1,8 @@
 #include "engine/core/Scene.h"
 #include "engine/object/Object.h"
-#include "engine/core/Debuger.h"
 
 Scene::Scene()
-    : game(nullptr), name(""), globalScale(1.0f), m_isThisFirstFrame(true)
+    : game(nullptr), name(""), globalScale(1.0f), next_id_for_go(0), m_isThisFirstFrame(true)
 {
 
 }
@@ -85,7 +84,11 @@ void Scene::dispose()
     VDebuger::print("SCENE :: DISPOSE :: scene", this->name, "dispose started");
 
     this->objects.clear();
+    this->buffor_objectsToCreate.clear();
+    this->buffor_objectsToKill.clear();
+    this->next_id_for_go = 0;
     this->m_isThisFirstFrame = true;
+    this->WIDeadBodyCleanupCell.clear();
 
     VDebuger::print("SCENE :: DISPOSE :: scene", this->name, "dispose completed");
 }
@@ -170,3 +173,24 @@ void Scene::update(float deltaTime)
     }
 }
 
+
+
+
+
+///
+/// kill
+///
+
+void Scene::killObject(Object* go, bool critical)
+{
+    if (go)
+    {
+        go->setEnable(false);
+        buffor_objectsToKill.emplace(go);
+
+        if (!critical)
+        {
+            WIDeadBodyCleanupCell.emplace(objects[0][go->hashId][go->id]);
+        }
+    }
+}

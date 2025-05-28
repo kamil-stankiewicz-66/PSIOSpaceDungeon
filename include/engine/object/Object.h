@@ -3,6 +3,8 @@
 
 #include <vector>
 
+#include "engine/core/Debuger.h"
+
 using namespace std;
 
 class Scene;
