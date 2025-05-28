@@ -29,7 +29,7 @@ Object::Object() :
 
 Object::~Object()
 {
-    VDebuger::print("OBJECT :: DESTRUCTOR :: obj:", this, "hash_id =", this->hashId, "id =", this->id, "-> destroyed");
+    VDebuger::print("OBJECT :: DESTRUCTOR :: obj:", this, "hash_id =", this->hashId, "id =", this->id, "-> destroyed", "tag[0]:", getTag(0));
 }
 
 
@@ -189,7 +189,38 @@ bool Object::try_getParent(Object*& out)
 
 
 
+///
+/// identify
+///
 
+
+void Object::setTags(const vector<string>& arg_tags)
+{
+    if (!this->tags.empty())
+        this->tags.clear();
+
+    addTags(arg_tags);
+}
+
+void Object::addTags(const vector<string>& arg_tags)
+{
+    for (const auto& _t : arg_tags)
+        addTag(_t);
+}
+
+void Object::addTag(const string& arg_tag)
+{
+    this->tags.emplace(arg_tag);
+}
+
+void Object::removeTag(const string& arg_tag)
+{
+    auto it = this->tags.find(arg_tag);
+    if (it != this->tags.end())
+    {
+        this->tags.erase(it);
+    }
+}
 
 
 const size_t& Object::getHashID() const {
@@ -200,8 +231,24 @@ const unsigned int& Object::getID() const {
     return this->id;
 }
 
+const set<string>& Object::getTags() const {
+    return this->tags;
+}
+
+const string Object::getTag(const unsigned char& index) const
+{
+    if (this->tags.size() <= index)
+        return "<ERROR>_TAG_OUT_OF_INDEX";
+
+    auto it = this->tags.begin();
+    advance(it, index);
+    return *it;
+}
 
 
+const bool Object::checkTag(const string& arg_tag) const {
+    return this->tags.find(arg_tag) != this->tags.end();
+}
 
 
 

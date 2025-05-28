@@ -16,7 +16,8 @@ class TestScene : public Scene
     {
         //test
         {
-            createObject<Entity>();
+            auto o = createObject<Entity>();
+            o->addTag("obiekt1");
         }
     }
 };
