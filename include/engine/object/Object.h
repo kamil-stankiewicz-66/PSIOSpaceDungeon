@@ -16,6 +16,7 @@ using namespace std;
 
 class Scene;
 class Engine;
+class VSprite;
 
 
 ///
@@ -233,6 +234,7 @@ public:
     //basic components
 
     Transform* transform;
+    VSprite* sprite;
 
 };
 

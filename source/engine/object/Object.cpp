@@ -1,5 +1,6 @@
 #include "engine/object/Object.h"
 #include "engine/core/Debuger.h"
+#include "engine/component/Sprite.h"
 
 #include <algorithm>
 
@@ -24,13 +25,15 @@ Object::Object() :
     game(nullptr),
     parent(nullptr),
     hashId(0), id(0),
-    transform(nullptr)
+    transform(nullptr),
+    sprite(nullptr)
 {
+    this->sprite = createComponent<VSprite>();
 }
 
 Object::~Object()
 {
-    VDebuger::print("OBJECT :: DESTRUCTOR :: obj:", this, "hash_id =", this->hashId, "id =", this->id, "-> destroyed", "tag[0]:", getTag(0));
+    VDebuger::print("OBJECT :: DESTRUCTOR :: obj:", this, "render_layer", sprite->getRenderLayer(), "hash_id =", this->hashId, "id =", this->id, "-> destroyed", "tag[0]:", getTag(0));
 }
 
 

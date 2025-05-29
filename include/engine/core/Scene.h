@@ -2,6 +2,7 @@
 #define SCENE_H
 
 #include "engine/object/Object.h"
+#include "engine/component/Sprite.h"
 
 #include <functional>
 #include <map>
@@ -323,6 +324,7 @@ public:
         shared_ptr<Object> go_ptr = make_shared<T>();
 
         //init
+        go_ptr->sprite->renderLayer = _renderLayer;
         go_ptr->setParent(_parent);
         bool m_init = go_ptr->init(
             this->game,

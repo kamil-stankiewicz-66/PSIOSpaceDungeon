@@ -170,6 +170,10 @@ void Scene::spawnObjectsFromBuffor()
             continue;
         }
 
+        if (!newObj->sprite) {
+            continue;
+        }
+
         //try add
         bool _result = spawnObjectsFromBufforHelper(newObj);
 
@@ -191,7 +195,7 @@ void Scene::spawnObjectsFromBuffor()
 
 bool Scene::spawnObjectsFromBufforHelper(const shared_ptr<Object>& newObj)
 {
-    auto renderLayer = 0;
+    auto renderLayer = newObj->sprite->getRenderLayer();
     auto hashID = newObj->getHashID();
     auto id = newObj->getID();
 
@@ -246,31 +250,38 @@ void Scene::killObjectsFromBuffor()
 
         unsigned int renderLayer = 0;
 
-        bool _found = false;
-        for (const auto& renderPair : objects)
+        if (!objectToKill->sprite)
         {
-            for (const auto& hashPair : renderPair.second)
+            bool _found = false;
+            for (const auto& renderPair : objects)
             {
-                auto it = hashPair.second.find(objectToKill->id);
-                if (it != hashPair.second.end())
+                for (const auto& hashPair : renderPair.second)
                 {
-                    //found
-                    renderLayer = renderPair.first;
-                    _found = true;
+                    auto it = hashPair.second.find(objectToKill->id);
+                    if (it != hashPair.second.end())
+                    {
+                        //found
+                        renderLayer = renderPair.first;
+                        _found = true;
+                        break;
+                    }
+                }
+
+                if (_found)
+                {
                     break;
                 }
             }
 
-            if (_found)
+            //skip this obj if not found
+            if (!_found)
             {
-                break;
+                continue;
             }
         }
-
-        //skip this obj if not found
-        if (!_found)
+        else
         {
-            continue;
+            renderLayer = objectToKill->sprite->getRenderLayer();
         }
 
 
@@ -314,7 +325,17 @@ void Scene::refreshStatesOnObjects()
 
 void Scene::render()
 {
-
+    forEachObject([](Object* obj)
+    {
+        if (obj && obj->sprite && obj->transform)
+        {
+            obj->sprite->render(obj->transform->get_position(),
+                                obj->transform->get_scale(),
+                                obj->transform->get_rotation(),
+                                obj->transform->get_flipX(),
+                                obj->transform->isRect());
+        }
+    });
 }
 
 
@@ -425,7 +446,7 @@ void Scene::killObject(Object* go, bool critical)
 
         if (!critical)
         {
-            WIDeadBodyCleanupCell.emplace(objects[0][go->hashId][go->id]);
+            WIDeadBodyCleanupCell.emplace(objects[go->sprite->renderLayer][go->hashId][go->id]);
         }
     }
 }
