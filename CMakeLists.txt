@@ -26,6 +26,8 @@ add_executable(PSIOSpaceDungeon main.cpp
     source/engine/object/Object.cpp
     include/engine/component/Component.h
     source/engine/component/Component.cpp
+    include/engine/component/Transform.h
+    source/engine/component/Transform.cpp
 )
 
 set_target_properties(

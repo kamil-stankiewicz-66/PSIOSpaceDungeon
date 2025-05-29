@@ -13,6 +13,7 @@ typedef unsigned int uint;
 
 struct COMPONENT_PRIORITY
 {
+    static constexpr float TRANSFORM = -100.0f;
 };
 
 ///

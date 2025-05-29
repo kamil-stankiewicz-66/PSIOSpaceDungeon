@@ -10,6 +10,7 @@
 
 #include "engine/component/Component.h"
 #include "engine/core/Debuger.h"
+#include "engine/component/Transform.h"
 
 using namespace std;
 
@@ -121,6 +122,7 @@ public:
     createComponent()
     {
         bool m_error = false;
+        bool m_transformExist = false;
 
         size_t type_hash_code = typeid(T).hash_code();
         ostringstream _message;
@@ -129,6 +131,11 @@ public:
         {
             for (const auto& _c : p_v.second)
             {
+                if (!m_transformExist && dynamic_cast<Transform*>(_c.get()))
+                {
+                    m_transformExist = true;
+                }
+
                 if (type_hash_code == _c->get_typeHashCode())
                 {
                     _message
@@ -140,6 +147,15 @@ public:
                     break;
                 }
             }
+        }
+
+        if (m_transformExist && is_base_of<Transform, T>::value)
+        {
+            _message.str("");
+            _message
+                << "<ERROR> :: OBJECT :: CREATE_COMPONENT :: You cannot create more Transform components in object: " << this;
+
+            m_error = true;
         }
 
         //report
@@ -212,6 +228,11 @@ public:
     {
         return out = this->getComponent<T>(polimorhicAllowed);
     }
+
+
+    //basic components
+
+    Transform* transform;
 
 };
 

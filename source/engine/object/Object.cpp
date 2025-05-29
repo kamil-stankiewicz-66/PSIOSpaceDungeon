@@ -23,7 +23,8 @@ Object::Object() :
     m_enable(false),
     game(nullptr),
     parent(nullptr),
-    hashId(0), id(0)
+    hashId(0), id(0),
+    transform(nullptr)
 {
 }
 
@@ -132,6 +133,7 @@ void Object::addChild(Object* arg_child)
     }
 
     arg_child->parent = this;
+    arg_child->transform->resetPosition();
     this->childs.push_back(arg_child);
 }
 
@@ -147,6 +149,7 @@ void Object::dispose_asChild()
         this->parent->childs.erase(it);
     }
 
+    this->transform->updateGlobalTransform();
     this->parent = nullptr;
 }
 
@@ -312,12 +315,12 @@ void Object::callOnLateUpdateInComponents(float _deltaTime)
 
 GameObject::GameObject()
 {
-
+    this->transform = createComponent<Transform>();
 }
 
 
 
 UIObject::UIObject()
 {
-
+    this->transform = createComponent<RectTransform>();
 }

@@ -330,6 +330,11 @@ public:
             next_id_for_go++
             );
 
+        //scaling
+        if (Transform* _t = go_ptr->transform) {
+            _t->scaleBy(Vector2(this->globalScale, this->globalScale));
+        }
+
         if (!m_init)
         {
             VDebuger::print("<ERROR> :: SCENE :: CREATE_OBJECT :: go init error");

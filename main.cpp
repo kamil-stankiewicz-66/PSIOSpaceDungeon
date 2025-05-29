@@ -2,12 +2,12 @@
 #include "engine/core/Debuger.h"
 #include "engine/core/Scene.h"
 #include "engine/object/Object.h"
-#include "engine/core/Input.h"
 
 class Entity : public GameObject
 {
     virtual void onUpdate(float dt) override{
-        //std::cout << "update" << endl;
+        this->transform->add_rotation(dt/4.);
+        //cout << this->transform->get_rotation() << endl;
     }
 };
 
@@ -15,10 +15,36 @@ class TestScene : public Scene
 {
     void loadObjects() override
     {
+        set_globalScale(0.001);
+
         //test
         {
-            auto o = createObject<Entity>();
-            o->addTag("obiekt1");
+            {
+                auto _go = createObject<Entity>();
+                _go->transform->set_position(Vector2());
+                _go->transform->scaleBy(0.3f);
+                _go->transform->set_rotation(0);
+            }
+            {
+                auto _go = createObject<Entity>();
+                _go->transform->set_position(this->getGame()->get_window()->get_cornerPositions().leftUp *3.f);
+                _go->transform->set_rotation(0);
+            }
+            {
+                auto _go = createObject<Entity>();
+                _go->transform->set_position(this->getGame()->get_window()->get_cornerPositions().rightUp *3.f);
+                _go->transform->set_rotation(0);
+            }
+            {
+                auto _go = createObject<Entity>();
+                _go->transform->set_position(this->getGame()->get_window()->get_cornerPositions().rightDown *3.f);
+                _go->transform->set_rotation(0);
+            }
+            {
+                auto _go = createObject<Entity>();
+                _go->transform->set_position(this->getGame()->get_window()->get_cornerPositions().leftDown *3.f);
+                _go->transform->set_rotation(0);
+            }
         }
     }
 };
