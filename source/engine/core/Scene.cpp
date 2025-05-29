@@ -416,3 +416,53 @@ void Scene::killObject(Object* go, bool critical)
         }
     }
 }
+
+
+
+
+
+///
+/// find by hash_id and id
+///
+
+Object* Scene::findObject(const size_t& hash_id, const unsigned int& id)
+{
+    return findObject<Object>(hash_id, id);
+}
+
+GameObject* Scene::findGameObject(const size_t& hash_id, const unsigned int& id)
+{
+    return findObject<GameObject>(hash_id, id);
+}
+
+UIObject* Scene::findUIObject(const size_t& hash_id, const unsigned int& id)
+{
+    return findObject<UIObject>(hash_id, id);
+}
+
+
+
+
+///
+/// find by tag
+///
+
+GameObject* Scene::findGameObject(const string& tag)
+{
+    return findObject<GameObject>(tag, true);
+}
+
+UIObject* Scene::findUIObject(const string& tag)
+{
+    return findObject<UIObject>(tag, true);
+}
+
+vector<GameObject*> Scene::findGameObjects(const string& tag)
+{
+    return findObjects<GameObject>(tag, true);
+}
+
+vector<UIObject*> Scene::findUIObjects(const string& tag)
+{
+    return findObjects<UIObject>(tag, true);
+}

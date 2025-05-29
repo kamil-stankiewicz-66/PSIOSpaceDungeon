@@ -107,7 +107,7 @@ public:
 
         static void update(); //aktualizacja pozycji myszy
 
-    public:        
+    public:
 
         ///
         /// \brief Metoda zwraca aktualna pozycje kursora w oknie.

@@ -7,7 +7,7 @@
 class Entity : public GameObject
 {
     virtual void onUpdate(float dt) override{
-        std::cout << "update" << endl;
+        //std::cout << "update" << endl;
     }
 };
 
@@ -43,17 +43,9 @@ public:
         }
         _flag = !_flag;
 
-        //obsluga klawiszy (zmiana koloru tla) b-niebieski, r-czerwony
-
-        if (Input::Keyboard::isPressed(Input::Keyboard::B)) {
-            get_window()->set_BGColor(sf::Color::Blue);
-        }
-        else if (Input::Keyboard::isPressed(Input::Keyboard::R)) {
-            get_window()->set_BGColor(sf::Color::Red);
-        }
-
-        if (Input::Mouse::LEFT_BUTTON()) {
-            VDebuger::print(Input::Mouse::AXIS());
+        auto obj = this->get_currentScene()->findObject<Entity>();
+        if (obj) {
+            VDebuger::print(obj->getTag(0));
         }
     }
 
