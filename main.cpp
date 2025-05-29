@@ -42,11 +42,6 @@ public:
             //VDebuger::print("dt =", dt);
         }
         _flag = !_flag;
-
-        auto obj = this->get_currentScene()->findObject<Entity>();
-        if (obj) {
-            VDebuger::print(obj->getTag(0));
-        }
     }
 
 };

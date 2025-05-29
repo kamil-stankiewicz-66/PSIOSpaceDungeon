@@ -46,6 +46,20 @@ bool Object::init(Engine* game, const size_t& hashID, const unsigned int& id)
     this->hashId = hashID;
     this->id = id;
 
+    //comps
+    for (const auto& p_v : this->components)
+    {
+        for (const auto& _comp : p_v.second)
+        {
+            if (!_comp->init(this->game, this))
+            {
+                VDebuger::print("<ERROR> :: OBJECT :: INIT :: comp init error");
+
+                return false;
+            }
+        }
+    }
+
     return true;
 }
 
@@ -253,7 +267,46 @@ const bool Object::checkTag(const string& arg_tag) const {
 
 
 
+///
+/// components
+///
 
+
+void Object::callOnStartInComponents()
+{
+    for (const auto& p_v : this->components)
+    {
+        for (const auto& _comp : p_v.second)
+        {
+            if (_comp != nullptr)
+                _comp->onStart();
+        }
+    }
+}
+
+void Object::callOnUpdateInComponents(float _deltaTime)
+{
+    for (const auto& p_v : this->components)
+    {
+        for (const auto& _comp : p_v.second)
+        {
+            if (_comp != nullptr)
+                _comp->onUpdate(_deltaTime);
+        }
+    }
+}
+
+void Object::callOnLateUpdateInComponents(float _deltaTime)
+{
+    for (const auto& p_v : this->components)
+    {
+        for (const auto& _comp : p_v.second)
+        {
+            if (_comp != nullptr)
+                _comp->onLateUpdate(_deltaTime);
+        }
+    }
+}
 
 
 

@@ -232,6 +232,7 @@ private:
     void callOnStartOnObjects();
     void callOnUpdateOnObjects(float deltaTime);
     void refreshStatesOnObjects();
+    void callOnLateUpdateOnObjects(float deltaTime);
     void spawnObjectsFromBuffor();
     bool spawnObjectsFromBufforHelper(const shared_ptr<Object>&);
     void killObjectsFromBuffor();

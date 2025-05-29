@@ -129,6 +129,7 @@ void Scene::callOnStartOnObjects()
                   {
                       if (obj)
                       {
+                          obj->callOnStartInComponents();
                           obj->onStart();
                       }
                   });
@@ -144,11 +145,22 @@ void Scene::callOnUpdateOnObjects(float deltaTime)
                   {
                       if (obj)
                       {
+                          obj->callOnUpdateInComponents(deltaTime);
                           obj->onUpdate(deltaTime);
                       }
                   });
 }
 
+void Scene::callOnLateUpdateOnObjects(float deltaTime)
+{
+    forEachObject([&deltaTime](Object* obj)
+                  {
+                      if (obj)
+                      {
+                          obj->callOnLateUpdateInComponents(deltaTime);
+                      }
+                  });
+}
 
 void Scene::spawnObjectsFromBuffor()
 {
@@ -393,6 +405,7 @@ void Scene::update(float deltaTime)
     refreshStatesOnObjects();
 
     callOnUpdateOnObjects(deltaTime);
+    callOnLateUpdateOnObjects(deltaTime);
 }
 
 

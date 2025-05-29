@@ -4,7 +4,7 @@
 #include "engine\core\Vector2.h"
 
 ///
-/// \brief Klasa obsługująca dane wejściowe z klawiatury i myszy.
+/// \brief Klasa obslugujaca dane wejsciowe z klawiatury i myszy.
 ///
 
 class Input

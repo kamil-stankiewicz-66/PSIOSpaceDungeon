@@ -24,6 +24,8 @@ add_executable(PSIOSpaceDungeon main.cpp
     source/engine/core/Input.cpp
     include/engine/object/Object.h
     source/engine/object/Object.cpp
+    include/engine/component/Component.h
+    source/engine/component/Component.cpp
 )
 
 set_target_properties(
