@@ -332,7 +332,7 @@ public:
 
         //scaling
         if (Transform* _t = go_ptr->transform) {
-            _t->scaleBy(Vector2(this->globalScale, this->globalScale));
+            _t->scaleBy(this->globalScale);
         }
 
         if (!m_init)
