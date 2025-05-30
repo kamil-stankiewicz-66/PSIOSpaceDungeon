@@ -1,8 +1,9 @@
 #include "engine/core/Scene.h"
 #include "engine/object/Object.h"
+#include "engine/object/Camera.h"
 
 Scene::Scene()
-    : game(nullptr), name(""), globalScale(1.0f), next_id_for_go(0), m_isThisFirstFrame(true)
+    : game(nullptr), mainCamera(nullptr), name(""), globalScale(1.0f), next_id_for_go(0), m_isThisFirstFrame(true)
 {
 
 }
@@ -373,6 +374,23 @@ const bool Scene::isThisFirstFrame() const {
 /// setters
 ///
 
+void Scene::set_mainCamera(Camera* _camera)
+{
+    if (!_camera)
+    {
+        return;
+    }
+
+    if (!this->findObject(_camera->getHashID(), _camera->getID()))
+    {
+        VDebuger::print("SCENE :: SET_MAIN_CAMERA :: This camera does not exist on the scene: ", this->name);
+
+        return;
+    }
+
+    this->mainCamera = _camera;
+}
+
 void Scene::set_globalScale(const float& _gs)
 {
     this->globalScale = _gs;
@@ -388,6 +406,11 @@ void Scene::set_globalScale(const float& _gs)
 
 const Engine* Scene::getGame() const {
     return this->game;
+}
+
+Camera* Scene::get_mainCamera() const
+{
+    return this->mainCamera;
 }
 
 const string& Scene::get_name() const {

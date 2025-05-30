@@ -30,6 +30,8 @@ add_executable(PSIOSpaceDungeon main.cpp
     source/engine/component/Transform.cpp
     source/engine/component/Sprite.cpp
     include/engine/component/Sprite.h
+    include/engine/object/Camera.h
+    source/engine/object/Camera.cpp
 )
 
 set_target_properties(

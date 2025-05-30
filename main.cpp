@@ -2,6 +2,7 @@
 #include "engine/core/Debuger.h"
 #include "engine/core/Scene.h"
 #include "engine/object/Object.h"
+#include "engine/object/Camera.h"
 
 class Entity : public GameObject
 {
@@ -11,11 +12,20 @@ class Entity : public GameObject
     }
 };
 
+class BasicCamera : public Camera
+{
+
+};
+
 class TestScene : public Scene
 {
     void loadObjects() override
     {
         set_globalScale(0.001);
+
+        auto _camera = createObject<BasicCamera>();
+        set_mainCamera(_camera);
+        VDebuger::print("   ->", this->get_mainCamera()->getTag(0));
 
         //test
         {

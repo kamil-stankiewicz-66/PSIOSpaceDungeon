@@ -13,6 +13,7 @@
 
 using namespace std;
 
+class Camera;
 class Engine;
 
 //Alias for the main objects map type [renderLayer, hashID, id, obj_ptr]
@@ -208,6 +209,7 @@ class Scene
 
 private:
     Engine* game;
+    Camera* mainCamera;
     string name;
 
     bool m_isThisFirstFrame;
@@ -262,10 +264,12 @@ public:
 
 
     //setters
+    void set_mainCamera(Camera*);
     void set_globalScale(const float&);
 
     //getters
     const Engine* getGame() const;
+    Camera* get_mainCamera() const;
     const string& get_name() const;
     const float& get_globalScale() const;
     const OBJ_MAP_TYPE& get_objects() const;
