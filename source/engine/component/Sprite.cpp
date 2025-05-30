@@ -1,6 +1,7 @@
 #include "engine/component/Sprite.h"
 #include "engine/core/Scene.h"
 #include "engine/core/Engine.h"
+#include "engine/object/Camera.h"
 
 
 //sprite
@@ -38,8 +39,21 @@ void VSprite::render(const Vector2& position, const Vector2& scale, const float&
     float r_posY = screen_zeroY;
 
 
-    r_posX -= ((r_sizeX / 2.0f) - position.x);
-    r_posY -= ((r_sizeY / 2.0f) + position.y);
+    //uwzglednienie kamery
+    const Camera* _camera = this->getObject()->getGame()->get_currentScene()->get_mainCamera();
+    if (!isRect && _camera)
+    {
+        r_sizeX /= _camera->get_viewSize();
+        r_sizeY /= _camera->get_viewSize();
+
+        r_posX -= ((r_sizeX / 2.0f) - ((position.x - _camera->transform->get_position().x) / _camera->get_viewSize()));
+        r_posY -= ((r_sizeY / 2.0f) + ((position.y - _camera->transform->get_position().y) / _camera->get_viewSize()));
+    }
+    else
+    {
+        r_posX -= ((r_sizeX / 2.0f) - position.x);
+        r_posY -= ((r_sizeY / 2.0f) + position.y);
+    }
 
 
     //odbicie lustrzane
@@ -50,6 +64,15 @@ void VSprite::render(const Vector2& position, const Vector2& scale, const float&
     m_sprite.setOrigin(m_sprite.getTextureRect().width *0.5f, m_sprite.getTextureRect().height *0.5f);
     m_sprite.setRotation(rotationZ);
 
+    //uwzglednie rotacji kamery
+    sf::Transform transform;
+    if (!isRect && _camera)
+    {
+        transform.translate(screen_zeroX, screen_zeroY);
+        transform.rotate(-_camera->get_rotation());
+        transform.translate(-screen_zeroX, -screen_zeroY);
+    }
+
     //translacja
     m_sprite.setPosition(r_posX, r_posY);
 
@@ -58,7 +81,7 @@ void VSprite::render(const Vector2& position, const Vector2& scale, const float&
 
 
     //draw
-    getGame()->get_window()->get_renderwindow()->draw(m_sprite);
+    getGame()->get_window()->get_renderwindow()->draw(m_sprite, transform);
 }
 
 
