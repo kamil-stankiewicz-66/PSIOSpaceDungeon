@@ -10,7 +10,7 @@ class Scene;
 struct Edges;
 
 ///
-/// \brief Klasa realizujaca wykrywanie kolizji miedzy Collidarami.
+/// \brief Klasa realizujaca wykrywanie kolizji miedzy Colliderami.
 ///
 
 class CollisionManager

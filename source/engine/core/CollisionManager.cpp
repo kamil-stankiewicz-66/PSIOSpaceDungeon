@@ -108,6 +108,16 @@ void CollisionManager::removeFromOutdatedChunks(Collider* collider, Edges& colli
             if (it != collidersInChunk.end())
             {
                 collidersInChunk.erase(it);
+
+                //odswiezenie kolizji kiedy obiekt gwaltownie opuszcza chunk
+                for (Collider* _oc : collidersInChunk)
+                {
+                    if (_oc == collider) {
+                        continue;
+                    }
+
+                    _oc->refreshCollisions();
+                }
             }
         }
     }
