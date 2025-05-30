@@ -54,6 +54,10 @@ void Scene::init(Engine* arg_game, const string& arg_name, unsigned int arg_chun
 {
     this->game = arg_game;
     this->name = arg_name;
+
+    // collision manager init
+    this->collisionManager = make_unique<CollisionManager>();
+    this->collisionManager->init(this, arg_chunkSize);
 }
 
 
@@ -90,6 +94,7 @@ void Scene::dispose()
     this->next_id_for_go = 0;
     this->m_isThisFirstFrame = true;
     this->WIDeadBodyCleanupCell.clear();
+    this->collisionManager->dispose();
 
     VDebuger::print("SCENE :: DISPOSE :: scene", this->name, "dispose completed");
 }
@@ -425,6 +430,10 @@ const OBJ_MAP_TYPE& Scene::get_objects() const {
     return this->objects;
 }
 
+CollisionManager* Scene::get_collisionManager() const {
+    return collisionManager.get();
+}
+
 
 
 
@@ -442,6 +451,8 @@ void Scene::update(float deltaTime)
     }
 
     spawnObjectsFromBuffor();
+
+    this->collisionManager->updateAll();
 
     killObjectsFromBuffor();
 

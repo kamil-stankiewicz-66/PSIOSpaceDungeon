@@ -32,6 +32,10 @@ add_executable(PSIOSpaceDungeon main.cpp
     include/engine/component/Sprite.h
     include/engine/object/Camera.h
     source/engine/object/Camera.cpp
+    include/engine/core/CollisionManager.h
+    source/engine/core/CollisionManager.cpp
+    include/engine/component/Collider.h
+    source/engine/component/Collider.cpp
 )
 
 set_target_properties(

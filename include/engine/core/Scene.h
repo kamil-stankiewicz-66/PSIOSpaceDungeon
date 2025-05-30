@@ -3,6 +3,7 @@
 
 #include "engine/object/Object.h"
 #include "engine/component/Sprite.h"
+#include "engine/core/CollisionManager.h"
 
 #include <functional>
 #include <map>
@@ -216,6 +217,8 @@ private:
     float globalScale; //the scaling factor of all objects during creation
     unsigned int next_id_for_go;
 
+    unique_ptr<CollisionManager> collisionManager;
+
     OBJ_MAP_TYPE objects;
     unordered_set<shared_ptr<Object>> WIDeadBodyCleanupCell;
     list<shared_ptr<Object>> buffor_objectsToCreate;
@@ -273,6 +276,7 @@ public:
     const string& get_name() const;
     const float& get_globalScale() const;
     const OBJ_MAP_TYPE& get_objects() const;
+    CollisionManager* get_collisionManager() const;
 
 private:
     void update(float deltaTime); //Ta metoda jest wywolywana przez silnik.
