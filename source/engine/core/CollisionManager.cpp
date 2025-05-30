@@ -33,6 +33,13 @@ void CollisionManager::updateAll()
             continue;
         }
 
+        //if reborn - refresh
+        if (!collider->getObject()->transform->inMove() &&
+            collider->getObject()->getState() != ObjectState::Reborn)
+        {
+            continue;
+        }
+
         //update all
         updateChunks(collider);
         updateCollisions(collider);
@@ -49,6 +56,17 @@ void CollisionManager::updateChunks(Collider* collider)
     int chunk_x_max = colliderEdges.x_max / m_chunkSize;
     int chunk_y_min = colliderEdges.y_min / m_chunkSize;
     int chunk_y_max = colliderEdges.y_max / m_chunkSize;
+
+
+    //skip if not changed
+    if (colliderCurrentChunks.x_min == chunk_x_min &&
+        colliderCurrentChunks.x_max == chunk_x_max &&
+        colliderCurrentChunks.y_min == chunk_y_min &&
+        colliderCurrentChunks.y_max == chunk_y_max &&
+        collider->getObject()->getState() == ObjectState::Normal)
+    {
+        return;
+    }
 
 
     //remove from outdated chunks
