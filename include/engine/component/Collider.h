@@ -47,7 +47,8 @@ protected:
     virtual bool checkCollision(Collider* other_collider, Transform* other_transform) = 0; //Ta metoda jest wywolywana przez silnik.
 
 public:
-    ~Collider();
+    Collider();
+    virtual ~Collider();
     void refreshCollisions();
 
 
@@ -90,6 +91,38 @@ public:
 
     //Metoda zwraca kolekcje ze wszystkimi Colliderami, z ktorymi jest w kolizji ten Collider.
     const std::set<Collider*>& getCollisions() const;
+};
+
+///
+/// \brief Collider o ksztalcie prostokata
+///
+
+class BoxCollider : public Collider
+{
+private:
+    float x = 0.0f;
+    float y = 0.0f;
+
+    float leftEdge, rightEdge, downEdge, upEdge;
+
+    void onUpdate(float) override; //Ta metoda jest wywolywana przez silnik.
+    bool checkCollision(Collider* other_collider, Transform* other_transform) override; //Ta metoda jest wywolywana przez silnik.
+
+    //helper
+    void updateEdges(); //Ta metoda jest wywolywana przez silnik.
+
+public:
+    //Metoda ustawiajaca rozmiar Collidera.
+    void set(float size_x, float size_y);
+
+    //Definicje metod abstrakcyjnych
+    bool isThisPointInCollider(const Vector2&) override;
+    Vector2 getNearestColliderPointTo(const Vector2&, const float borderThickness = 0.0f) override;
+    Edges getEdges() const override;
+
+    //getters
+    const float& getSize_x() const;
+    const float& getSize_y() const;
 };
 
 #endif // COLLIDER_H

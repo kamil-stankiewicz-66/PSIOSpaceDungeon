@@ -2,6 +2,17 @@
 #include "engine/object/Object.h"
 #include "engine/core/Engine.h"
 #include "engine/core/CollisionManager.h"
+#include "engine/core/VMath.h"
+
+
+
+
+
+
+
+///
+/// Collider
+///
 
 
 Edges::Edges(int x_min, int x_max, int y_min, int y_max)
@@ -33,6 +44,8 @@ bool Collider::init(Engine* engine, Object* object)
 
     return false;
 }
+
+Collider::Collider() : m_collisions() {}
 
 Collider::~Collider()
 {
@@ -108,4 +121,101 @@ bool Collider::isInCollisionWith(Collider* other_collider) {
 
 const std::set<Collider*>& Collider::getCollisions() const {
     return m_collisions;
+}
+
+
+
+
+
+
+
+///
+/// BoxCollider
+///
+
+
+void BoxCollider::set(float _x, float _y)
+{
+    if (_x > 0.0f) { this->x = _x; }
+    if (_y > 0.0f) { this->y = _y; }
+
+    this->updateEdges();
+}
+
+
+void BoxCollider::onUpdate(float _dt)
+{
+    if (getObject()->transform->inMove()) {
+        this->updateEdges();
+    }
+
+    Collider::onUpdate(_dt);
+}
+
+
+//for this collider
+bool BoxCollider::checkCollision(Collider* other_collider, Transform* other_transform)
+{
+    const Vector2 other_position = other_transform->get_position();
+    const Vector2 nearestPointToOther = this->getNearestColliderPointTo(other_position, 0.0f);
+
+    if (nearestPointToOther.x == other_position.x &&
+        nearestPointToOther.y == other_position.y)
+    {
+        return true;
+    }
+
+    return other_collider->isThisPointInCollider(nearestPointToOther);
+}
+
+Vector2 BoxCollider::getNearestColliderPointTo(const Vector2& point, const float borderThickness)
+{
+    return Vector2(
+        VMath::clamp(point.x, leftEdge + borderThickness, rightEdge - borderThickness),
+        VMath::clamp(point.y, downEdge + borderThickness, upEdge - borderThickness)
+        );
+}
+
+
+//for other collider
+bool BoxCollider::isThisPointInCollider(const Vector2& point)
+{
+    if (this->x == 0.0f || this->y == 0.0f) {
+        return false;
+    }
+
+    return
+        VMath::isInRange(point.x, leftEdge, rightEdge) &&
+        VMath::isInRange(point.y, downEdge, upEdge);
+}
+
+
+//getter
+const float& BoxCollider::getSize_x() const {
+    return this->x;
+}
+
+const float& BoxCollider::getSize_y() const {
+    return this->y;
+}
+
+
+//for chunks
+Edges BoxCollider::getEdges() const
+{
+    return Edges(
+        (int)this->leftEdge, (int)this->rightEdge,
+        (int)this->downEdge, (int)this->upEdge
+        );
+}
+
+
+//helper
+void BoxCollider::updateEdges()
+{
+    const Vector2 position = getObject()->transform->get_position();
+    this->leftEdge = position.x - (this->x / 2.0f);
+    this->rightEdge = position.x + (this->x / 2.0f);
+    this->downEdge = position.y - (this->y / 2.0f);
+    this->upEdge = position.y + (this->y / 2.0f);
 }

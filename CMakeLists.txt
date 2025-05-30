@@ -36,6 +36,7 @@ add_executable(PSIOSpaceDungeon main.cpp
     source/engine/core/CollisionManager.cpp
     include/engine/component/Collider.h
     source/engine/component/Collider.cpp
+    include/engine/core/VMath.h
 )
 
 set_target_properties(

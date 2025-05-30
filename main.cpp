@@ -3,12 +3,44 @@
 #include "engine/core/Scene.h"
 #include "engine/object/Object.h"
 #include "engine/object/Camera.h"
+#include "engine/component/Collider.h"
+#include "engine/core/Input.h"
 
 class Entity : public GameObject
 {
-    virtual void onUpdate(float dt) override{
-        this->transform->add_rotation(dt/4.);
-        //cout << this->transform->get_rotation() << endl;
+    Collider* m_collider = nullptr;
+    virtual void onStart() override {
+        m_collider = this->getComponent<Collider>(true);
+    }
+
+    virtual void onUpdate(float dt) override {
+        if (m_collider) {
+            if (!m_collider->getCollisions().empty()) {
+                this->sprite->setColor(sf::Color::Red);
+            }
+            else {
+                this->sprite->setColor(sf::Color::Green);
+            }
+
+            //this->transform->add_position(Vector2(dt/1000.f));
+        }
+    }
+};
+
+class Player : public GameObject
+{
+
+    virtual void onStart() override {
+
+    }
+
+    virtual void onUpdate(float dt) override {
+        auto _camera = this->getGame()->get_currentScene()->get_mainCamera();
+        if (_camera) {
+            if (auto _t = this->transform) {
+                _t->set_position(_camera->transform->get_position() + (Input::Mouse::AXIS()*_camera->get_viewSize()));
+            }
+        }
     }
 };
 
@@ -21,7 +53,7 @@ class TestScene : public Scene
 {
     void loadObjects() override
     {
-        set_globalScale(0.001);
+        set_globalScale(0.002);
 
         auto _camera = createObject<BasicCamera>();
         _camera->set_viewSize(8.f);
@@ -37,31 +69,18 @@ class TestScene : public Scene
                 _go->transform->set_position(Vector2());
                 _go->transform->scaleBy(0.3f);
                 _go->transform->set_rotation(0);
-                _go->sprite->setColor(sf::Color::Red);
+                auto _colider = _go->createComponent<BoxCollider>();
+                _colider->set(700.f, 700.f);
             }
             {
-                auto _go = createObject<Entity>();
+                auto _go = createObject<Player>();
                 _go->sprite->setTexture("test_textures\\6115912.jpg");
-                _go->transform->set_position(this->getGame()->get_window()->get_cornerPositions().leftUp *3.f);
+                _go->transform->set_position(Vector2());
+                _go->transform->scaleBy(0.3f);
                 _go->transform->set_rotation(0);
-            }
-            {
-                auto _go = createObject<Entity>();
-                _go->sprite->setTexture("test_textures\\6115912.jpg");
-                _go->transform->set_position(this->getGame()->get_window()->get_cornerPositions().rightUp *3.f);
-                _go->transform->set_rotation(0);
-            }
-            {
-                auto _go = createObject<Entity>();
-                _go->sprite->setTexture("test_textures\\6115912.jpg");
-                _go->transform->set_position(this->getGame()->get_window()->get_cornerPositions().rightDown *3.f);
-                _go->transform->set_rotation(0);
-            }
-            {
-                auto _go = createObject<Entity>();
-                _go->sprite->setTexture("test_textures\\6115912.jpg");
-                _go->transform->set_position(this->getGame()->get_window()->get_cornerPositions().leftDown *3.f);
-                _go->transform->set_rotation(0);
+                _go->sprite->setColor(sf::Color::Blue);
+                auto _colider = _go->createComponent<BoxCollider>();
+                _colider->set(700.f, 700.f);
             }
         }
     }
@@ -89,7 +108,7 @@ public:
 
         //_camera->set_viewSize(_camera->get_viewSize()-(dt*0.001f));
         //_camera->transform->add_position(Vector2(dt));
-        _camera->set_rotation(_camera->get_rotation()-(dt/50.f));
+        //_camera->set_rotation(_camera->get_rotation()-(dt/50.f));
         //VDebuger::print(_camera->get_rotation());
 
         if (_flag){
