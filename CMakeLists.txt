@@ -46,6 +46,8 @@ add_executable(PSIOSpaceDungeon
     source/game/scenes/MainScene.cpp
     source/game/scenes/GameScene.cpp
     source/game/scenes/StoreScene.cpp
+    include/engine/object/Button.h
+    source/engine/object/Button.cpp
 )
 
 set_target_properties(
