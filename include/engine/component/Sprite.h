@@ -30,6 +30,7 @@ private:
     unsigned short renderLayer;
 
     bool init(Engine* engine, Object* parent) override; //Ta metoda jest wywolywana przez silnik.
+    void onLateUpdate(float) override;
     void render(const Vector2& position, const Vector2& scale, const float& rotationZ, const bool flipX, const bool isRect);
 
 public:

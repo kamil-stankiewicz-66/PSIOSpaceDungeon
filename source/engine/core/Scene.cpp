@@ -329,21 +329,6 @@ void Scene::refreshStatesOnObjects()
     }
 }
 
-void Scene::render()
-{
-    forEachObject([](Object* obj)
-    {
-        if (obj && obj->sprite && obj->transform)
-        {
-            obj->sprite->render(obj->transform->get_position(),
-                                obj->transform->get_scale(),
-                                obj->transform->get_rotation(),
-                                obj->transform->get_flipX(),
-                                obj->transform->isRect());
-        }
-    });
-}
-
 
 
 

@@ -45,7 +45,7 @@ bool VWindow::init(const string WINDOW_TITLE)
 
     //window
     this->sfwindow = make_unique<sf::RenderWindow>(this->displayMode, WINDOW_TITLE, sf::Style::Close);
-    this->sfwindow->clear(this->m_background);;
+    this->clear();
 
     //corner positions
     this->cornerPositions.init(this->displayMode);
@@ -196,7 +196,6 @@ int Engine::run(const unsigned int MAX_FPS)
         if (this->currentScene)
         {
             this->currentScene->update(deltaTime);
-            this->currentScene->render();
         }
 
         //display

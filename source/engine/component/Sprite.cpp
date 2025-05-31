@@ -20,6 +20,19 @@ bool VSprite::init(Engine* game, Object* parent)
 }
 
 
+void VSprite::onLateUpdate(float)
+{
+    if (auto _t = getObject()->transform)
+    {
+        this->render(_t->get_position(),
+                     _t->get_scale(),
+                     _t->get_rotation(),
+                     _t->get_flipX(),
+                     _t->isRect());
+    }
+}
+
+
 void VSprite::render(const Vector2& position, const Vector2& scale, const float& rotationZ, const bool flipX, const bool isRect)
 {
     if (!this->isInited()) {

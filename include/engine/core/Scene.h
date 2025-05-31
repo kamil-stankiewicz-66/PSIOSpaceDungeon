@@ -242,7 +242,6 @@ private:
     void spawnObjectsFromBuffor();
     bool spawnObjectsFromBufforHelper(const shared_ptr<Object>&);
     void killObjectsFromBuffor();
-    void render();
 
 protected:
 
