@@ -1,7 +1,7 @@
 #include "engine/object/Button.h"
 #include "engine/component/Collider.h"
 #include "engine/core/Input.h"
-#include "engine/component/Sprite.h"
+#include "engine/component/Renderable.h"
 
 
 

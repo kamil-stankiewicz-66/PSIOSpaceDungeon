@@ -1,6 +1,6 @@
 #include "engine/object/Object.h"
 #include "engine/core/Debuger.h"
-#include "engine/component/Sprite.h"
+#include "engine/component/Renderable.h"
 
 #include <algorithm>
 
@@ -33,11 +33,11 @@ Object::Object() :
 
 Object::~Object()
 {
-    VDebuger::print("OBJECT :: DESTRUCTOR :: obj:", this, "render_layer", sprite->getRenderLayer(), "hash_id =", this->hashId, "id =", this->id, "-> destroyed", "tag[0]:", getTag(0));
+    VDebuger::print("OBJECT :: DESTRUCTOR :: obj:", this, "render_layer", this->getRenderLayer(), "hash_id =", this->hashId, "id =", this->id, "-> destroyed", "tag[0]:", getTag(0));
 }
 
 
-bool Object::init(Engine* game, const size_t& hashID, const unsigned int& id)
+bool Object::init(Engine* game, const size_t& renderLayer, const size_t& hashID, const unsigned int& id)
 {
     if (!game)
     {
@@ -47,6 +47,7 @@ bool Object::init(Engine* game, const size_t& hashID, const unsigned int& id)
     }
 
     this->game = game;
+    this->renderLayer = renderLayer;
     this->hashId = hashID;
     this->id = id;
 
@@ -242,6 +243,10 @@ void Object::removeTag(const string& arg_tag)
     }
 }
 
+
+const size_t& Object::getRenderLayer() const {
+    return this->renderLayer;
+}
 
 const size_t& Object::getHashID() const {
     return this->hashId;

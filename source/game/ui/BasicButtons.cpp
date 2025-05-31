@@ -1,5 +1,5 @@
 #include "game/ui/BasicButtons.h"
-#include "engine/component/Sprite.h"
+#include "engine/component/Renderable.h"
 #include "game/core/Asset.h"
 
 void MenuButton::onAwake()

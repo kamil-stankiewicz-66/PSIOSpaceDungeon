@@ -201,7 +201,7 @@ void Scene::spawnObjectsFromBuffor()
 
 bool Scene::spawnObjectsFromBufforHelper(const shared_ptr<Object>& newObj)
 {
-    auto renderLayer = newObj->sprite->getRenderLayer();
+    auto renderLayer = newObj->getRenderLayer();
     auto hashID = newObj->getHashID();
     auto id = newObj->getID();
 
@@ -287,7 +287,7 @@ void Scene::killObjectsFromBuffor()
         }
         else
         {
-            renderLayer = objectToKill->sprite->getRenderLayer();
+            renderLayer = objectToKill->getRenderLayer();
         }
 
 
@@ -465,7 +465,7 @@ void Scene::killObject(Object* go, bool critical)
 
         if (!critical)
         {
-            WIDeadBodyCleanupCell.emplace(objects[go->sprite->renderLayer][go->hashId][go->id]);
+            WIDeadBodyCleanupCell.emplace(objects[go->getRenderLayer()][go->hashId][go->id]);
         }
     }
 }

@@ -45,11 +45,12 @@ private:
     Object* parent;
     vector<Object*> childs;
     map<float, vector<shared_ptr<Component>>> components; //priority, vector
+    size_t renderLayer;
     size_t hashId;
     unsigned int id;
     set<string> tags;
 
-    bool init(Engine* game, const size_t& hashID, const unsigned int& id); //Ta metoda jest wywolywana przez silnik.
+    bool init(Engine* game, const size_t& renderLayer, const size_t& hashID, const unsigned int& id); //Ta metoda jest wywolywana przez silnik.
     void set_state(ObjectState); //Ta metoda jest wywolywana przez silnik.
 
 protected:
@@ -93,6 +94,7 @@ public:
     void addTag(const string&);
     void removeTag(const string&);
 
+    const size_t& getRenderLayer() const;
     const size_t& getHashID() const;
     const unsigned int& getID() const;
     const set<string>& getTags() const;

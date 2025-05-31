@@ -28,8 +28,6 @@ add_executable(PSIOSpaceDungeon
     source/engine/component/Component.cpp
     include/engine/component/Transform.h
     source/engine/component/Transform.cpp
-    source/engine/component/Sprite.cpp
-    include/engine/component/Sprite.h
     include/engine/object/Camera.h
     source/engine/object/Camera.cpp
     include/engine/core/CollisionManager.h
@@ -51,8 +49,8 @@ add_executable(PSIOSpaceDungeon
     include/game/core/Asset.h
     include/game/ui/BasicButtons.h
     source/game/ui/BasicButtons.cpp
-    include/engine/component/Text.h
-    source/engine/component/Text.cpp
+    include/engine/component/Renderable.h
+    source/engine/component/Renderable.cpp
 )
 
 set_target_properties(
