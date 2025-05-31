@@ -12,7 +12,7 @@ link_directories(${SFML_ROOT}/lib)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-add_executable(PSIOSpaceDungeon main.cpp
+add_executable(PSIOSpaceDungeon
     include/engine/core/Debuger.h
     include/engine/core/Engine.h
     include/engine/core/Scene.h
@@ -37,6 +37,15 @@ add_executable(PSIOSpaceDungeon main.cpp
     include/engine/component/Collider.h
     source/engine/component/Collider.cpp
     include/engine/core/VMath.h
+    include/game/core/Game.h
+    source/game/core/Game.cpp
+    source/game/main.cpp
+    include/game/scenes/MainScene.h
+    include/game/scenes/GameScene.h
+    include/game/scenes/StoreScene.h
+    source/game/scenes/MainScene.cpp
+    source/game/scenes/GameScene.cpp
+    source/game/scenes/StoreScene.cpp
 )
 
 set_target_properties(
