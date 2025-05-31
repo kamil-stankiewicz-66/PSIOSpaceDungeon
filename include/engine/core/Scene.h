@@ -271,7 +271,7 @@ public:
     void set_globalScale(const float&);
 
     //getters
-    const Engine* getGame() const;
+    Engine* getGame() const;
     Camera* get_mainCamera() const;
     const string& get_name() const;
     const float& get_globalScale() const;

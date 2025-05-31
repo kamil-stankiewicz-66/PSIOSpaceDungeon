@@ -409,7 +409,7 @@ void Scene::set_globalScale(const float& _gs)
 /// getters
 ///
 
-const Engine* Scene::getGame() const {
+Engine *Scene::getGame() const {
     return this->game;
 }
 

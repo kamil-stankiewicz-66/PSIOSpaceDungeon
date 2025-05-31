@@ -3,7 +3,20 @@
 #include "engine/core/Input.h"
 #include "engine/component/Sprite.h"
 
-Button::Button() : collider(nullptr) {}
+
+
+///
+/// Button
+///
+
+
+Button::Button() : collider(nullptr)
+{
+    //colors
+    this->normalColor = Color::White;
+    this->highlightedColor = Color::White;
+    this->pressedColor = Color::White;
+}
 
 void Button::onAwake()
 {
@@ -33,9 +46,8 @@ void Button::onUpdate(float deltaTime)
 }
 
 
-///
-/// private setter
-///
+
+//private setter
 
 void Button::setColor(const Color& _color)
 {
@@ -47,9 +59,8 @@ void Button::setColor(const Color& _color)
 }
 
 
-///
-/// public setters
-///
+
+//public setters
 
 void Button::set_normalColor(const Color& _color) {
     this->normalColor = _color;
@@ -70,4 +81,23 @@ void Button::set_reactionAreaSize(float x, float y)
     }
 
     collider->set(x, y);
+}
+
+
+
+
+
+
+///
+/// ActionButton
+///
+
+
+void ActionButton::onClick(float)
+{
+    if (this->action == nullptr) {
+        return;
+    }
+
+    this->action();
 }

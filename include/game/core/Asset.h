@@ -35,6 +35,7 @@ struct Asset
 
         //GUI
         static constexpr std::string_view LEFTRIGHT_ARROWS = "Graphics/GUI/leftRightArrows.png";
+        static constexpr std::string_view BUTTON = "Graphics/GUI/button.png";
 
         //particles
         static constexpr std::string_view PARTICLE = "Graphics/Particles/particle.png";

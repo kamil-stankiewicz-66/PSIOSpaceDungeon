@@ -49,6 +49,8 @@ add_executable(PSIOSpaceDungeon
     include/engine/object/Button.h
     source/engine/object/Button.cpp
     include/game/core/Asset.h
+    include/game/ui/BasicButtons.h
+    source/game/ui/BasicButtons.cpp
 )
 
 set_target_properties(
