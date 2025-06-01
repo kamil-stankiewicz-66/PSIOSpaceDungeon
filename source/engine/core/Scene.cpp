@@ -427,6 +427,8 @@ void Scene::killObject(Object* go, bool critical)
         if (!critical)
         {
             WIDeadBodyCleanupCell.emplace(objects[go->getRenderLayer()][go->hashId][go->id]);
+
+            VDebuger::print("SCENE :: KILLOBJECT :: safetly removed obj:", go->getLog());
         }
     }
 }

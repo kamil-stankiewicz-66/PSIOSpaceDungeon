@@ -21,12 +21,20 @@ class VSprite;
 
 ///
 /// \brief Enum representing different states of an object.
+/// \details
+/// Normal - object is active,
+/// Undead - first frame after setActive(false)
+/// Dead - object is not active
+/// Reborn - first frame after setActive(true)
+/// PermaDead - object has been removed from the scene and cannot be restored
 ///
 
 enum class ObjectState
 {
     Normal, Undead, Dead, Reborn, PermaDead
 };
+
+std::ostream& operator<<(std::ostream& os, ObjectState state);
 
 
 ///
@@ -101,6 +109,11 @@ public:
     const string getTag(const unsigned char& index) const;
 
     const bool checkTag(const string&) const;
+
+
+    //log
+
+    const string getLog();
 
 
     //components

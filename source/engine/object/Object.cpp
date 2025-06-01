@@ -5,6 +5,23 @@
 #include <algorithm>
 
 
+
+std::ostream& operator<<(std::ostream& os, ObjectState state)
+{
+    switch (state) {
+    case ObjectState::Normal: os << ">Normal<"; break;
+    case ObjectState::Undead: os << ">Undead<"; break;
+    case ObjectState::Dead: os << ">Dead<"; break;
+    case ObjectState::Reborn: os << ">Reborn<"; break;
+    case ObjectState::PermaDead: os << ">PermaDead<"; break;
+    default: os << ">Unknown<"; break;
+    }
+
+    return os;
+}
+
+
+
 void Object::onStart() {}
 void Object::onAwake() {}
 void Object::onUpdate(float deltaTime) {}
@@ -17,6 +34,8 @@ void Object::set_state(ObjectState _state)
     }
 
     this->m_state = _state;
+
+    VDebuger::print("OBJECT :: SETSTATE :: set state", this->m_state, "on obj:", this->getLog());
 }
 
 
@@ -33,7 +52,7 @@ Object::Object() :
 
 Object::~Object()
 {
-    VDebuger::print("OBJECT :: DESTRUCTOR :: obj:", this, "render_layer", this->getRenderLayer(), "hash_id =", this->hashId, "id =", this->id, "-> destroyed", "tag[0]:", getTag(0));
+    VDebuger::print("OBJECT :: DESTRUCTOR :: obj:", this->getLog());
 }
 
 
@@ -273,6 +292,19 @@ const string Object::getTag(const unsigned char& index) const
 
 const bool Object::checkTag(const string& arg_tag) const {
     return this->tags.find(arg_tag) != this->tags.end();
+}
+
+
+
+const string Object::getLog()
+{
+    std::ostringstream oss;
+    oss << this << ", render_layer: " << this->getRenderLayer()
+        << ", hash_id = " << this->hashId
+        << ", id = " << this->id
+        << ", tag[0]: " << getTag(0);
+
+    return oss.str();
 }
 
 
