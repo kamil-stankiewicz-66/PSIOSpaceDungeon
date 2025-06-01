@@ -9,7 +9,8 @@ void MainScene::loadObjects()
 
     {
         auto play_button = createObject<MenuButton>();
-        play_button->setAction([this](){
+
+        play_button->addListener([this](){
             this->getGame()->changeScene(GAME_SCENE);
         });
     }

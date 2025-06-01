@@ -3,7 +3,7 @@
 
 #include "SFML/Graphics/Color.hpp"
 #include "engine/object/Object.h"
-#include <functional>
+#include "engine/core/Event.h"
 
 using Color = sf::Color;
 class BoxCollider;
@@ -12,7 +12,7 @@ class BoxCollider;
 /// \brief A class representing a basic abstract button.
 ///
 
-class Button : public UIObject
+class AbstractButton : public UIObject
 {
 private:
     BoxCollider* collider;
@@ -34,36 +34,31 @@ protected:
     virtual void onClick(float deltaTime) = 0;
 
 public:
-    Button();
+    AbstractButton();
     void set_normalColor(const Color&);
     void set_pressedColor(const Color&);
     void set_highlightedColor(const Color&);
-    void set_reactionAreaSize(float x, float y);
+    void set_reactionAreaSize(const float& x, const float& y);
 };
 
 ///
-/// \brief Button with function.
-/// \details Button executes function automaticly when pressed.
+/// \brief A class representing a button.
+/// \details Button invoke event automaticly when pressed.
 ///
 
-class ActionButton : public Button
+class Button : public AbstractButton, private VEvent
 {
 private:
-
-    //stores the function that will execute onClick
-    std::function<void()> action;
-
-    //method called by the engine
-    void onClick(float) override;
+    void onClick(float) override; //This method is called by the engine.
 
 public:
 
     ///
-    /// \brief Sets the function that the button will execute when pressed.
-    /// \param _action This function will be called when the button is pressed.
+    /// \brief Adds a function that the button will execute when pressed.
+    /// \param newListener
     ///
 
-    void setAction(std::function<void()> _action);
+    void addListener(const std::function<void()>& newListener);
 };
 
 #endif // BUTTON_H

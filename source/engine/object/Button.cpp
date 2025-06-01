@@ -6,11 +6,11 @@
 
 
 ///
-/// Button
+/// AbstractButton
 ///
 
 
-Button::Button() : collider(nullptr)
+AbstractButton::AbstractButton() : collider(nullptr)
 {
     //colors
     this->normalColor = Color::White;
@@ -18,12 +18,12 @@ Button::Button() : collider(nullptr)
     this->pressedColor = Color::White;
 }
 
-void Button::onAwake()
+void AbstractButton::onAwake()
 {
     collider = createComponent<BoxCollider>();
 }
 
-void Button::onUpdate(float deltaTime)
+void AbstractButton::onUpdate(float deltaTime)
 {
     if (!collider) {
         return;
@@ -49,7 +49,7 @@ void Button::onUpdate(float deltaTime)
 
 //private setter
 
-void Button::setColor(const Color& _color)
+void AbstractButton::setColor(const Color& _color)
 {
     if (!sprite) {
         return;
@@ -62,19 +62,19 @@ void Button::setColor(const Color& _color)
 
 //public setters
 
-void Button::set_normalColor(const Color& _color) {
+void AbstractButton::set_normalColor(const Color& _color) {
     this->normalColor = _color;
 }
 
-void Button::set_pressedColor(const Color& _color) {
+void AbstractButton::set_pressedColor(const Color& _color) {
     this->pressedColor = _color;
 }
 
-void Button::set_highlightedColor(const Color& _color) {
+void AbstractButton::set_highlightedColor(const Color& _color) {
     this->highlightedColor = _color;
 }
 
-void Button::set_reactionAreaSize(float x, float y)
+void AbstractButton::set_reactionAreaSize(const float& x, const float& y)
 {
     if (!collider) {
         return;
@@ -89,19 +89,14 @@ void Button::set_reactionAreaSize(float x, float y)
 
 
 ///
-/// ActionButton
+/// Button
 ///
 
 
-void ActionButton::onClick(float)
-{
-    if (this->action == nullptr) {
-        return;
-    }
-
-    this->action();
+void Button::onClick(float) {
+    VEvent::invoke();
 }
 
-void ActionButton::setAction(std::function<void()> _action) {
-    this->action = std::move(_action);
+void Button::addListener(const std::function<void()>& newListener) {
+    VEvent::addListener(newListener);
 }

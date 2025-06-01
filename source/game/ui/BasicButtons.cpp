@@ -4,7 +4,7 @@
 
 void MenuButton::onAwake()
 {
-    ActionButton::onAwake();
+    Button::onAwake();
 
     set_normalColor(Color::Red);
     set_highlightedColor(Color(0,200,0,255));

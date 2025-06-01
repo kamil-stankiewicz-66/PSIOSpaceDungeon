@@ -7,7 +7,7 @@
 /// \brief A standard rectangular button for the menu.
 ///
 
-class MenuButton : public ActionButton
+class MenuButton : public Button
 {
 protected:
     virtual void onAwake() override;
