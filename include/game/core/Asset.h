@@ -71,6 +71,13 @@ struct Asset
         static constexpr std::string_view ASSAULT_RIFLE_01 = "Graphics/Weapons/Guns/assault_rifle_01.png";
         static constexpr std::string_view ASSAULT_RIFLE_01_SHOP = "Graphics/Weapons/Guns/assault_rifle_01_shop.png";
     };
+
+    struct Fonts
+    {
+        static constexpr std::string_view LIBERATION_SANS = "Fonts/LiberationSans.ttf";
+        static constexpr std::string_view PIXEL_OPERATOR_8 = "Fonts/PixelOperator8.ttf";
+        static constexpr std::string_view PIXEL_OPERATOR_8_BOLD = "Fonts/PixelOperator8-Bold.ttf";
+    };
 };
 
 #endif // ASSET_H

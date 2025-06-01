@@ -44,8 +44,7 @@ Object::Object() :
     game(nullptr),
     parent(nullptr),
     hashId(0), id(0),
-    transform(nullptr),
-    sprite(nullptr)
+    transform(nullptr)
 {
 
 }
@@ -187,7 +186,7 @@ void Object::dispose_childs()
 }
 
 
-const Object* Object::getParent() const {
+Object* Object::getParent() const {
     return this->parent;
 }
 
@@ -196,12 +195,12 @@ const std::vector<Object*>& Object::getChilds() const {
 }
 
 
-bool Object::isChild()
+bool Object::isChild() const
 {
     return this->parent != nullptr;
 }
 
-bool Object::isChildOf(Object* _object)
+bool Object::isChildOf(Object* _object) const
 {
     if (this->isChild())
     {
@@ -215,7 +214,7 @@ bool Object::isChildOf(Object* _object)
     return false;
 }
 
-bool Object::try_getParent(Object*& out)
+bool Object::try_getParent(Object*& out) const
 {
     if (this->isChild())
     {
@@ -352,17 +351,59 @@ void Object::callOnLateUpdateInComponents(float _deltaTime)
 }
 
 
+Transform* Object::getTransformPtr() {
+    return this->transform;
+}
+
+
+
+///
+/// Sprite object
+///
+
+SpriteObject::SpriteObject() : sprite(nullptr)
+{
+    this->sprite = createComponent<VSprite>();
+}
+
+VSprite *SpriteObject::getSpritePtr() const {
+    return this->sprite;
+}
+
+
+
+///
+/// GameObject
+///
 
 GameObject::GameObject()
 {
-    this->sprite = createComponent<VSprite>();
     this->transform = createComponent<Transform>();
 }
 
 
 
+///
+/// GameObject
+///
+
 UIObject::UIObject()
 {
-    this->sprite = createComponent<VSprite>();
     this->transform = createComponent<RectTransform>();
+}
+
+
+
+///
+/// TextObject
+///
+
+TextObject::TextObject() : text(nullptr)
+{
+    this->transform = createComponent<RectTransform>();
+    this->text = createComponent<VText>();
+}
+
+VText* TextObject::getTextPtr() const {
+    return this->text;
 }

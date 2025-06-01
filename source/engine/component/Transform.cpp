@@ -103,15 +103,15 @@ const Vector2 Transform::get_position() const
         return this->position;
     }
 
-    if (!this->getObject()->getParent()->transform->get_flipX())
+    if (!this->getObject()->getParent()->getTransformPtr()->get_flipX())
     {
-        return this->getObject()->getParent()->transform->get_position() + this->position;
+        return this->getObject()->getParent()->getTransformPtr()->get_position() + this->position;
     }
     else
     {
         return Vector2(
-            this->getObject()->getParent()->transform->get_position().x - this->position.x,
-            this->getObject()->getParent()->transform->get_position().y + this->position.y
+            this->getObject()->getParent()->getTransformPtr()->get_position().x - this->position.x,
+            this->getObject()->getParent()->getTransformPtr()->get_position().y + this->position.y
             );
     }
 }
@@ -134,7 +134,7 @@ const bool Transform::get_flipX() const
 {
     if (this->getObject()->isChild())
     {
-        return this->getObject()->getParent()->transform->get_flipX();
+        return this->getObject()->getParent()->getTransformPtr()->get_flipX();
     }
 
     return this->flip_x;

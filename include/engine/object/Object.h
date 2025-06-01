@@ -9,6 +9,7 @@
 #include <string>
 
 #include "engine/component/Component.h"
+#include "engine/component/Renderable.h"
 #include "engine/core/Debuger.h"
 #include "engine/component/Transform.h"
 
@@ -87,12 +88,12 @@ public:
     void dispose_asChild();
     void dispose_childs();
 
-    const Object* getParent() const;
+    Object* getParent() const;
     const vector<Object*>& getChilds() const;
 
-    bool isChild();
-    bool isChildOf(Object*);
-    bool try_getParent(Object*& out);
+    bool isChild() const;
+    bool isChildOf(Object*) const;
+    bool try_getParent(Object*& out) const;
 
 
     //identify
@@ -122,6 +123,11 @@ private:
     void callOnStartInComponents();
     void callOnUpdateInComponents(float deltaTime);
     void callOnLateUpdateInComponents(float deltaTime);
+
+protected:
+
+    //basic component
+    Transform* transform;
 
 public:
 
@@ -246,11 +252,24 @@ public:
     }
 
 
-    //basic components
+    //get basic component
 
-    Transform* transform;
+    Transform* getTransformPtr();
+};
+
+
+///
+/// \brief Class representing an empty object with sprite.
+///
+
+class SpriteObject : public Object
+{
+private:
     VSprite* sprite;
 
+public:
+    SpriteObject();
+    VSprite* getSpritePtr() const;
 };
 
 
@@ -258,7 +277,7 @@ public:
 /// \brief Class representing an empty game object.
 ///
 
-class GameObject : public Object
+class GameObject : public SpriteObject
 {
 public:
     GameObject();
@@ -269,10 +288,25 @@ public:
 /// \brief Class representing an empty interface (UI) object.
 ///
 
-class UIObject : public Object
+class UIObject : public SpriteObject
 {
 public:
     UIObject();
+};
+
+
+///
+/// \brief Class representing an empty object with text.
+///
+
+class TextObject : public Object
+{
+private:
+    VText* text;
+
+public:
+    TextObject();
+    VText* getTextPtr() const;
 };
 
 #endif // OBJECT_H

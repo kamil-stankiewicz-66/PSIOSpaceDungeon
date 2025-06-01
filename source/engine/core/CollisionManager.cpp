@@ -18,7 +18,7 @@ void CollisionManager::updateAll()
 {
     for (auto& collider : collidersRegistry)
     {
-        if (!collider || !collider->getObject() || !collider->getObject()->transform) {
+        if (!collider || !collider->getObject() || !collider->getObject()->getTransformPtr()) {
             continue;
         }
 
@@ -34,7 +34,7 @@ void CollisionManager::updateAll()
         }
 
         //if reborn - refresh
-        if (!collider->getObject()->transform->inMove() &&
+        if (!collider->getObject()->getTransformPtr()->inMove() &&
             collider->getObject()->getState() != ObjectState::Reborn)
         {
             continue;

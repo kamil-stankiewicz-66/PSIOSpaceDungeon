@@ -1,5 +1,6 @@
 #include "game/ui/BasicButtons.h"
 #include "engine/component/Renderable.h"
+#include "engine/core/Engine.h"
 #include "game/core/Asset.h"
 
 void MenuButton::onAwake()
@@ -11,12 +12,22 @@ void MenuButton::onAwake()
     set_pressedColor(Color::Yellow);
 
 
-    if (!transform || !sprite) {
+    if (!getTransformPtr() || !getSpritePtr()) {
         return;
     }
 
-    sprite->setTexture(Asset::Graphics::BUTTON.data());
+    getSpritePtr()->setTexture(Asset::Graphics::BUTTON.data());
 
-    transform->scaleBy(Vector2(0.3f, 1.f));
+    transform->scaleBy(Vector2(0.3f, 1.2f));
     set_reactionAreaSize(280.f, 95.0f);
+
+
+    //text
+    auto textObj = this->getGame()->get_currentScene()->createObject<TextObject>();
+    this->addChild(textObj);
+
+    textObj->getTextPtr()->setFont(Asset::Fonts::PIXEL_OPERATOR_8_BOLD.data());
+    textObj->getTextPtr()->setText("Play");
+    textObj->getTextPtr()->setCharacterSize(50);
+    textObj->getTextPtr()->setLetterSpacing(0.5f);
 }

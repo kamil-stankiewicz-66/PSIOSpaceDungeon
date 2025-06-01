@@ -51,11 +51,11 @@ void AbstractButton::onUpdate(float deltaTime)
 
 void AbstractButton::setColor(const Color& _color)
 {
-    if (!sprite) {
+    if (!getSpritePtr()) {
         return;
     }
 
-    sprite->setColor(_color);
+    this->getSpritePtr()->setColor(_color);
 }
 
 

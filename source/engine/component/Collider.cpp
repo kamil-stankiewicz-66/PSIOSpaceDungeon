@@ -84,7 +84,7 @@ void Collider::refreshCollisions()
 
                 Object* other_object = other_collider->getObject();
 
-                if (!other_object || !other_object->transform) {
+                if (!other_object || !other_object->getTransformPtr()) {
                     continue;
                 }
 
@@ -93,7 +93,7 @@ void Collider::refreshCollisions()
                 }
 
 
-                bool _result = checkCollision(other_collider, other_object->transform);
+                bool _result = checkCollision(other_collider, other_object->getTransformPtr());
 
                 if (_result)
                 {
@@ -145,7 +145,7 @@ void BoxCollider::set(float _x, float _y)
 
 void BoxCollider::onUpdate(float _dt)
 {
-    if (getObject()->transform->inMove()) {
+    if (getObject()->getTransformPtr()->inMove()) {
         this->updateEdges();
     }
 
@@ -213,7 +213,7 @@ Edges BoxCollider::getEdges() const
 //helper
 void BoxCollider::updateEdges()
 {
-    const Vector2 position = getObject()->transform->get_position();
+    const Vector2 position = getObject()->getTransformPtr()->get_position();
     this->leftEdge = position.x - (this->x / 2.0f);
     this->rightEdge = position.x + (this->x / 2.0f);
     this->downEdge = position.y - (this->y / 2.0f);

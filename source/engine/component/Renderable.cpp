@@ -23,7 +23,7 @@ bool VRenderable::init(Engine* game, Object* parent)
 
 void VRenderable::onLateUpdate(float)
 {
-    if (auto _t = getObject()->transform)
+    if (auto _t = getObject()->getTransformPtr())
     {
         this->render(_t->get_position(),
                      _t->get_scale(),
@@ -51,14 +51,14 @@ void VRenderable::generateMatrix(sf::Transform& sftransform, const int& width, c
 
 
     //relative to the camera
-    const Camera* _camera = this->getObject()->getGame()->get_currentScene()->get_mainCamera();
+    Camera* _camera = this->getObject()->getGame()->get_currentScene()->get_mainCamera();
     if (!isRect && _camera)
     {
         r_sizeX /= _camera->get_viewSize();
         r_sizeY /= _camera->get_viewSize();
 
-        r_posX -= ((r_sizeX / 2.0f) - ((position.x - _camera->transform->get_position().x) / _camera->get_viewSize()));
-        r_posY -= ((r_sizeY / 2.0f) + ((position.y - _camera->transform->get_position().y) / _camera->get_viewSize()));
+        r_posX -= ((r_sizeX / 2.0f) - ((position.x - _camera->getTransformPtr()->get_position().x) / _camera->get_viewSize()));
+        r_posY -= ((r_sizeY / 2.0f) + ((position.y - _camera->getTransformPtr()->get_position().y) / _camera->get_viewSize()));
     }
     else
     {
@@ -74,7 +74,7 @@ void VRenderable::generateMatrix(sf::Transform& sftransform, const int& width, c
     //camera rotation
     if (!isRect && _camera) {
         sftransform.translate(screen_zeroX, screen_zeroY);
-        sftransform.rotate(-_camera->transform->get_rotation());
+        sftransform.rotate(-_camera->getTransformPtr()->get_rotation());
         sftransform.translate(-screen_zeroX, -screen_zeroY);
     }
 
