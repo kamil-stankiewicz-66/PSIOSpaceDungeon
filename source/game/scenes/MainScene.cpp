@@ -6,5 +6,11 @@
 void MainScene::loadObjects()
 {
     set_globalScale(0.01f);
-    createObject<MenuButton>();
+
+    {
+        auto play_button = createObject<MenuButton>();
+        play_button->setAction([this](){
+            this->getGame()->changeScene(GAME_SCENE);
+        });
+    }
 }

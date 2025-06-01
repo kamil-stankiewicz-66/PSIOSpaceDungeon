@@ -35,8 +35,8 @@ protected:
     /// \details Used in render() method.
     ///
 
-    void calculateRenderData(const Vector2& position, const Vector2& scale, const float& rotationZ, const bool flipX, const bool isRect,
-                             float& screen_zeroX, float& screen_zeroY, float& r_posX, float& r_posY, float& r_sizeX, float& r_sizeY);
+    void generateMatrix(sf::Transform& transform, const int& width, const int& height,
+                        const Vector2& position, const Vector2& scale, const float& rotationZ, const bool flipX, const bool isRect);
 
 public:
     //abstract methods

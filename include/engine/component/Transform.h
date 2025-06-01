@@ -22,7 +22,7 @@ protected:
     Vector2 position;
     Vector2 pre_position;
     Vector2 scale;
-    double rotation;
+    float rotation;
     bool flip_x;
 
     void makeRect();
@@ -30,7 +30,7 @@ protected:
 public:
     Transform(const Vector2& position = Vector2(),
               const Vector2& scale = Vector2(1.0f, 1.0f),
-              const double& rotation = 0.0,
+              const float& rotation = 0.0,
               const bool flipX = false
               );
     virtual ~Transform();
@@ -48,15 +48,15 @@ public:
     //setters
     void set_position(const Vector2&);
     void add_position(const Vector2&);
-    void set_rotation(const double&);
-    void add_rotation(const double&);
+    void set_rotation(const float&);
+    void add_rotation(const float&);
     void set_flip_x(const bool);
 
     //getters
     const Vector2 get_position() const;
     const Vector2& get_prePosition() const;
     const Vector2& get_scale() const;
-    const double& get_rotation() const;
+    const float& get_rotation() const;
     const bool get_flipX() const;
 
     //info

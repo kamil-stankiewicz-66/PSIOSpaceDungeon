@@ -1,7 +1,7 @@
 #include "engine/object/Camera.h"
 #include <cmath>
 
-Camera::Camera() : view_size(1)
+Camera::Camera() : view_size(1.0f)
 {
     this->addTag("camera");
 }
@@ -23,12 +23,6 @@ void Camera::set_viewSize(const float& _v)
     }
 }
 
-void Camera::set_rotation(const float& _r)
-{
-    //this->rotation = _r;
-    this->rotation = std::fmod(_r, FULL_ROTATION);
-}
-
 
 ///
 /// getters
@@ -36,8 +30,4 @@ void Camera::set_rotation(const float& _r)
 
 const float& Camera::get_viewSize() const {
     return this->view_size;
-}
-
-const float& Camera::get_rotation() const {
-    return this->rotation;
 }

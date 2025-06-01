@@ -17,7 +17,7 @@ void Transform::onUpdate(float _dt)
 
 Transform::Transform(const Vector2& arg_position,
                      const Vector2& arg_scale,
-                     const double& arg_rotation,
+                     const float& arg_rotation,
                      const bool arg_flipX)
     : Component(COMPONENT_PRIORITY::TRANSFORM), m_rect(false), m_inMove(true)
 {
@@ -73,12 +73,12 @@ void Transform::add_position(const Vector2& _v)
     this->set_position(this->position + _v);
 }
 
-void Transform::set_rotation(const double& _v)
+void Transform::set_rotation(const float& _v)
 {
     this->rotation = std::fmod(_v, 360.0f);
 }
 
-void Transform::add_rotation(const double& _v)
+void Transform::add_rotation(const float& _v)
 {
     this->set_rotation(this->rotation + _v);
 }
@@ -121,7 +121,7 @@ const Vector2& Transform::get_scale() const
     return this->scale;
 }
 
-const double& Transform::get_rotation() const
+const float& Transform::get_rotation() const
 {
     return this->rotation;
 }

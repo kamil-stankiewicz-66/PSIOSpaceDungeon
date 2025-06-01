@@ -1,4 +1,4 @@
-#ifndef SHOPSCENE_H
-#define SHOPSCENE_H
+#ifndef STORESCENE_H
+#define STORESCENE_H
 
-#endif // SHOPSCENE_H
+#endif // STORESCENE_H

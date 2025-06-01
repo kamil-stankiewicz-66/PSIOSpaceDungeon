@@ -34,17 +34,23 @@ void VRenderable::onLateUpdate(float)
 }
 
 
-void VRenderable::calculateRenderData(const Vector2& position, const Vector2& scale, const float& rotationZ, const bool flipX, const bool isRect,
-                                      float& screen_zeroX, float& screen_zeroY, float& r_posX, float& r_posY, float& r_sizeX, float& r_sizeY)
+void VRenderable::generateMatrix(sf::Transform& sftransform, const int& width, const int& height,
+                                 const Vector2& position, const Vector2& scale, const float& rotationZ, const bool flipX, const bool isRect)
 {
-    screen_zeroX = static_cast<float>(getGame()->get_window()->get_displaymode().width) / 2.0f;
-    screen_zeroY = static_cast<float>(getGame()->get_window()->get_displaymode().height) / 2.0f;
+    float screen_zeroX = static_cast<float>(getGame()->get_window()->get_displaymode().width) / 2.0f;
+    float screen_zeroY = static_cast<float>(getGame()->get_window()->get_displaymode().height) / 2.0f;
 
-    r_posX = screen_zeroX;
-    r_posY = screen_zeroY;
+    float r_posX = screen_zeroX;
+    float r_posY = screen_zeroY;
+
+    float sfTxtSizeX = static_cast<float>(width);
+    float sfTxtSizeY = static_cast<float>(height);
+
+    float r_sizeX = sfTxtSizeX * scale.x;
+    float r_sizeY = sfTxtSizeY * scale.y;
 
 
-    //uwzglednienie kamery
+    //relative to the camera
     const Camera* _camera = this->getObject()->getGame()->get_currentScene()->get_mainCamera();
     if (!isRect && _camera)
     {
@@ -59,6 +65,28 @@ void VRenderable::calculateRenderData(const Vector2& position, const Vector2& sc
         r_posX -= ((r_sizeX / 2.0f) - position.x);
         r_posY -= ((r_sizeY / 2.0f) + position.y);
     }
+
+
+    //mirror
+    int r_flipX = flipX ? -1.f : 1.f;
+
+
+    //camera rotation
+    if (!isRect && _camera) {
+        sftransform.translate(screen_zeroX, screen_zeroY);
+        sftransform.rotate(-_camera->transform->get_rotation());
+        sftransform.translate(-screen_zeroX, -screen_zeroY);
+    }
+
+    //translation
+    sftransform.translate(r_posX, r_posY);
+
+    //scale
+    sftransform.scale(r_sizeX * r_flipX, r_sizeY);
+
+    //rotation
+    sftransform.rotate(rotationZ);
+    sftransform.translate(-width *0.5f, -height *0.5f);
 }
 
 
@@ -80,48 +108,10 @@ void VSprite::render(const Vector2& position, const Vector2& scale, const float&
         return;
     }
 
-    float screen_zeroX = 0.0f;
-    float screen_zeroY = 0.0f;
-    float r_posX = 0.0f;
-    float r_posY = 0.0f;
-    float r_sizeX = 0.0f;
-    float r_sizeY = 0.0f;
-
-
-    this->calculateRenderData(position, scale, rotationZ, flipX, isRect,
-                              screen_zeroX, screen_zeroY, r_posX, r_posY, r_sizeX, r_sizeY);
-
-
-    float sfTxtSizeX = static_cast<float>(this->m_sprite.getTexture()->getSize().x);
-    float sfTxtSizeY = static_cast<float>(this->m_sprite.getTexture()->getSize().y);
-
-    r_sizeX = sfTxtSizeX * scale.x;
-    r_sizeY = sfTxtSizeY * scale.y;
-
-    //odbicie lustrzane
-    int r_flipX = flipX ? -1.f : 1.f;
-
-
-    //rotacja bezwgledna
-    m_sprite.setOrigin(m_sprite.getTextureRect().width *0.5f, m_sprite.getTextureRect().height *0.5f);
-    m_sprite.setRotation(rotationZ);
-
-    //uwzglednie rotacji kamery
-    Camera* _camera = getGame()->get_currentScene()->get_mainCamera();
+    //transform
     sf::Transform transform;
-    if (!isRect && _camera)
-    {
-        transform.translate(screen_zeroX, screen_zeroY);
-        transform.rotate(-_camera->get_rotation());
-        transform.translate(-screen_zeroX, -screen_zeroY);
-    }
-
-    //translacja
-    m_sprite.setPosition(r_posX, r_posY);
-
-    //skalowanie
-    m_sprite.setScale(r_sizeX * r_flipX, r_sizeY);
-
+    this->generateMatrix(transform, m_sprite.getTextureRect().width, m_sprite.getTextureRect().height,
+                         position, scale, rotationZ, flipX, isRect);
 
     //draw
     getGame()->get_window()->get_renderwindow()->draw(m_sprite, transform);
