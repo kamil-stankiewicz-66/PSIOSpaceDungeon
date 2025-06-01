@@ -176,10 +176,6 @@ void Scene::spawnObjectsFromBuffor()
             continue;
         }
 
-        if (!newObj->sprite) {
-            continue;
-        }
-
         //try add
         bool _result = spawnObjectsFromBufforHelper(newObj);
 
@@ -253,43 +249,8 @@ void Scene::killObjectsFromBuffor()
             continue;
         }
 
-
-        unsigned int renderLayer = 0;
-
-        if (!objectToKill->sprite)
-        {
-            bool _found = false;
-            for (const auto& renderPair : objects)
-            {
-                for (const auto& hashPair : renderPair.second)
-                {
-                    auto it = hashPair.second.find(objectToKill->id);
-                    if (it != hashPair.second.end())
-                    {
-                        //found
-                        renderLayer = renderPair.first;
-                        _found = true;
-                        break;
-                    }
-                }
-
-                if (_found)
-                {
-                    break;
-                }
-            }
-
-            //skip this obj if not found
-            if (!_found)
-            {
-                continue;
-            }
-        }
-        else
-        {
-            renderLayer = objectToKill->getRenderLayer();
-        }
-
+        //get render layer
+        unsigned int renderLayer = objectToKill->getRenderLayer();
 
         //set object state
         objectToKill->set_state(ObjectState::PermaDead);
