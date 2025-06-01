@@ -17,10 +17,6 @@ void Input::update() {
     Input::Mouse::update();
 }
 
-bool Input::Keyboard::isPressed(Input::Keyboard::Key key) {
-    return sf::Keyboard::isKeyPressed((sf::Keyboard::Key)key);//sprawdza czy dany klawisz jest wcisniety
-}
-
 void Input::Mouse::update() {
 
     if (window) {
