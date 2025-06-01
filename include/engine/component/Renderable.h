@@ -17,7 +17,7 @@ struct Vector2;
 
 
 ///
-/// \brief Component renderujacy sie w oknie.
+/// \brief This component can render itself in a window.
 ///
 
 class VRenderable : public Component
@@ -27,8 +27,8 @@ protected:
     string m_assetRef;
 
     //engine methods
-    bool init(Engine* engine, Object* parent) override; //Ta metoda jest wywolywana przez silnik.
-    void onLateUpdate(float) override;
+    bool init(Engine* engine, Object* parent) override; //This method is called by the engine.
+    void onLateUpdate(float) override; //This method is called by the engine.
 
     ///
     /// \brief Calculates common data required for rendering.
@@ -50,7 +50,7 @@ public:
 
 
 ///
-/// \brief Component reprezentujący sprite.
+/// \brief A component that represents a sprite.
 ///
 
 class VSprite : public VRenderable

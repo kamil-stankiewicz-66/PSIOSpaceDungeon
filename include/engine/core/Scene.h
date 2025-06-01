@@ -17,6 +17,7 @@ using namespace std;
 class Camera;
 class Engine;
 
+
 //Alias for the main objects map type [renderLayer, hashID, id, obj_ptr]
 using OBJ_MAP_TYPE = map<unsigned int, map<size_t, map<unsigned int, shared_ptr<Object>>>>;
 
@@ -26,7 +27,7 @@ using OBJ_MAP_TYPE = map<unsigned int, map<size_t, map<unsigned int, shared_ptr<
 
 
 ///
-/// \brief Klasa pomocnicza klasy Scene.
+/// \brief Helper class for Scene class.
 ///
 
 class ObjectFidingHelper
@@ -200,8 +201,8 @@ class ObjectFidingHelper
 
 
 ///
-/// \brief Klasa bazowa dla wszystkich scen. Kazda scene musi byc rodzajem tej klasy.
-/// \details Pamietaj o implementacji metody abstrakcyjnej !!!
+/// \brief Base class for all scenes. Every scene must inherit from this class.
+/// \details Remember to implement the abstract method !!!
 ///
 
 class Scene
@@ -246,8 +247,8 @@ private:
 protected:
 
     ///
-    /// \brief Metoda przeznaczona do tworzenia obiektow umieszczanych domyslnie na scenie oraz ustawiania ich domyslnych parametrow.
-    /// \details Wiecej informacji o tworzeniu obiekow w opisie metody createObject<T>();
+    /// \brief Method for creating objects placed by default on the scene and setting their default parameters.
+    /// \details More information about object creation in the description of createObject<T>() method.
     ///
 
     virtual void loadObjects() = 0;
@@ -255,13 +256,26 @@ protected:
 
 public:
 
-    ///Metoda resetujaca scene.
+    ///
+    /// \brief Restores the scene to default state
+    ///
+
     void reload();
 
-    ///Zwraca true jesli na scenie nie ma obiektow.
+
+    ///
+    /// \brief Returns true if there are no objects on the scene.
+    /// \return bool
+    ///
+
     const bool isEmpty() const;
 
-    ///Zwraca true jesli jest to pierwsza klatka od wczytania tej sceny.
+
+    ///
+    /// \brief Returns true if this is the first frame since loading this scene.
+    /// \return bool
+    ///
+
     const bool isThisFirstFrame() const;
 
 
@@ -278,7 +292,7 @@ public:
     CollisionManager* get_collisionManager() const;
 
 private:
-    void update(float deltaTime); //Ta metoda jest wywolywana przez silnik.
+    void update(float deltaTime); //This method is called by the engine.
 
 
 public:
@@ -311,16 +325,16 @@ public:
 public:
 
     ///
-    /// \brief Metoda jest przeznaczona do tworzenia obiektow i dodawania ich do sceny.
-    /// Metoda zwraca surowy wskaźnik do utworzonego obiektu.
-    /// Po zakonczeniu programu pamiec jest zwalniana automatycznie. WSKAZNIKA NIE NALEZY CZYSZCIC RECZNIE SLOWEM DELETE.
-    /// Aby uworzyc obiekt:
-    /// 1. Utworz klase dziedziczaca publicznie po klasie GameObject lub UIObject - przykladowo class Entity.
-    /// 2. W dowolnym miejscu wywolaj metode createObject<Entity>(), aby obiekt pojawil sie na scenie.
-    /// Aby utworzyc obiekt pojawiajacy sie na scenie domyslnie skorzystaj z metody loadObjects();
-    /// \tparam T Typ musi być rodzajem klasy Object.
-    /// \param _renderLayer Warstwa, na której obiekt będzie renderowany.
-    /// \param _parent Obiekt nadrzędny obiektu, który jest tworzony.
+    /// \brief This method is for creating objects and adding them to the scene.
+    /// The method returns a raw pointer to the created object.
+    /// After the program ends, memory is freed automatically. DO NOT CLEAN THE POINTER MANUALLY WITH DELETE.
+    /// To create an object:
+    /// 1. Create a class that publicly inherits from Object, for example: class Entity.
+    /// 2. Call the createObject<Entity>() method anywhere to make the object appear in the scene.
+    /// To create an object that appears in the scene by default, use the loadObjects() method.
+    /// \tparam T Type that publicly inherits from the Object class.
+    /// \param _renderLayer The layer on which the object will be rendered.
+    /// \param _parent The parent object of the object being created.
     /// \return T*
     ///
 
@@ -375,10 +389,10 @@ public:
     }
 
     ///
-    /// \brief Metoda szablonowa, ktora wyszukuje obiekt na scenie po jego hash_id i id.
-    /// \tparam T Typ musi byc rodzajem klasy Object.
-    /// \param hash_id hash_id obiektu.
-    /// \param id id obiektu.
+    /// \brief Template method that searches for an object in the scene by its hash_id and id.
+    /// \tparam T Type that publicly inherits from the Object class.
+    /// \param hash_id The object's hash_id.
+    /// \param id The object's id.
     /// \return T*
     ///
 
@@ -391,10 +405,10 @@ public:
     }
 
     ///
-    /// \brief Metoda szablonowa, która wyszukuje i zwraca pojedynczy obiekt na scenie po jego tagu.
-    /// \tparam T Typ musi byc rodzajem klasy Object.
-    /// \param tag Jeden z tagow przypisanych do obietu.
-    /// \param polimorficAllowed Flaga, ktora okresla, czy obiekty bedace rodzajem klasy T są brane pod uwage.
+    /// \brief Template method that searches for and returns a single object in the scene by its tag.
+    /// \tparam T Type that publicly inherits from the Object class.
+    /// \param tag One of the tags assigned to the object.
+    /// \param polimorficAllowed Flag that determines if objects publicly inheriting from class T are included.
     /// \return T*
     ///
 
@@ -407,10 +421,10 @@ public:
     }
 
     ///
-    /// \brief Metoda szablonowa, ktora wyszukuje i zwraca wiele obiektow na scenie po ich tagu.
-    /// \tparam T Typ musi byc rodzajem klasy Object.
-    /// \param tag Jeden z tagow przypisanych do obietu.
-    /// \param polimorficAllowed Flaga, ktora okresla, czy obiekty bedace rodzajem klasy T są brane pod uwage.
+    /// \brief Template method that searches for and returns multiple objects in the scene by their tag.
+    /// \tparam T Type that publicly inherits from the Object class.
+    /// \param tag One of the tags assigned to the object.
+    /// \param polimorficAllowed Flag that determines if objects publicly inheriting from class T are included.
     /// \return T*
     ///
 

@@ -4,7 +4,7 @@
 #include <iostream>
 
 ///
-/// \brief Struktura definiujaca wektor o dwoch skladowych: x i y.
+/// \brief Structure that defines a vector with two components: x and y.
 ///
 
 struct Vector2
@@ -33,19 +33,19 @@ struct Vector2
     Vector2(float x = 0.0f, float y = 0.0f);
 
 
-    //Metoda ustawia wartosc x i y na 0;
+    //Method sets x and y values to 0;
     void clear();
 
-    //Ta metoda zwraca ten wektor w wersji znormalizowanej.
+    //This method returns this vector in a normalized form
     Vector2 get_normalized() const;
 
-    //Te metody zwracaja odleglosc do wektora podanego w argumencie...
-    float distanceToLite(const Vector2&) const; //bez pierwiastkowania.
-    float distanceTo(const Vector2&) const; //rzeczywista odleglosc.
+    //These methods return the distance to the vector given as an argument...
+    float distanceToLite(const Vector2&) const; //without square root.
+    float distanceTo(const Vector2&) const; //actual distance.
 
-    //Ta metoda zwraca dlugosc tego wektora...
-    float moduloLite() const; //bez pierwiastkowania.
-    float modulo() const; //rzeczywista dlugosc.
+    //This method returns the length of this vector...
+    float moduloLite() const; //without square root.
+    float modulo() const; //actual length.
 };
 
 #endif // VECTOR2_H

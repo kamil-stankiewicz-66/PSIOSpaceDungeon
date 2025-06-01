@@ -424,7 +424,7 @@ CollisionManager* Scene::get_collisionManager() const {
 
 
 ///
-/// engine
+/// update all
 ///
 
 void Scene::update(float deltaTime)

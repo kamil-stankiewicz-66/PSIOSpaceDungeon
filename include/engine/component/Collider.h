@@ -9,7 +9,7 @@ class Transform;
 class CollisionManager;
 
 ///
-/// \brief Struktura przechowujaca punkty krancowe Collidera.
+/// \brief Structure storing the edge points of a Collider
 ///
 
 struct Edges
@@ -20,7 +20,7 @@ struct Edges
 };
 
 ///
-/// \brief Klasa bazowa Collidera. Kazdy Collider musi byc rodzajem tej klasy.
+/// \brief Base class for a Collider. Every Collider must be derived from this class.
 ///
 
 class Collider : public Component
@@ -38,13 +38,13 @@ protected:
 
 
     ///
-    /// \brief Metoda sprawdza czy ten Collider jest w kolizji z Colliderem podanym w argumencie.
-    /// \param other_collider Collider obiektu, z ktorym wykrywana jest kolizja.
-    /// \param other_transform Transform obiektu, z ktorym wykrywana jest kolizja.
+    /// \brief Checks if this Collider is colliding with the given Collider.
+    /// \param other_collider The Collider of the object to check collision against.
+    /// \param other_transform The Transform of the object to check collision against.
     /// \return bool
     ///
 
-    virtual bool checkCollision(Collider* other_collider, Transform* other_transform) = 0; //Ta metoda jest wywolywana przez silnik.
+    virtual bool checkCollision(Collider* other_collider, Transform* other_transform) = 0; //This method is called by the engine.
 
 public:
     Collider();
@@ -53,8 +53,8 @@ public:
 
 
     ///
-    /// \brief Metoda sprawdza czy punkt nalezy do Collidera.
-    /// \param point Pozycja punktu.
+    /// \brief Checks if a point belongs to the Collider.
+    /// \param point Position of the point.
     /// \return bool
     ///
 
@@ -62,9 +62,9 @@ public:
 
 
     ///
-    /// \brief Metoda znajduje punkt nalezacy do Collidera, ktory jest najblizej punktu podanego w argumencie.
-    /// \param point Pozycja punktu.
-    /// \param borderThickness Wirtualna granica Collidera (ramka).
+    /// \brief Finds the point on the Collider closest to the given point.
+    /// \param point Position of the point.
+    /// \param borderThickness Virtual border (margin) of the Collider.
     /// \return Vector2
     ///
 
@@ -72,7 +72,7 @@ public:
 
 
     ///
-    /// \brief Metoda zwraca punkty krancowe Collidera.
+    /// \brief Returns the edge points of the Collider.
     /// \return Edges
     ///
 
@@ -80,21 +80,24 @@ public:
 
 
     ///
-    /// \brief Uniwersalna metoda sprawdzajaca czy ten Collider jest w kolizji z Colliderem podanym w argumencie.
-    /// \details Wykrywanie kolizji pomiedzy Colliderami roznych typow jest dozwolone.
-    /// \param collider Inny Collider.
+    /// \brief General method to check if this Collider is colliding with the given Collider.
+    /// \details Collision detection between different types of Colliders is supported.
+    /// \param collider Another Collider.
     /// \return bool
     ///
 
     bool isInCollisionWith(Collider* collider);
 
 
-    //Metoda zwraca kolekcje ze wszystkimi Colliderami, z ktorymi jest w kolizji ten Collider.
+    ///
+    /// \brief Method returns a collection of all Colliders this Collider is colliding with.
+    ///
+
     const std::set<Collider*>& getCollisions() const;
 };
 
 ///
-/// \brief Collider o ksztalcie prostokata
+/// \brief Collider with a rectangular shape.
 ///
 
 class BoxCollider : public Collider
@@ -105,17 +108,17 @@ private:
 
     float leftEdge, rightEdge, downEdge, upEdge;
 
-    void onUpdate(float) override; //Ta metoda jest wywolywana przez silnik.
-    bool checkCollision(Collider* other_collider, Transform* other_transform) override; //Ta metoda jest wywolywana przez silnik.
+    void onUpdate(float) override; //This method is called by the engine.
+    bool checkCollision(Collider* other_collider, Transform* other_transform) override; //This method is called by the engine.
 
     //helper
-    void updateEdges(); //Ta metoda jest wywolywana przez silnik.
+    void updateEdges(); //This method is called by the engine.
 
 public:
-    //Metoda ustawiajaca rozmiar Collidera.
+    //Method that sets the size of the Collider.
     void set(float size_x, float size_y);
 
-    //Definicje metod abstrakcyjnych
+    //Definitions of abstract methods
     bool isThisPointInCollider(const Vector2&) override;
     Vector2 getNearestColliderPointTo(const Vector2&, const float borderThickness = 0.0f) override;
     Edges getEdges() const override;

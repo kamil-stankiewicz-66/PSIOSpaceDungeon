@@ -7,8 +7,8 @@ class Object;
 typedef unsigned int uint;
 
 ///
-/// \brief Struktura przechowujaca priorytety wykonywania wszystkich Componentow, ktore go posiadaja.
-/// \details Componenty z najnizsza wartoscia sa wykonywane pierwsze.
+/// \brief Structure storing execution priorities of selected components.
+/// \details Components with the lowest value are executed first.
 ///
 
 struct COMPONENT_PRIORITY
@@ -17,7 +17,7 @@ struct COMPONENT_PRIORITY
 };
 
 ///
-/// \brief Klasa bazowa dla wszystkich Componentow. Kazdy Component musi byc rodzajem tej klasy.
+/// \brief Base class for all Components.
 ///
 
 class Component
@@ -41,22 +41,22 @@ public:
     Object* getObject() const;
 
 protected:
-    virtual bool init(Engine* game, Object* parent); //Ta metoda jest wywolywana przez silnik.
+    virtual bool init(Engine* game, Object* parent); //This method is called by the engine.
 
 
     /*
-    * Metody sa przeznaczone do przechowywania wlasnej niestandardowej logiki.
-    * Sa domyslnie puste.
-    * Te metody sa wywolywane przez silnik.
+    * The methods are meant for storing your own custom logic.
+    * They are empty by default.
+    * These methods are called by the engine.
     */
 
-    virtual void onAwake(); //kiedy Component jest tworzony.
-    virtual void onStart(); //w pierwszej klatce po zaladowaniu sceny.
-    virtual void onUpdate(float deltaTime); //w kazdej klatce.
-    virtual void onLateUpdate(float deltaTime); //w kazdej klatce, po wykonaniu onUpdate(float) dla kazdego obiektu.
+    virtual void onAwake(); //when the Component is created.
+    virtual void onStart(); //in the first frame after the scene loads.
+    virtual void onUpdate(float deltaTime); //every frame.
+    virtual void onLateUpdate(float deltaTime); //every frame, after onUpdate(float) runs for every object.
 
 private:
-    void onCreate(uint type_hash_code); //Ta metoda jest wywolywana przez silnik.
+    void onCreate(uint type_hash_code); //This method is called by the engine.
 
 };
 

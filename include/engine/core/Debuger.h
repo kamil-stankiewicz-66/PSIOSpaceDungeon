@@ -7,9 +7,9 @@ class VDebuger {
 public:
 
     ///
-    /// \brief Metoda wypisujaca w konsoli podany ciag zmiennych.
-    /// \tparam Args Typy kompatybilne z std::ostream.
-    /// \param args Zmienne/slowa.
+    /// \brief Method that prints the given sequence of variables to the console.
+    /// \tparam Args Types compatible with std::ostream.
+    /// \param args Variables/words.
     ///
 
     template<typename... Args>

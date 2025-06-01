@@ -20,7 +20,7 @@ static constexpr const char* WINDOW_TITLE_DEFAULT = "VEngine2 v.3.1";
 
 
 ///
-/// \brief Struktura przechowujaca SDL_Window, SDL_Rednderer i podstawowe informacje o oknie.
+/// \brief Structure handling the SFML window and basic information about the window.
 ///
 
 class VWindow
@@ -28,8 +28,8 @@ class VWindow
     friend class Engine;
 
     ///
-    /// \brief Struktura przechowujaca pozycje rogow okna.
-    /// \details Przeznaczone do pozycjonowania elementow interfejsu.
+    /// \brief Structure storing the positions of the window corners.
+    /// \details Designed for positioning interface elements.
     ///
 
     struct CornerPositions
@@ -54,13 +54,13 @@ public:
     VWindow();
     ~VWindow();
 
-    //czysci okno i wyswietla kolor m_background
+    //Clears the window and displays the color m_background
     void clear();
 
-    //czy okno jest gotowe do uzycia?
+    //Is the window ready to use?
     bool isInited() const;
 
-    //gettery
+    //getters
     sf::RenderWindow* get_renderwindow() const;
     const sf::VideoMode& get_displaymode() const;
     const CornerPositions& get_cornerPositions() const;
@@ -72,11 +72,11 @@ public:
 
 
 ///
-/// \brief Glowna klasa silnika.
-/// \details Aby utworzyc nowa gre, stworz klase <Game> dziedziczaca po tej klasie.
-/// W main utworz obiekt tej klasy.
-/// Aby rozpoczac petle silnika wywolaj metode run() w obiekcie klasy <Game>.
-/// Aby przerwac petle silnika wywolaj shutdown() w obiekcie klasy <Game>.
+/// \brief Main engine class.
+/// \details To create a new game, make a <Game> class that inherits from this class.
+/// In main, create an object of this class.
+/// To start the engine loop, call the run() method on the <Game> class object.
+/// To stop the engine loop, call shutdown() on the <Game> class object.
 ///
 
 class Engine
@@ -87,8 +87,8 @@ private:
 
 protected:
 
-    //Logika globalna - jest wykonywana w kazdym cyklu, niezaleznie od aktywnej sceny.
-    //Metoda jest domyslnie pusta.
+    //Global logic – runs every cycle, regardless of the active scene.
+    //The method is empty by default.
     virtual void onUpdate(float deltaTime);
 
 public:
@@ -97,8 +97,8 @@ public:
 
 
     ///
-    /// \brief Glowna petla silnika.
-    /// \param MAX_FPS Limit klatek na sekunde - domyslnie 60.
+    /// \brief Main engine loop.
+    /// \param MAX_FPS Frame rate limit – default is 60.
     /// \return
     ///
 
@@ -106,7 +106,7 @@ public:
 
 
     ///
-    /// \brief Metoda przerywajaca glowna petle silnika i zamkykajaca aplikacje.
+    /// \brief Method that stops the main engine loop and closes the application.
     ///
 
     void shutdown();
@@ -121,8 +121,8 @@ public:
     Scene* get_currentScene() const;
 
 
-    //Menadzer scen.
-    //Fragment klasy zarzadzajacy scenami.
+    //Scene manager.
+    //Part of the class for managing scenes.
 
 private:
     struct SceneLoadData
@@ -147,14 +147,14 @@ private:
 protected:
 
     ///
-    /// \brief Metoda budujaca obiekt sceny w pamieci. Zwraca surowy wskaznik na utworzona scene.
-    /// \details Po zakonczeniu programu pamiec jest zwalniana automatycznie. WSKAZNIKA NIE NALEZY CZYSZCIC RECZNIE SLOWEM DELETE.
-    /// Aby stworzyc nowa scene:
-    /// 1. Utworz klase dziedziczaca publicznie po klasie Scene - przykladowo class MainScene.
-    /// 2. W kontruktorze klasy bedacej rodzajem klasy Engine wywolaj metode createScene<T>(string) - przykladowo createScene<MainScene>("SceneGlowna")
-    /// \tparam T* Klasa bedaca rodzajem klasy Scene.
-    /// \param name Nazwa sceny musi byc unikalna, proba utworzenia sceny o istniejacej nazwie zwroci blad.
-    /// \param chunkSize Dlugosc krawedzi kwadratowych komorek tworzacych siatke. Optymalizuje obslugiwanie interakcji miedzy obiektami.
+    /// \brief Method that creates a scene object in memory. Returns a raw pointer to the created scene.
+    /// \details After the program ends, memory is freed automatically. DO NOT manually delete the POINTER using delete.
+    /// To create a new scene:
+    /// 1. Create a class that publicly inherits from the Scene class – for example, class MainScene.
+    /// 2. In the constructor of the class that is a type of Engine, call the method createScene<T>(string) – for example, createScene<MainScene>("MainScene").
+    /// \tparam T* Class that is a type of Scene.
+    /// \param name The scene name must be unique; trying to create a scene with an existing name will cause an error.
+    /// \param chunkSize The length of the square cells that form the grid. Optimizes handling interactions between objects.
     /// \return
     ///
 
@@ -185,17 +185,17 @@ protected:
 public:
 
     ///
-    /// \brief Metoda zmienia scene na podana w argumencie.
-    /// \details Argument bool okresla czy poprzednio uzywana scena ma zostac wyczyszczona czy zachowana w pamieci wraz ze wszystkimi zmianami.
-    /// \param name Nazwa wczytywanej sceny.
-    /// \param keepChanges True - zachowanie zmian, False - zwolnienie pamieci.
+    /// \brief Method changes the scene to the one given in the argument.
+    /// \details The bool argument specifies whether the previously used scene should be cleared or kept in memory with all changes.
+    /// \param name Name of the scene to load.
+    /// \param keepChanges True – keep changes, False – free memory.
     ///
 
     void changeScene(const string name, bool keepChanges = false);
 
 
 private:
-    void loadScene(); //Ta metoda jest wywolywana przez silnik.
+    void loadScene(); //This method is called by the engine.
 };
 
 #endif // ENGINE_H

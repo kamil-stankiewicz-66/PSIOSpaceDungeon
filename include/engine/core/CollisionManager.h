@@ -10,7 +10,7 @@ class Scene;
 struct Edges;
 
 ///
-/// \brief Klasa realizujaca wykrywanie kolizji miedzy Colliderami.
+/// \brief Class that handles collision detection between Colliders.
 ///
 
 class CollisionManager
@@ -26,17 +26,17 @@ private:
     std::map<int, std::map<int, std::list<Collider*>>> m_chunks; //chunks[x][y]
 
 
-    void init(Scene* scene, unsigned int chunkSize); //Ta metoda jest wywolywana przez silnik.
-    void dispose(); //Ta metoda jest wywolywana przez silnik.
+    void init(Scene* scene, unsigned int chunkSize); //This method is called by the engine.
+    void dispose(); //This method is called by the engine.
 
 
-    void updateAll(); //Ta metoda jest wywolywana przez silnik.
+    void updateAll(); //This method is called by the engine.
 
-    void updateChunks(Collider* collider); //Ta metoda jest wywolywana przez silnik.
-    void removeFromOutdatedChunks(Collider* collider, Edges& colliderCurrentChunks); //Ta metoda jest wywolywana przez silnik.
+    void updateChunks(Collider* collider); //This method is called by the engine.
+    void removeFromOutdatedChunks(Collider* collider, Edges& colliderCurrentChunks); //This method is called by the engine.
 
 
-    void updateCollisions(Collider* collider); //Ta metoda jest wywolywana przez silnik.
+    void updateCollisions(Collider* collider); //This method is called by the engine.
 };
 
 #endif // COLLISIONMANAGER_H

@@ -101,3 +101,7 @@ void ActionButton::onClick(float)
 
     this->action();
 }
+
+void ActionButton::setAction(std::function<void()> _action) {
+    this->action = std::move(_action);
+}

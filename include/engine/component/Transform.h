@@ -5,9 +5,9 @@
 #include "engine/core/Vector2.h"
 
 ///
-/// \brief Component przechowujacy pozycje, skale i rotacje obiektu.
-/// \details Obiekty ze standardowym transformem sa renderowane relatywnie do kamery.
-/// Wszystkie GameObject posiadaja domyslnie ten Transform.
+/// \brief Component storing position, scale, and rotation of an object.
+/// \details Objects with the standard transform are rendered relative to the camera.
+/// All GameObjects have this Transform by default.
 ///
 
 class Transform : public Component
@@ -35,13 +35,13 @@ public:
               );
     virtual ~Transform();
 
-    //Metoda ta ustawia rzeczywista pozycje na biezaca pozycje pozorna zdefiniowana przez obiekty nadrzedne.
+    //This method sets the real position to the current virtual position defined by parent objects.
     void updateGlobalTransform();
 
-    //Metoda ustawia pozycje na Vector(0, 0).
+    //Method sets the position to Vector(0, 0).
     void resetPosition();
 
-    //Metody te modyfikuja skale, mnozac ja przez wartosc podana w argumencie.
+    //These methods modify the scale by multiplying it by the value given in the argument.
     void scaleBy(const Vector2&);
     void scaleBy(const float&);
 
@@ -66,9 +66,9 @@ public:
 };
 
 ///
-/// \brief Component przechowujacy pozycje, skale i rotacje obiektu.
-/// \details Obiekty z tym transformem sa renderowane bez wzgledu na pozycje i sizeView kamery.
-/// Przeznaczone dla elementow interfejsu. Kazdy UIObject posiada domyslnie ten Transform.
+/// \brief Component storing position, scale, and rotation of an object.
+/// \details Objects with this transform are rendered regardless of the camera’s position and sizeView.
+/// Designed for interface elements. All UIObjects have this Transform by default.
 ///
 
 class RectTransform : public Transform

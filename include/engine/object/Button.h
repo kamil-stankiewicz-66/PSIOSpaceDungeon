@@ -43,6 +43,7 @@ public:
 
 ///
 /// \brief Button with function.
+/// \details Button executes function automaticly when pressed.
 ///
 
 class ActionButton : public Button
@@ -62,10 +63,7 @@ public:
     /// \param _action This function will be called when the button is pressed.
     ///
 
-    template <typename F>
-    void setAction(F&& _action) {
-        this->action = _action;
-    }
+    void setAction(std::function<void()> _action);
 };
 
 #endif // BUTTON_H

@@ -16,7 +16,7 @@ Game::Game(string _title) : Engine(_title)
 void Game::onUpdate(float deltatime)
 {
     //exit
-    if (Input::Keyboard::isPressed(Input::Keyboard::Escape)) {
+    if (Input::Keyboard::isPressed(Input::Keyboard::Key::Escape)) {
         this->shutdown();
     }
 }

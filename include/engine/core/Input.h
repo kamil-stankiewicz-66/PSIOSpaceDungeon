@@ -4,7 +4,7 @@
 #include "engine\core\Vector2.h"
 
 ///
-/// \brief Klasa obslugujaca dane wejsciowe z klawiatury i myszy.
+/// \brief Class handling input data from keyboard and mouse.
 ///
 
 class Input
@@ -12,15 +12,15 @@ class Input
 friend class Engine;
 
 private:
-    static sf::RenderWindow* window; //wskaznik na okno SFML,  do pobierania pozycji myszy
+    static sf::RenderWindow* window; //Pointer to the SFML window, used to get the mouse position
 
-    static void init(sf::RenderWindow* win);  //Ta metoda jest wywolywana przez silnik.
-    static void update(); //aktualizacja danych wejsciowych - Ta metoda jest wywolywana przez silnik.
+    static void init(sf::RenderWindow* win);  //This method is called by the engine.
+    static void update(); //Input data update – This method is called by the engine.
 
 public:
 
     ///
-    /// \brief Klasa obslugujaca dane wejsciowe z klawiatury.
+    /// \brief Class handling input data from keyboard.
     ///
 
     class Keyboard
@@ -29,10 +29,10 @@ public:
     public:
 
         ///
-        /// \brief Enum przechowujacy numery wybranych przyciskow klawiatury, zgodne z SFML.
+        /// \brief Enum storing the numbers of selected keyboard buttons, compatible with SFML.
         ///
 
-        enum Key {
+        enum class Key {
             A = sf::Keyboard::A, B = sf::Keyboard::B, C = sf::Keyboard::C, D = sf::Keyboard::D,
             E = sf::Keyboard::E, F = sf::Keyboard::F, G = sf::Keyboard::G, H = sf::Keyboard::H,
             I = sf::Keyboard::I, J = sf::Keyboard::J, K = sf::Keyboard::K, L = sf::Keyboard::L,
@@ -85,16 +85,16 @@ public:
         };
 
         ///
-        /// \brief Metoda zwraca true, gdy przycisk podany w argumencie jest wcisniety.
-        /// \param key Numer przycisku pochodzacy z enum Keyboard::Key.
+        /// \brief Method returns true if the key passed as an argument is pressed.
+        /// \param key Button number from the Keyboard::Key enum.
         /// \return bool
         ///
 
-        static bool isPressed(Key key); //sprawdza czy klawisz wcisniety
+        static bool isPressed(Key key); //Checks if the key is pressed.
     };
 
     ///
-    /// \brief Klasa obslugujaca dane wejsciowe myszy.
+    /// \brief Class handling input data from mouse.
     ///
 
     class Mouse
@@ -103,28 +103,30 @@ public:
 
     private:
 
-        static Vector2 pos; //pozycja myszy wzgledem srodek okna
+        //Stores the current cursor position relative to the center of the window.
+        static Vector2 pos;
 
-        static void update(); //aktualizacja pozycji myszy
+        //Update mouse position.
+        static void update();
 
     public:
 
         ///
-        /// \brief Metoda zwraca aktualna pozycje kursora w oknie.
-        /// \details Kiedy kursor jest w srodku okna jego pozycja wynosi (0, 0).
+        /// \brief Method returns current cursor position in window.
+        /// \details When cursor is at window center, its position is (0, 0).
         ///
 
         static const Vector2& AXIS();
 
         ///
-        /// \brief Metoda zwraca true jesli lewy przycisk myszy zostal wcisniety.
+        /// \brief Method returns true if left mouse button was pressed.
         /// \return bool
         ///
 
         static bool LEFT_BUTTON();
 
         ///
-        /// \brief Metoda zwraca true jesli prawy przycisk myszy zostal wcisniety.
+        /// \brief Method returns true if right mouse button was pressed.
         /// \return bool
         ///
 

@@ -5,7 +5,7 @@
 #include <cfloat>
 
 ///
-/// \brief Klasa reprezentujaca podstawowa kamere.
+/// \brief Class representing a basic camera.
 ///
 
 class Camera : public GameObject
@@ -14,9 +14,9 @@ private:
     static constexpr float MIN_VIEWSIZE = FLT_MIN;
 
     ///
-    /// \brief Parametr okreslajacy zakres widocznosci.
-    /// \details Okresla rozmiar obszaru, ktory kamera jest w stanie zobaczyc w danym momencie.
-    /// Definiuje, jak duza czesc swiata gry bedzie wyswietlana na ekranie.
+    /// \brief Parameter specifying the visibility range.
+    /// \details Specifies the size of the area that the camera can see at a given moment.
+    /// Defines how much of the game world will be displayed on the screen.
     ///
 
     float view_size;

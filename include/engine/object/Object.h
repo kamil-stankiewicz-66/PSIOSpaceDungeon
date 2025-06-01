@@ -20,7 +20,7 @@ class VSprite;
 
 
 ///
-/// \brief Enum reprezentujacy rozne stany obiektu.
+/// \brief Enum representing different states of an object.
 ///
 
 enum class ObjectState
@@ -30,8 +30,8 @@ enum class ObjectState
 
 
 ///
-/// \brief Klasa bazowa obiektu. Kazdy obiekt gry i interfejsu musi byc rodzajem tej klasy.
-/// \details Zamiast bezposredniego dziedziczenia po Object, zaleca sie uzycie GameObject przeznanocznych dla obiektow gry i UIObject dla obiektow interfejsu.
+/// \brief Base class for an object. Every game and interface object must be a kind of this class.
+/// \details Instead of inheriting directly from Object, it is recommended to use GameObject for game objects and UIObject for interface objects.
 ///
 
 class Object
@@ -50,15 +50,15 @@ private:
     unsigned int id;
     set<string> tags;
 
-    bool init(Engine* game, const size_t& renderLayer, const size_t& hashID, const unsigned int& id); //Ta metoda jest wywolywana przez silnik.
-    void set_state(ObjectState); //Ta metoda jest wywolywana przez silnik.
+    bool init(Engine* game, const size_t& renderLayer, const size_t& hashID, const unsigned int& id); //This method is called by the engine.
+    void set_state(ObjectState); //This method is called by the engine.
 
 protected:
-    //Metody przeznaczone do przechowywania logiki obiektow zdefiniowanych przez programiste gry.
-    //Te metody sa wywolywana przez silnik...
-    virtual void onStart(); //w pierwszej klatce.
-    virtual void onAwake(); //kiedy obiekt jest tworzony na scenie.
-    virtual void onUpdate(float deltaTime); //w kazdej klatce.
+    //Methods for storing object logic defined by game developer
+    //These methods are called by the engine...
+    virtual void onStart(); //in first frame.
+    virtual void onAwake(); //when object is created on scene.
+    virtual void onUpdate(float deltaTime); //every frame.
 
 
 public:
@@ -113,11 +113,11 @@ private:
 public:
 
     ///
-    /// \brief Metoda jest przeznaczona do tworzenia komponentow i dodawania ich do obiektow.
-    /// \details Po zakonczeniu programu pamiec jest zwalniana automatycznie. WSKAZNIKA NIE NALEZY CZYSZCIC RECZNIE SLOWEM DELETE.
-    /// Aby uworzyc komponent w dowolnym miejscu wywolaj metode createComponent<TYPE>() na odpowiednim obiekcie.
-    /// Silnik zawiera zestaw gotowych komponentow oraz istnieje mozliwosc utworzenia wlasnych.
-    /// \return Metoda zwraca surowy wskaznik do utworzonego komponentu.
+    /// \brief Method for creating components and adding them to objects.
+    /// \details Memory is automatically freed when program ends. DO NOT MANUALLY DELETE THE POINTER.
+    /// To create component call createComponent<TYPE>() on target object.
+    /// Engine includes set of ready-to-use components and allows creating custom ones.
+    /// \return Returns raw pointer to created component.
     ///
 
     template <typename T>
@@ -182,11 +182,11 @@ public:
     }
 
     ///
-    /// \brief Metoda wyszukujaca wybranyc komponent w obiekcie.
-    /// \details Jesli dany komponent nie zostal utworzony w obiekcie, metoda zwroci nullptr.
-    /// \tparam T Klasa bedaca rodzajem klasy Component.
-    /// \param polimorhicAllowed Flaga, ktora okresla, czy obiekty bedace rodzajem klasy T sa brane pod uwage.
-    /// \return Zwraca wskaznik na wyszukany komponent.
+    /// \brief Method for finding specific component in object.
+    /// \details If component wasn't created in object, returns nullptr.
+    /// \tparam T Class derived from Component class.
+    /// \param polymorphicAllowed Flag determining if classes derived from T should be considered.
+    /// \return Returns pointer to found component.
     ///
 
     template <typename T>
@@ -216,13 +216,13 @@ public:
     }
 
     ///
-    /// \brief Metoda wyszukujaca wybrany komponent w obiekcie.
-    /// \details Jesli dany komponent zostal znaleziony - nadpisuje refrencje wskaznikiem na wyszukany komponent i zwraca wartosc true.
-    /// Jesli dany komponent nie zostal znaleziony, metoda zwroci false.
-    /// \tparam Klasa bedaca rodzajem klasy Component.
-    /// \param out Referencja na wskaznik na komponent.
-    /// \param polimorhicAllowed Flaga, ktora okresla, czy obiekty bedace rodzajem klasy T sa brane pod uwage.
-    /// \return True or False
+    /// \brief Method for finding specific component in object.
+    /// \details If component is found - overwrites reference with found component and returns true.
+    /// If component is not found, returns false.
+    /// \tparam T Class derived from Component class.
+    /// \param out Reference to component pointer.
+    /// \param polymorphicAllowed Flag determining if derived classes should be considered.
+    /// \return True - if found, False - if not found.
     ///
 
     template <typename T>
@@ -242,7 +242,7 @@ public:
 
 
 ///
-/// \brief Klasa reprezentujaca pusty obiekt gry.
+/// \brief Class representing an empty game object.
 ///
 
 class GameObject : public Object
@@ -253,7 +253,7 @@ public:
 
 
 ///
-/// \brief Klasa reprezentujaca pusty obiekt interfejsu.
+/// \brief Class representing an empty interface (UI) object.
 ///
 
 class UIObject : public Object

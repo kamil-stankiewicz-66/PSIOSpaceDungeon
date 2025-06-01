@@ -4,9 +4,11 @@
 
 
 
+
 ///
 /// corners positions
 ///
+
 
 void VWindow::CornerPositions::init(const sf::VideoMode& displayMode)
 {
@@ -20,9 +22,16 @@ void VWindow::CornerPositions::init(const sf::VideoMode& displayMode)
 
 
 
+
+
+
+
+
+
 ///
 /// window
 ///
+
 
 VWindow::VWindow() : sfwindow(nullptr), displayMode()
 {}
@@ -96,18 +105,9 @@ void VWindow::set_BGColor(const sf::Color& _bgcolor) {
 
 
 
-
-
-
-
-
-
-
-
 ///
 /// Engine
 ///
-
 
 
 Engine::Engine(const string WINDOW_TITLE) : currentScene(nullptr), m_isRunning(false)
@@ -133,15 +133,11 @@ Engine::~Engine()
 }
 
 
-
-
 ///
 /// protected
 ///
 
 void Engine::onUpdate(float deltaTime) {}
-
-
 
 
 ///
@@ -232,9 +228,6 @@ void Engine::taskHandling()
 }
 
 
-
-
-
 ///
 /// getters
 ///
@@ -249,12 +242,9 @@ Scene* Engine::get_currentScene() const {
 }
 
 
-
-
 ///
 /// scene manager
 ///
-
 
 void Engine::SceneLoadData::set(string _name, bool _keepChanges) {
     this->name = _name;

@@ -6,7 +6,11 @@
 
 
 
-// transform
+
+///
+/// Transform
+///
+
 
 void Transform::onUpdate(float _dt)
 {
@@ -162,7 +166,9 @@ const bool Transform::inMove() const {
 
 
 
-// rect transform
+///
+/// RectTransform
+///
 
 
 RectTransform::RectTransform(const Vector2& arg_position,
