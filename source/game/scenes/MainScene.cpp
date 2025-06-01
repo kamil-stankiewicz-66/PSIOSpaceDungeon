@@ -5,7 +5,7 @@
 
 void MainScene::loadObjects()
 {
-    set_globalScale(0.01f);
+    set_globalScale(1.f);
 
     {
         auto play_button = createObject<MenuButton>();

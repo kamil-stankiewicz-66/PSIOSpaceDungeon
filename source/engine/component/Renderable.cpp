@@ -43,11 +43,8 @@ void VRenderable::generateMatrix(sf::Transform& sftransform, const int& width, c
     float r_posX = screen_zeroX;
     float r_posY = screen_zeroY;
 
-    float sfTxtSizeX = static_cast<float>(width);
-    float sfTxtSizeY = static_cast<float>(height);
-
-    float r_sizeX = sfTxtSizeX * scale.x;
-    float r_sizeY = sfTxtSizeY * scale.y;
+    float r_sizeX = scale.x;
+    float r_sizeY = scale.y;
 
 
     //relative to the camera
@@ -167,6 +164,9 @@ void VText::render(const Vector2& position, const Vector2& scale, const float& r
     if (!this->isInited()) {
         return;
     }
+
+    m_text.setOrigin(m_text.getLocalBounds().left,
+                     m_text.getLocalBounds().top);
 
     //transform
     sf::Transform transform;

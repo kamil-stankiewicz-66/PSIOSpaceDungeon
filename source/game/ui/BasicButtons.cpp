@@ -18,7 +18,7 @@ void MenuButton::onAwake()
 
     getSpritePtr()->setTexture(Asset::Graphics::BUTTON.data());
 
-    transform->scaleBy(Vector2(0.3f, 1.2f));
+    transform->scaleBy(Vector2(1.f, 1.2f));
     set_reactionAreaSize(280.f, 95.0f);
 
 
