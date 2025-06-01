@@ -9,6 +9,7 @@
 
 using namespace std;
 using Uint8 = unsigned char;
+using uint = unsigned int;
 
 class Scene;
 class Engine;
@@ -69,6 +70,40 @@ public:
     //sprite api
     void setTexture(const string& asset_ref);
     void setColor(const sf::Color&);
+};
+
+
+
+///
+/// \brief A component that represents a text.
+///
+
+class VText : public VRenderable
+{
+
+private:
+    sf::Text m_text;
+    unique_ptr<sf::Font> m_font;
+
+public:
+    virtual void render(const Vector2& position, const Vector2& scale, const float& rotationZ, const bool flipX, const bool isRect) override;
+    virtual const bool isInited() const override;
+
+    virtual void dispose() override;
+
+    //text api setters
+    void setText(const string& text);
+    void setFont(const string& asser_ref);
+    void setStyle(const sf::Text::Style&);
+    void setCharacterSize(const Uint8&);
+    void setLetterSpacing(const float&);
+    void setLineSpacing(const float&);
+    void setFillColor(const sf::Color&);
+    void setOutlineColor(const sf::Color&);
+    void setOutlineThickness(const float&);
+
+    //text api getters
+    const string getText() const;
 };
 
 #endif // RENDERABLE_H

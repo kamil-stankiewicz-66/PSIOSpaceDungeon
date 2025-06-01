@@ -28,7 +28,7 @@ Object::Object() :
     transform(nullptr),
     sprite(nullptr)
 {
-    this->sprite = createComponent<VSprite>();
+
 }
 
 Object::~Object()
@@ -323,6 +323,7 @@ void Object::callOnLateUpdateInComponents(float _deltaTime)
 
 GameObject::GameObject()
 {
+    this->sprite = createComponent<VSprite>();
     this->transform = createComponent<Transform>();
 }
 
@@ -330,5 +331,6 @@ GameObject::GameObject()
 
 UIObject::UIObject()
 {
+    this->sprite = createComponent<VSprite>();
     this->transform = createComponent<RectTransform>();
 }

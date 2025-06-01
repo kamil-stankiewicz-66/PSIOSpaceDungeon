@@ -143,7 +143,7 @@ void VSprite::setTexture(const string& asset_ref)
     }
 
     if (!m_texture->loadFromFile(asset_ref)) {
-        VDebuger::print("SPRITE :: TEXTURE :: ERROR - downloading sprite:", asset_ref);
+        VDebuger::print("SPRITE :: TEXTURE :: ERROR - loading sprite:", asset_ref);
     }
 
     this->m_sprite.setTexture(*m_texture);
@@ -153,4 +153,105 @@ void VSprite::setTexture(const string& asset_ref)
 void VSprite::setColor(const sf::Color& _c)
 {
     this->m_sprite.setColor(_c);
+}
+
+
+
+///
+/// Text
+///
+
+
+void VText::render(const Vector2& position, const Vector2& scale, const float& rotationZ, const bool flipX, const bool isRect)
+{
+    if (!this->isInited()) {
+        return;
+    }
+
+    //transform
+    sf::Transform transform;
+    this->generateMatrix(transform, m_text.getLocalBounds().width, m_text.getLocalBounds().height,
+                         position, scale, rotationZ, flipX, isRect);
+
+    //draw
+    getGame()->get_window()->get_renderwindow()->draw(m_text, transform);
+}
+
+
+const bool VText::isInited() const
+{
+    return m_font.get();
+}
+
+
+void VText::dispose()
+{
+    VRenderable::dispose();
+    m_text = sf::Text();
+    m_font = nullptr;
+}
+
+
+void VText::setText(const string& text)
+{
+    this->m_text.setString(text);
+}
+
+void VText::setFont(const string& asset_ref)
+{
+    if (this->m_assetRef == asset_ref) {
+        return;
+    }
+
+    if (!m_font) {
+        m_font = make_unique<sf::Font>();
+    }
+
+    if (!m_font->loadFromFile(asset_ref)) {
+        VDebuger::print("SPRITE :: TEXTURE :: ERROR - loading font:", asset_ref);
+    }
+
+    this->m_text.setFont(*m_font);
+    this->m_assetRef = asset_ref;
+}
+
+void VText::setStyle(const sf::Text::Style& style)
+{
+    this->m_text.setStyle(style);
+}
+
+void VText::setCharacterSize(const Uint8& size)
+{
+    this->m_text.setCharacterSize(size);
+}
+
+void VText::setLetterSpacing(const float& factor)
+{
+    this->m_text.setLetterSpacing(factor);
+}
+
+void VText::setLineSpacing(const float& factor)
+{
+    this->setLineSpacing(factor);
+}
+
+void VText::setFillColor(const sf::Color& color)
+{
+    this->setFillColor(color);
+}
+
+void VText::setOutlineColor(const sf::Color& color)
+{
+    this->setOutlineColor(color);
+}
+
+void VText::setOutlineThickness(const float& thickness)
+{
+    this->m_text.setOutlineThickness(thickness);
+}
+
+
+const string VText::getText() const
+{
+    return this->m_text.getString();
 }
