@@ -77,6 +77,10 @@ struct Asset
         static constexpr std::string_view LIBERATION_SANS = "Fonts/LiberationSans.ttf";
         static constexpr std::string_view PIXEL_OPERATOR_8 = "Fonts/PixelOperator8.ttf";
         static constexpr std::string_view PIXEL_OPERATOR_8_BOLD = "Fonts/PixelOperator8-Bold.ttf";
+        static constexpr std::string_view ANTON = "Fonts/Anton.ttf";
+        static constexpr std::string_view BANGERS = "Fonts/Bangers.ttf";
+        static constexpr std::string_view OSWALD_BOLD = "Fonts/Oswald-Bold.ttf";
+        static constexpr std::string_view ROBOTO_BOLD = "Fonts/Roboto-Bold.ttf";
     };
 };
 

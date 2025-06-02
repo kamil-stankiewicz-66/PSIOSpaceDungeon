@@ -26,8 +26,7 @@ void MenuButton::onAwake()
     auto textObj = this->getGame()->get_currentScene()->createObject<TextObject>();
     this->addChild(textObj);
 
-    textObj->getTextPtr()->setFont(Asset::Fonts::PIXEL_OPERATOR_8_BOLD.data());
+    textObj->getTextPtr()->setFont(Asset::Fonts::BANGERS.data());
     textObj->getTextPtr()->setText("Play");
     textObj->getTextPtr()->setCharacterSize(50);
-    textObj->getTextPtr()->setLetterSpacing(0.5f);
 }

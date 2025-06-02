@@ -36,12 +36,17 @@ void AbstractButton::onUpdate(float deltaTime)
         if (Input::Mouse::LEFT_BUTTON())
         {
             this->setColor(pressedColor);
+            m_isPressed = true;
+        }
+        else if (m_isPressed)
+        {
             this->onClick(deltaTime);
         }
     }
     else
     {
         this->setColor(normalColor);
+        m_isPressed = false;
     }
 }
 
