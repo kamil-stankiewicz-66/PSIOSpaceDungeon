@@ -232,17 +232,17 @@ void VText::setLetterSpacing(const float& factor)
 
 void VText::setLineSpacing(const float& factor)
 {
-    this->setLineSpacing(factor);
+    this->m_text.setLineSpacing(factor);
 }
 
 void VText::setFillColor(const sf::Color& color)
 {
-    this->setFillColor(color);
+    this->m_text.setFillColor(color);
 }
 
 void VText::setOutlineColor(const sf::Color& color)
 {
-    this->setOutlineColor(color);
+    this->m_text.setOutlineColor(color);
 }
 
 void VText::setOutlineThickness(const float& thickness)
