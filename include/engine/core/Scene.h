@@ -104,7 +104,7 @@ class ObjectFidingHelper
                 auto hashPair = layerPair.second.find(t_hashID);
                 if (hashPair == layerPair.second.end())
                 {
-                    break;
+                    continue;
                 }
 
                 return findObjectWithTagHelper<T>(hashPair->second, tag);
