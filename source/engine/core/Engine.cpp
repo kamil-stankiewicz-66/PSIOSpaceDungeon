@@ -47,20 +47,43 @@ VWindow::~VWindow()
 }
 
 
-bool VWindow::init(const string WINDOW_TITLE)
+bool VWindow::init(const string WINDOW_TITLE, const bool fullscreen)
 {
     //display mode
     this->displayMode = sf::VideoMode::getDesktopMode();
 
+    //vars
+    this->m_windowTitle = WINDOW_TITLE;
+    this->m_isFullscreen = fullscreen;
+
     //window
-    this->sfwindow = make_unique<sf::RenderWindow>(this->displayMode, WINDOW_TITLE, sf::Style::Close);
-    this->clear();
+    this->makeWindow();
 
     //corner positions
     this->cornerPositions.init(this->displayMode);
 
     //result
     return this->isInited();
+}
+
+bool VWindow::makeWindow()
+{
+    this->sfwindow = nullptr;
+    this->sfwindow = make_unique<sf::RenderWindow>(this->displayMode, m_windowTitle, m_isFullscreen ? sf::Style::Fullscreen : sf::Style::Close);
+    this->clear();
+
+    //result
+    return this->isInited();
+}
+
+void VWindow::setFullscreen(const bool fullscreen)
+{
+    if(m_isFullscreen == fullscreen) {
+        return;
+    }
+
+    m_isFullscreen = fullscreen;
+    makeWindow();
 }
 
 
@@ -72,7 +95,13 @@ void VWindow::clear()
 
 bool VWindow::isInited() const
 {
-    return this->sfwindow.get() && this->sfwindow->isOpen();
+    bool flag = this->sfwindow.get() && this->sfwindow->isOpen();
+
+    if (!flag) {
+        VDebuger::print("<ERROR> :: VWindow :: IS_INITED :: WINDOW INIT ERROR");
+    }
+
+    return flag;
 }
 
 
@@ -93,7 +122,7 @@ const sf::Color& VWindow::get_BGColor() const {
 }
 
 
-void VWindow::set_BGColor(const sf::Color& _bgcolor) {
+void VWindow::setBGColor(const sf::Color& _bgcolor) {
     this->m_background = _bgcolor;
 }
 
@@ -110,13 +139,13 @@ void VWindow::set_BGColor(const sf::Color& _bgcolor) {
 ///
 
 
-Engine::Engine(const string WINDOW_TITLE) : currentScene(nullptr), m_isRunning(false)
+Engine::Engine(const string WINDOW_TITLE, const bool fullscreen) : currentScene(nullptr), m_isRunning(false)
 {    
     VDebuger::print("ENGINE :: INIT");
 
     //window
     window = make_unique<VWindow>();
-    if (!window->init(WINDOW_TITLE))
+    if (!window->init(WINDOW_TITLE, fullscreen))
     {
         VDebuger::print("<ERROR> ENGINE :: WINDOW INIT ERROR");
     }

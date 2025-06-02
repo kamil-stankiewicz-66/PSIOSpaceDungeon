@@ -15,7 +15,7 @@
 using namespace std;
 
 
-static constexpr const char* WINDOW_TITLE_DEFAULT = "VEngine2 v.3.1";
+static constexpr string_view WINDOW_TITLE_DEFAULT = "VEngine2 v.3.1";
 
 
 
@@ -48,11 +48,18 @@ private:
     CornerPositions cornerPositions;
     sf::Color m_background;
 
-    bool init(const string WINDOW_TITLE);
+    string m_windowTitle;
+    bool m_isFullscreen;
+
+    bool init(const string WINDOW_TITLE, const bool fullscreen);
+    bool makeWindow();
 
 public:
     VWindow();
     ~VWindow();
+
+    //change window style
+    void setFullscreen(const bool);
 
     //Clears the window and displays the color m_background
     void clear();
@@ -66,7 +73,7 @@ public:
     const CornerPositions& get_cornerPositions() const;
     const sf::Color& get_BGColor() const;
 
-    void set_BGColor(const sf::Color&);
+    void setBGColor(const sf::Color&);
 };
 
 
@@ -92,7 +99,7 @@ protected:
     virtual void onUpdate(float deltaTime);
 
 public:
-    Engine(const string WINDOW_TITLE = WINDOW_TITLE_DEFAULT);
+    Engine(const string WINDOW_TITLE = WINDOW_TITLE_DEFAULT.data(), const bool fullscreen = true);
     virtual ~Engine();
 
 

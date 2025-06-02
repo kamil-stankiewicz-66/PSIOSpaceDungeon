@@ -3,8 +3,11 @@
 #include "game/scenes/MainScene.h"
 #include "game/scenes/GameScene.h"
 
-Game::Game(string _title) : Engine(_title)
+Game::Game(string _title) : Engine(_title, false)
 {
+    //background color
+    this->get_window()->setBGColor(sf::Color(12, 21, 36));
+
     //create scenes
     this->createScene<MainScene>(MAIN_SCENE);
     this->createScene<GameScene>(GAME_SCENE);
