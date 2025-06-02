@@ -155,7 +155,11 @@ void Object::addChild(Object* arg_child)
     }
 
     arg_child->parent = this;
-    arg_child->transform->resetPosition();
+
+    if (arg_child->transform) {
+        arg_child->transform->resetPosition();
+    }
+
     this->childs.push_back(arg_child);
 }
 

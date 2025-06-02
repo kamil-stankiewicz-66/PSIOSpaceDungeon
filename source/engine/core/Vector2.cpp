@@ -72,6 +72,18 @@ void Vector2::clear()
     this->y = 0.0f;
 }
 
+void Vector2::normalize()
+{
+    float _mod = this->modulo();
+
+    if (_mod == 0.0f || _mod == 1.0f) {
+        return;
+    }
+
+    x = x / (_mod);
+    y = y / (_mod);
+}
+
 Vector2 Vector2::get_normalized() const
 {
     float _mod = this->modulo();

@@ -36,6 +36,9 @@ struct Vector2
     //Method sets x and y values to 0;
     void clear();
 
+    //Methods normalize this vetor
+    void normalize();
+
     //This method returns this vector in a normalized form
     Vector2 get_normalized() const;
 

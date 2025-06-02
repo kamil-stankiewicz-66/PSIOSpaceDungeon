@@ -53,6 +53,12 @@ add_executable(PSIOSpaceDungeon
     source/engine/component/Renderable.cpp
     include/engine/core/Event.h
     source/engine/core/Event.cpp
+    include/game/player/PlayerCore.h
+    source/game/player/PlayerCore.cpp
+    include/game/player/PlayerMove.h
+    source/game/player/PlayerMove.cpp
+    include/game/core/Parameter.h
+    source/game/core/Parameter.cpp
 )
 
 set_target_properties(
