@@ -47,7 +47,9 @@ public:
 
     //setters
     void set_position(const Vector2&);
+    void set_position(const float& x, const float& y);
     void add_position(const Vector2&);
+    void add_position(const float& x, const float& y);
     void set_rotation(const float&);
     void add_rotation(const float&);
     void set_flip_x(const bool);

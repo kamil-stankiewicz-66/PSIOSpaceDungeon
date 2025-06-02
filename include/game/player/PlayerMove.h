@@ -19,7 +19,7 @@ protected:
     virtual void onUpdate(float) override;
 
 private:
-    void move();
+    void move(float dt);
 };
 
 #endif // PLAYERMOVE_H

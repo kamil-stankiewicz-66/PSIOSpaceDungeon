@@ -21,28 +21,28 @@ void PlayerMove::onUpdate(float dt)
 
     //get move direction
     if (Input::Keyboard::isKeyPressed(Input::Keyboard::Key::W)) {
-        m_move_dir.y = 1.0f;
+        m_move_dir.y += 1.0f;
     }
     if (Input::Keyboard::isKeyPressed(Input::Keyboard::Key::S)) {
-        m_move_dir.y = -1.0f;
+        m_move_dir.y += -1.0f;
     }
     if (Input::Keyboard::isKeyPressed(Input::Keyboard::Key::D)) {
-        m_move_dir.x = 1.0f;
+        m_move_dir.x += 1.0f;
     }
     if (Input::Keyboard::isKeyPressed(Input::Keyboard::Key::A)) {
-        m_move_dir.x = -1.0f;
+        m_move_dir.x += -1.0f;
     }
 
-    //normalize
+    //normalize vector
     m_move_dir.normalize();
 
     //move or not
     if (m_move_dir.x != 0.0f || m_move_dir.y != 0.0f) {
-        move();
+        move(dt);
     }
 }
 
-void PlayerMove::move()
+void PlayerMove::move(float dt)
 {
     auto _t = playerCore->getTransformPtr();
 
@@ -50,6 +50,14 @@ void PlayerMove::move()
         return;
     }
 
-    _t->add_position(m_move_dir * Parameters::PlayerControl::getMoveSpeed());
-    _t->set_flip_x(m_move_dir.x < 0);
+    //move
+    _t->add_position(m_move_dir * Parameters::PlayerControl::getMoveSpeed() * dt * 0.075f);
+
+    //flip
+    if (m_move_dir.x < 0) {
+        _t->set_flip_x(true);
+    }
+    else if (m_move_dir.x > 0) {
+        _t->set_flip_x(false);
+    }
 }

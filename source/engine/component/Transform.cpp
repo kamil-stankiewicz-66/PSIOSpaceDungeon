@@ -72,9 +72,20 @@ void Transform::set_position(const Vector2& _v)
     this->position = _v;
 }
 
+void Transform::set_position(const float& _x, const float& _y)
+{
+    this->position.x = _x;
+    this->position.y = _y;
+}
+
 void Transform::add_position(const Vector2& _v)
 {
     this->set_position(this->position + _v);
+}
+
+void Transform::add_position(const float& _x, const float& _y)
+{
+    this->set_position(position.x + _x, position.y + _y);
 }
 
 void Transform::set_rotation(const float& _v)

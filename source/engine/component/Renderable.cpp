@@ -152,6 +152,11 @@ void VSprite::setColor(const sf::Color& _c)
     this->m_sprite.setColor(_c);
 }
 
+void VSprite::setTextureRect(const sf::IntRect& rect)
+{
+    this->m_sprite.setTextureRect(rect);
+}
+
 
 
 ///
