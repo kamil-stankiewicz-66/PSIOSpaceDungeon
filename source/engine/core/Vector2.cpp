@@ -124,3 +124,8 @@ float Vector2::modulo() const
 {
     return std::sqrt(this->moduloLite());
 }
+
+const bool Vector2::zero() const
+{
+    return this->x == 0.0f && this->y == 0.0f;
+}

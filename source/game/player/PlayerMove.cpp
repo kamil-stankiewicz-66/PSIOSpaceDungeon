@@ -1,4 +1,5 @@
 #include "game/player/PlayerMove.h"
+#include "engine/component/AnimationController.h"
 #include "engine/core/Input.h"
 #include "game/core/Parameter.h"
 #include "game/player/PlayerCore.h"

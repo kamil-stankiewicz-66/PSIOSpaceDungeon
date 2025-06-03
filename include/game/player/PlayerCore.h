@@ -5,11 +5,6 @@
 #include "game/core/Asset.h"
 #include "game/player/PlayerMove.h"
 
-class PlayerBody;
-class PlayerLegLeft;
-class PlayerLegRight;
-
-
 ///
 /// The PlayerCore class.
 /// Main player object.
@@ -17,6 +12,8 @@ class PlayerLegRight;
 
 class PlayerCore : public GameObject
 {
+    friend class PlayerMove;
+
 private:
     const string m_bodyTexture = Asset::Graphics::PLAYER_SKIN_02.data();
 

@@ -50,12 +50,14 @@ public:
     void set_position(const float& x, const float& y);
     void add_position(const Vector2&);
     void add_position(const float& x, const float& y);
+    void set_scale(const Vector2&);
     void set_rotation(const float&);
     void add_rotation(const float&);
     void set_flip_x(const bool);
 
     //getters
     const Vector2 get_position() const;
+    const Vector2 get_localPosition() const;
     const Vector2& get_prePosition() const;
     const Vector2& get_scale() const;
     const float& get_rotation() const;

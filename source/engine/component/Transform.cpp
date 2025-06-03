@@ -88,6 +88,10 @@ void Transform::add_position(const float& _x, const float& _y)
     this->set_position(position.x + _x, position.y + _y);
 }
 
+void Transform::set_scale(const Vector2& _v) {
+    this->scale = _v;
+}
+
 void Transform::set_rotation(const float& _v)
 {
     this->rotation = std::fmod(_v, 360.0f);
@@ -125,6 +129,11 @@ const Vector2 Transform::get_position() const
             this->getObject()->getParent()->getTransformPtr()->get_position().y + this->position.y
             );
     }
+}
+
+const Vector2 Transform::get_localPosition() const
+{
+    return this->position;
 }
 
 const Vector2& Transform::get_prePosition() const {

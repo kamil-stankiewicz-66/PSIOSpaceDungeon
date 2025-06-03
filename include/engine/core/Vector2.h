@@ -49,6 +49,9 @@ struct Vector2
     //This method returns the length of this vector...
     float moduloLite() const; //without square root.
     float modulo() const; //actual length.
+
+    //Is the vector zero.
+    const bool zero() const;
 };
 
 #endif // VECTOR2_H

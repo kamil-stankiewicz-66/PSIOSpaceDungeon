@@ -1,6 +1,5 @@
 #include "game/player/PlayerCore.h"
 #include "engine/core/Engine.h"
-#include "game/core/Asset.h"
 
 ///
 /// PlayerCore
@@ -11,8 +10,10 @@ void PlayerCore::onAwake()
     //tag
     this->addTag("Player");
 
+
     //ptr
     Scene* _scenePtr = this->getGame()->get_currentScene();
+
 
     //creating player body
     playerBody = _scenePtr->createObject<GameObject>(getRenderLayer());

@@ -1,6 +1,7 @@
 #ifndef VMATH_H
 #define VMATH_H
 
+#include "engine/core/Vector2.h"
 struct Vector2;
 struct Edges;
 
@@ -23,6 +24,9 @@ public:
     static constexpr const bool isInRange(const T& value, const T& min, const T& max) {
         return (min <= value) && (value <= max);
     }
+
+    //Checks if vectors have the same direction.
+    static const bool sameDirection(const Vector2& a, const Vector2& b);
 };
 
 #endif // VMATH_H
