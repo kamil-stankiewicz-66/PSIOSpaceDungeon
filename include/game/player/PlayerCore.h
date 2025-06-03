@@ -3,6 +3,7 @@
 
 #include "engine/object/Object.h"
 #include "game/core/Asset.h"
+#include "game/player/PlayerAnim.h"
 #include "game/player/PlayerMove.h"
 
 ///
@@ -13,6 +14,7 @@
 class PlayerCore : public GameObject
 {
     friend class PlayerMove;
+    friend class PlayerAnim;
 
 private:
     const string m_bodyTexture = Asset::Graphics::PLAYER_SKIN_02.data();
@@ -25,6 +27,7 @@ private:
 
     //scripts
     PlayerMove* playerMove = nullptr;
+    PlayerAnim* playerAnim = nullptr;
 
 protected:
     virtual void onAwake() override;

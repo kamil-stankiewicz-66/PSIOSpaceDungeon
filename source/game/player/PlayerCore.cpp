@@ -24,14 +24,14 @@ void PlayerCore::onAwake()
 
     playerLegLeft = _scenePtr->createObject<GameObject>(getRenderLayer()-1);
     playerLegLeft->addTag("PlayerLegLeft");
-    playerBody->addChild(playerLegLeft);
+    this->addChild(playerLegLeft);
     playerLegLeft->getSpritePtr()->setTexture(m_bodyTexture);
     playerLegLeft->getSpritePtr()->setTextureRect(sf::IntRect(53, 67, 11, 7));
     playerLegLeft->getTransformPtr()->set_position(-23.f, -65.f);
 
     playerLegRight = _scenePtr->createObject<GameObject>(getRenderLayer()-1);
     playerLegRight->addTag("PlayerLegRight");
-    playerBody->addChild(playerLegRight);
+    this->addChild(playerLegRight);
     playerLegRight->getSpritePtr()->setTexture(m_bodyTexture);
     playerLegRight->getSpritePtr()->setTextureRect(sf::IntRect(68, 67, 11, 7));
     playerLegRight->getTransformPtr()->set_position(10.f, -65.f);
@@ -48,5 +48,10 @@ void PlayerCore::onAwake()
     playerMove = _scenePtr->createObject<PlayerMove>();
     playerMove->addTag("Script_PlayerMove");
     this->addChild(this->playerMove);
+
+    //player animations
+    playerAnim = _scenePtr->createObject<PlayerAnim>();
+    playerAnim->addTag("Script_PlayerAnim");
+    this->addChild(this->playerAnim);
 }
 

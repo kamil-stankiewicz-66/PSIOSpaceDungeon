@@ -1,5 +1,4 @@
 #include "game/player/PlayerMove.h"
-#include "engine/component/AnimationController.h"
 #include "engine/core/Input.h"
 #include "game/core/Parameter.h"
 #include "game/player/PlayerCore.h"
@@ -41,6 +40,10 @@ void PlayerMove::onUpdate(float dt)
     if (m_move_dir.x != 0.0f || m_move_dir.y != 0.0f) {
         move(dt);
     }
+}
+
+const bool PlayerMove::isRunning() const {
+    return !m_move_dir.zero();
 }
 
 void PlayerMove::move(float dt)

@@ -118,6 +118,11 @@ void Scene::forEachObject(const function<void(Object*)>& func)
             for (const auto& idPair : idMap)
             {
                 const auto& obj = idPair.second;
+
+                if (!obj->isEnable()) {
+                    continue;
+                }
+
                 func(obj.get());
             }
         }

@@ -61,9 +61,9 @@ add_executable(PSIOSpaceDungeon
     source/game/core/Parameter.cpp
     include/engine/component/AnimationController.h
     source/engine/component/AnimationController.cpp
-    include/game/animations/PlayerAnimations.h
-    source/game/animations/PlayerAnimations.cpp
     source/engine/core/VMath.cpp
+    include/game/player/PlayerAnim.h
+    source/game/player/PlayerAnim.cpp
 )
 
 set_target_properties(

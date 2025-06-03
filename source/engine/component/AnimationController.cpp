@@ -74,8 +74,8 @@ bool AnimationTransformMove::update(const float& deltatime)
 
     bool flagRotation = false;
     {
-        float remainingRotation = targetRotation - currentRotation;
-        if (fabs(remainingRotation) > 0.1f) {
+        bool outOfRotation = (targetRotation - currentRotation) * (targetRotation - initRotation) <= 0.0f;
+        if (!outOfRotation) {
             transform->set_rotation(currentRotation);
         }
         else {
