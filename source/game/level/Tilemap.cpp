@@ -43,7 +43,15 @@ vtptr2 make_pallet(string_view asset, const float& factor, const int& size_x, co
 
 void TilePallet::init()
 {
-    // main floor
+    if (isInited) {
+        return;
+    }
+
+    //bool
+    isInited = true;
+
+
+    //main floor
     floor_main = make_shared<Tile>(1.0f);
     floor_main->setTexture(Asset::Graphics::FLOOR_MAIN.data());
 
@@ -61,6 +69,8 @@ void TilePallet::init()
 ///
 /// Tilemap
 ///
+
+TilePallet Tilemap::tilepallet;
 
 void Tilemap::onAwake()
 {

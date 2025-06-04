@@ -70,6 +70,8 @@ add_executable(PSIOSpaceDungeon
     source/game/level/LevelGenerator.cpp
     include/game/level/LevelManager.h
     source/game/level/LevelManager.cpp
+    include/game/core/DataBlock.h
+    source/game/core/DataBlock.cpp
 )
 
 set_target_properties(

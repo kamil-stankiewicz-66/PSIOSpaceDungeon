@@ -107,7 +107,18 @@ class ObjectFidingHelper
                     continue;
                 }
 
-                return findObjectWithTagHelper<T>(hashPair->second, tag);
+
+                T* _obj = findObjectWithTagHelper<T>(hashPair->second, tag);
+
+                if (_obj)
+                {
+                    return _obj;
+                }
+                else
+                {
+                    continue;
+                }
+
             }
         }
 

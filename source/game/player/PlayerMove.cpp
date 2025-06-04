@@ -55,7 +55,7 @@ void PlayerMove::move(float dt)
     }
 
     //move
-    _t->add_position(m_move_dir * Parameters::PlayerControl::getMoveSpeed() * dt * 0.075f);
+    _t->add_position(m_move_dir * Parameters::get_player_moveSpeed() * dt * 0.075f);
 
     //flip
     if (m_move_dir.x < 0) {

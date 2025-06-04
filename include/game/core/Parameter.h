@@ -3,14 +3,25 @@
 
 struct Parameters
 {
-    struct PlayerControl
-    {
-    private:
-        static float move_speed;
+private:
+    static float player_moveSpeed;
 
-    public:
-        static const float& getMoveSpeed();
-    };
+    static int levelGenerator_levelNumberMultiplier;
+    static int levelGenerator_roomsNumber_min;
+    static int levelGenerator_roomsNumber_max;
+    static int levelGenerator_corridorLength_min;
+    static int levelGenerator_corridorLength_max;
+    static int levelGenerator_enemiesFrequency;
+
+public:
+    static const float& get_player_moveSpeed();
+
+    static const int& get_levelGenerator_levelNumberMultiplier();
+    static const int& get_levelGenerator_roomsNumber_min();
+    static const int& get_levelGenerator_roomsNumber_max();
+    static const int& get_levelGenerator_corridorLength_min();
+    static const int& get_levelGenerator_corridorLength_max();
+    static const int& get_levelGenerator_enemiesFrequency();
 };
 
 #endif // PARAMETER_H

@@ -11,8 +11,12 @@ class LevelGenerator : public Component
     LevelManager* levelManager;
 
 private:
+    virtual void onAwake() override;
+
     void generate();
     void generateCorridors();
+    void generateCorridor(int& x, int& y);
+    void generateRoom(const int& x, const int& y);
 };
 
 #endif // LEVELGENERATOR_H

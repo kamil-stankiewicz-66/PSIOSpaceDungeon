@@ -2,7 +2,6 @@
 #define VMATH_H
 
 #include "engine/core/Vector2.h"
-struct Vector2;
 struct Edges;
 
 ///

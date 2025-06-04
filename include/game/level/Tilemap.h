@@ -40,6 +40,7 @@ struct TilePallet
 
 private:
     friend class Tilemap;
+    bool isInited;
     void init();
 };
 
@@ -59,8 +60,8 @@ private:
     void render();
 
 public:
-    TilePallet tilepallet;
-    void setData(const float &cellSize, const float& scale = 1.0f);
+    static TilePallet tilepallet;
+    void setData(const float& cellSize, const float& scale = 1.0f);
     void setTile(shared_ptr<Tile>& tile, const int& x, const int& y);
     void remove(const int& x, const int& y);
     void clear();

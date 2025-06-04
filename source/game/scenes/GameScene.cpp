@@ -1,4 +1,6 @@
 #include "game/scenes/GameScene.h"
+#include "engine/object/Camera.h"
+#include "game/level/LevelManager.h"
 #include "game/level/Tilemap.h"
 #include "game/player/PlayerCore.h"
 
@@ -6,23 +8,38 @@ void GameScene::loadObjects()
 {
     this->set_globalScale(2.0f);
 
+    //camera
+    {
+        auto cam = createObject<Camera>();
+        cam->set_viewSize(20.0f);
+        set_mainCamera(cam);
+    }
+
+    //managers
+    {
+        createObject<LevelManager>();
+    }
+
     //player
     {
         createObject<PlayerCore>(50);
     }
 
-    //tilemap
+    //tilemaps
     {
-        auto tilemap = createObject<Tilemap>();
-        tilemap->setData(16.0f, get_globalScale()*2.0f);
+        const float cellSize = 16.0f;
+        const float scale = 2.0f * get_globalScale();
 
-        for (int x = 0; x <2; x++)
-        {
-            for (int y = 0; y <1; y++)
-            {
-                tilemap->setTile(tilemap->tilepallet.floor_main, x, y);
-            }
-        }
-        tilemap->setTile(tilemap->tilepallet.floor_main, 0, 1);
+        auto tilemap = createObject<Tilemap>(20);
+        tilemap->addTag("tilemap");
+        tilemap->setData(cellSize, scale);
+
+        auto bgtilemap = createObject<Tilemap>(10);
+        bgtilemap->addTag("bg_tilemap");
+        bgtilemap->setData(cellSize, scale);
+
+        auto fgtilemap = createObject<Tilemap>(30);
+        fgtilemap->addTag("fg_tilemap");
+        fgtilemap->setData(cellSize, scale);
     }
 }
