@@ -9,26 +9,30 @@
 using namespace std;
 
 
-//randam generator
-int getRandomInt(const int& min, const int& max) {
-    static mt19937 gen(random_device{}());
-    uniform_int_distribution<> dist(min, max);
-    return dist(gen);
-}
-
-
 ///
 /// LevelGenerator
 ///
+
 
 void LevelGenerator::onAwake()
 {
     levelManager = getGame()->get_currentScene()->findObject<LevelManager>();
 
+    std::random_device rd;
+    gen = mt19937(rd());
+
     if (!levelManager) {
         VDebuger::print("<ERROR> LEVEL_GENERATOR :: levelManager = nullptr");
     }
 }
+
+
+int LevelGenerator::getRndInt(const int& min, const int& max)
+{
+    std::uniform_int_distribution<> dist(min, max);
+    return dist(gen);
+}
+
 
 void LevelGenerator::generate()
 {
@@ -36,14 +40,16 @@ void LevelGenerator::generate()
     VDebuger::print("LEVEL_GENERATOR :: GENERATE :: started");
 
     generateCorridors();
+    generateWalls();
 
     //log
     VDebuger::print("LEVEL_GENERATOR :: GENERATE :: ended");
 }
 
+
 void LevelGenerator::generateCorridors()
 {
-    int roomsNumber = getRandomInt(Parameters::get_levelGenerator_roomsNumber_min(), Parameters::get_levelGenerator_roomsNumber_max());
+    int roomsNumber = getRndInt(Parameters::get_levelGenerator_roomsNumber_min(), Parameters::get_levelGenerator_roomsNumber_max());
 
 
     //log
@@ -61,49 +67,78 @@ void LevelGenerator::generateCorridors()
     }
 }
 
+
 void LevelGenerator::generateCorridor(int& x, int& y)
 {
-    int direction = getRandomInt(0, 3);
-    int length = getRandomInt(Parameters::get_levelGenerator_corridorLength_min(), Parameters::get_levelGenerator_corridorLength_max());
+    //rnd corridor direction
+    {
+        int direction = getRndInt(0, 3);
+
+        if (direction == m_direction) {
+            ++direction;
+        }
+        else if (direction == 0 && m_direction == 2) {
+            ++direction;
+        }
+        else if (direction == 1 && m_direction == 3) {
+            ++direction;
+        }
+
+        m_direction = direction;
+    }
+
+
+    //rnd corridor length
+    int length = getRndInt(Parameters::get_levelGenerator_corridorLength_min(), Parameters::get_levelGenerator_corridorLength_max());
 
 
     //log
-    VDebuger::print("LEVEL_GENERATOR :: GENERATE_CORRIDOR :: rand direction:", direction, "; rand lenght:", length);
+    VDebuger::print("LEVEL_GENERATOR :: GENERATE_CORRIDOR :: rand direction:", m_direction, "; rand lenght:", length);
+
+
+    //add room lenght
+    if (m_direction == 0 || m_direction == 1) {
+        length += (m_room_size_x * 2);
+    }
+    else {
+        length += (m_room_size_y * 2);
+    }
 
 
     int _x = x;
     int _y = y;
 
 
-    if (direction == 0) //right
+    //make corridor
+    if (m_direction == 0) //right
     {
         while (x <= _x + length)
         {
-            levelManager->tilemap->setTile(Tilemap::tilepallet.floor_main, x, y-1);
-            levelManager->tilemap->setTile(Tilemap::tilepallet.floor_main, x, y);
-            levelManager->tilemap->setTile(Tilemap::tilepallet.floor_main, x, y+1);
+            for (int w = 0; w < Parameters::get_levelGenerator_corridor_width(); ++w) {
+                levelManager->tilemap->setTile(Tilemap::tilepallet.floor_main, x, y+w);
+            }
 
             ++x;
         }
     }
-    else if (direction == 1) //up
+    else if (m_direction == 1) //up
     {
         while (y <= _y + length)
         {
-            levelManager->tilemap->setTile(Tilemap::tilepallet.floor_main, x-1, y);
-            levelManager->tilemap->setTile(Tilemap::tilepallet.floor_main, x, y);
-            levelManager->tilemap->setTile(Tilemap::tilepallet.floor_main, x+1, y);
+            for (int w = 0; w < Parameters::get_levelGenerator_corridor_width(); ++w) {
+                levelManager->tilemap->setTile(Tilemap::tilepallet.floor_main, x+w, y);
+            }
 
             ++y;
         }
     }
-    else if (direction == 2) //left
+    else if (m_direction == 2) //left
     {
         while (x >= _x + length)
         {
-            levelManager->tilemap->setTile(Tilemap::tilepallet.floor_main, x, y-1);
-            levelManager->tilemap->setTile(Tilemap::tilepallet.floor_main, x, y);
-            levelManager->tilemap->setTile(Tilemap::tilepallet.floor_main, x, y+1);
+            for (int w = 0; w < Parameters::get_levelGenerator_corridor_width(); ++w) {
+                levelManager->tilemap->setTile(Tilemap::tilepallet.floor_main, x, y+w);
+            }
 
             --x;
         }
@@ -112,27 +147,102 @@ void LevelGenerator::generateCorridor(int& x, int& y)
     {
         while (y >= _y - length)
         {
-            levelManager->tilemap->setTile(Tilemap::tilepallet.floor_main, x-1, y);
-            levelManager->tilemap->setTile(Tilemap::tilepallet.floor_main, x, y);
-            levelManager->tilemap->setTile(Tilemap::tilepallet.floor_main, x+1, y);
+            for (int w = 0; w < Parameters::get_levelGenerator_corridor_width(); ++w) {
+                levelManager->tilemap->setTile(Tilemap::tilepallet.floor_main, x+w, y);
+            }
 
             --y;
         }
     }
 }
 
-void LevelGenerator::generateRoom(const int& x, const int& y)
-{
 
+void LevelGenerator::generateRoom(int& x, int& y)
+{
+    m_room_size_x = getRndInt(Parameters::get_levelGenerator_roomSize_min(), Parameters::get_levelGenerator_roomSize_max());
+    m_room_size_y = getRndInt(Parameters::get_levelGenerator_roomSize_min(), Parameters::get_levelGenerator_roomSize_max());
+
+
+    //log
+    VDebuger::print("LEVEL_GENERATOR :: GENERATE_ROOM :: room size:", m_room_size_x, m_room_size_y);
+
+
+    for (int _x = x - (m_room_size_x/2); _x < x + (m_room_size_x/2); ++_x)
+    {
+        for (int _y = y - (m_room_size_y/2); _y < y + (m_room_size_y/2); ++_y)
+        {
+            levelManager->tilemap->setTile(Tilemap::tilepallet.floor_main, _x, _y);
+        }
+    }
 }
 
 
+void LevelGenerator::generateWalls()
+{
+    auto tilemap = levelManager->tilemap;
+    auto fgtilemap = levelManager->fgTilemap;
+
+    for (auto tile = tilemap->get().begin(); tile != tilemap->get().end(); ++tile)
+    {
+        if (!tile->second.get()) {
+            continue;
+        }
 
 
+        Vector2 tilePos(tile->first.first, tile->first.second);
+
+        Vector2 upPos(tilePos.x, tilePos.y+1);
+        Vector2 downPos(tilePos.x, tilePos.y-1);
+        Vector2 rightPos(tilePos.x+1, tilePos.y);
+        Vector2 leftPos(tilePos.x-1, tilePos.y);
+
+        const Tile* up = tilemap->getTile(upPos.x, upPos.y);
+        const Tile* down = tilemap->getTile(downPos.x, downPos.y);
+        const Tile* right = tilemap->getTile(rightPos.x, rightPos.y);
+        const Tile* left = tilemap->getTile(leftPos.x, leftPos.y);
 
 
+        //shortcut
+        auto walls = Tilemap::tilepallet.wall;
 
 
-
-
+        //generate
+        if (!up) //this is top tile
+        {
+            if (!left) //this is left-top tile
+            {
+                fgtilemap->setTile(walls[0][0], upPos.x, upPos.y);
+                fgtilemap->setTile(walls[0][1], tilePos.x, tilePos.y);
+                fgtilemap->setTile(walls[0][2], downPos.x, downPos.y);
+            }
+            else if (!right) //this is right-top tile
+            {
+                fgtilemap->setTile(walls[2][0], upPos.x, upPos.y);
+                fgtilemap->setTile(walls[2][1], tilePos.x, tilePos.y);
+                fgtilemap->setTile(walls[2][2], downPos.x, downPos.y);
+            }
+            else //this is center-top tile
+            {
+                fgtilemap->setTile(walls[1][0], upPos.x, upPos.y);
+                fgtilemap->setTile(walls[1][1], tilePos.x, tilePos.y);
+                fgtilemap->setTile(walls[1][2], downPos.x, downPos.y);
+            }
+        }
+        else if (!down) //this is down tile
+        {
+            if (!left) //this is left-down tile
+            {
+                fgtilemap->setTile(walls[0][3], downPos.x, downPos.y);
+            }
+            else if (!right) //this is right-down tile
+            {
+                fgtilemap->setTile(walls[2][3], downPos.x, downPos.y);
+            }
+            else //this is center-down tile
+            {
+                fgtilemap->setTile(walls[1][3], downPos.x, downPos.y);
+            }
+        }
+    }
+}
 

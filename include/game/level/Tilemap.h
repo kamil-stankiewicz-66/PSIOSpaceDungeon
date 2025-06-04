@@ -66,6 +66,7 @@ public:
     void remove(const int& x, const int& y);
     void clear();
 
+    const map<pair<int,int>, tptr>& get() const;
     const Tile* getTile(const int& x, const int& y) const;
 };
 

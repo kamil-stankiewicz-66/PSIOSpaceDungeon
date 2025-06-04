@@ -9,8 +9,11 @@ private:
     static int levelGenerator_levelNumberMultiplier;
     static int levelGenerator_roomsNumber_min;
     static int levelGenerator_roomsNumber_max;
+    static int levelGenerator_roomSize_min;
+    static int levelGenerator_roomSize_max;
     static int levelGenerator_corridorLength_min;
     static int levelGenerator_corridorLength_max;
+    static int levelGenerator_corridor_width;
     static int levelGenerator_enemiesFrequency;
 
 public:
@@ -19,8 +22,11 @@ public:
     static const int& get_levelGenerator_levelNumberMultiplier();
     static const int& get_levelGenerator_roomsNumber_min();
     static const int& get_levelGenerator_roomsNumber_max();
+    static const int& get_levelGenerator_roomSize_min();
+    static const int& get_levelGenerator_roomSize_max();
     static const int& get_levelGenerator_corridorLength_min();
     static const int& get_levelGenerator_corridorLength_max();
+    static const int& get_levelGenerator_corridor_width();
     static const int& get_levelGenerator_enemiesFrequency();
 };
 

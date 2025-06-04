@@ -119,6 +119,11 @@ void Tilemap::clear() {
     tilemap.clear();
 }
 
+
+const map<pair<int,int>, tptr>& Tilemap::get() const {
+    return tilemap;
+}
+
 const Tile* Tilemap::getTile(const int& x, const int& y) const
 {
     auto it = tilemap.find(make_pair(x, y));

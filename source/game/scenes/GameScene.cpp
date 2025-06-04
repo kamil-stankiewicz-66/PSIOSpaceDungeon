@@ -11,7 +11,7 @@ void GameScene::loadObjects()
     //camera
     {
         auto cam = createObject<Camera>();
-        cam->set_viewSize(20.0f);
+        cam->set_viewSize(1.0f);
         set_mainCamera(cam);
     }
 
