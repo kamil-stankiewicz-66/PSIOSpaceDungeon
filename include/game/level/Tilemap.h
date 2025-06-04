@@ -3,6 +3,11 @@
 
 #include "engine/object/Object.h"
 
+class Tile;
+using tptr = shared_ptr<Tile>;
+using vtptr = vector<tptr>;
+using vtptr2 = vector<vtptr>;
+
 ///
 /// \brief A single cell in tilemap.
 ///
@@ -23,7 +28,15 @@ public:
 
 struct TilePallet
 {
-    shared_ptr<Tile> main = nullptr;
+    //main
+    tptr floor_main;
+
+    //wall
+    vtptr2 wall;
+
+    //light floor
+    tptr floor_light_main;
+    vtptr2 floor_light;
 
 private:
     friend class Tilemap;
@@ -37,7 +50,7 @@ private:
 class Tilemap : public GameObject
 {
 private:
-    map<pair<int,int>, shared_ptr<Tile>> tilemap;
+    map<pair<int,int>, tptr> tilemap;
     float scale;
     float cellSize;
 

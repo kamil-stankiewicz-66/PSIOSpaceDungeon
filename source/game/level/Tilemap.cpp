@@ -18,10 +18,43 @@ const float& Tile::getExceedability() const
 /// TilePallet
 ///
 
+vtptr2 make_pallet(string_view asset, const float& factor, const int& size_x, const int& size_y)
+{
+    vtptr2 temp2;
+
+    for (int _x = 0; _x < size_x; ++_x)
+    {
+        vtptr temp1;
+
+        for (int _y = 0; _y < size_y; ++_y)
+        {
+            auto tile = make_shared<Tile>(factor);
+            tile->setTexture(asset.data());
+            tile->setTextureRect(sf::IntRect(_x*16, _y*16, 16, 16));
+
+            temp1.emplace_back(tile);
+        }
+
+        temp2.emplace_back(temp1);
+    }
+
+    return temp2;
+}
+
 void TilePallet::init()
 {
-    main = make_shared<Tile>(1.0f);
-    main->setTexture(Asset::Graphics::FLOOR_MAIN.data());
+    // main floor
+    floor_main = make_shared<Tile>(1.0f);
+    floor_main->setTexture(Asset::Graphics::FLOOR_MAIN.data());
+
+    //wall
+    wall = make_pallet(Asset::Graphics::WALL_MAIN, 0.0f, 3, 4);
+
+    //light floor
+    floor_light_main = make_shared<Tile>(0.25f);
+    floor_main->setTexture(Asset::Graphics::FLOOR_LIGHT.data());
+    floor_main->setTextureRect(sf::IntRect(4*16, 0, 16, 16));
+    floor_light = make_pallet(Asset::Graphics::FLOOR_LIGHT, 0.25f, 4, 3);
 }
 
 

@@ -66,6 +66,10 @@ add_executable(PSIOSpaceDungeon
     source/game/player/PlayerAnim.cpp
     include/game/level/Tilemap.h
     source/game/level/Tilemap.cpp
+    include/game/level/LevelGenerator.h
+    source/game/level/LevelGenerator.cpp
+    include/game/level/LevelManager.h
+    source/game/level/LevelManager.cpp
 )
 
 set_target_properties(

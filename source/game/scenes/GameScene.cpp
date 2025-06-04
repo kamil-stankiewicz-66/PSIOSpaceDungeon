@@ -20,9 +20,9 @@ void GameScene::loadObjects()
         {
             for (int y = 0; y <1; y++)
             {
-                tilemap->setTile(tilemap->tilepallet.main, x, y);
+                tilemap->setTile(tilemap->tilepallet.floor_main, x, y);
             }
         }
-        tilemap->setTile(tilemap->tilepallet.main, 0, 1);
+        tilemap->setTile(tilemap->tilepallet.floor_main, 0, 1);
     }
 }
