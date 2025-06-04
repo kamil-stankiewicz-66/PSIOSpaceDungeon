@@ -1,8 +1,9 @@
 #include "game/scenes/GameScene.h"
-#include "engine/object/Camera.h"
+#include "game/core/Parameter.h"
 #include "game/level/LevelManager.h"
 #include "game/level/Tilemap.h"
 #include "game/player/PlayerCore.h"
+#include "game/player/TrackingCamera.h"
 
 void GameScene::loadObjects()
 {
@@ -10,8 +11,8 @@ void GameScene::loadObjects()
 
     //camera
     {
-        auto cam = createObject<Camera>();
-        cam->set_viewSize(1.0f);
+        auto cam = createObject<TrackingCamera>();
+        cam->set_viewSize(Parameters::get_camera_viewSize());
         set_mainCamera(cam);
     }
 

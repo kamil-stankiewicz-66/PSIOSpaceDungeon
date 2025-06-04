@@ -5,6 +5,10 @@
 
 class PlayerCore;
 
+///
+/// \brief Class that controls the player's movement
+///
+
 class PlayerMove : public Object
 {
     friend PlayerCore;

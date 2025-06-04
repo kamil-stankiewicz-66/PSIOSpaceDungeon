@@ -72,6 +72,8 @@ add_executable(PSIOSpaceDungeon
     source/game/level/LevelManager.cpp
     include/game/core/DataBlock.h
     source/game/core/DataBlock.cpp
+    include/game/player/TrackingCamera.h
+    source/game/player/TrackingCamera.cpp
 )
 
 set_target_properties(

@@ -6,6 +6,10 @@
 
 class LevelManager;
 
+///
+/// \brief Generates a dungeon-style level.
+///
+
 class LevelGenerator : public Component
 {
     friend class LevelManager;

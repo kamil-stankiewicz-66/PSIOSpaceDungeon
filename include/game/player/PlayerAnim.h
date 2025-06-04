@@ -7,6 +7,10 @@ using uint = unsigned int;
 class PlayerCore;
 class AnimationController;
 
+///
+/// \brief A class that controls player animations.
+///
+
 class PlayerAnim : public Object
 {
     friend PlayerCore;

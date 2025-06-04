@@ -6,6 +6,10 @@
 class LevelGenerator;
 class Tilemap;
 
+///
+/// \brief Level management class.
+///
+
 class LevelManager : public Object
 {
 public:

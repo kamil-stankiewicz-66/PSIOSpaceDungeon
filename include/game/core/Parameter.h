@@ -6,6 +6,11 @@ struct Parameters
 private:
     static float player_moveSpeed;
 
+    static float camera_viewSize;
+    static float camera_trackingOn;
+    static float camera_trackingOff;
+    static float camera_speed;
+
     static int levelGenerator_levelNumberMultiplier;
     static int levelGenerator_roomsNumber_min;
     static int levelGenerator_roomsNumber_max;
@@ -18,6 +23,11 @@ private:
 
 public:
     static const float& get_player_moveSpeed();
+
+    static const float& get_camera_viewSize();
+    static const float& get_camera_trackingOn();
+    static const float& get_camera_trackingOff();
+    static const float& get_camera_speed();
 
     static const int& get_levelGenerator_levelNumberMultiplier();
     static const int& get_levelGenerator_roomsNumber_min();
