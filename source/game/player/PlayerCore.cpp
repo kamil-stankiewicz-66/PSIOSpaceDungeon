@@ -26,15 +26,15 @@ void PlayerCore::onAwake()
     playerLegLeft->addTag("PlayerLegLeft");
     this->addChild(playerLegLeft);
     playerLegLeft->getSpritePtr()->setTexture(m_bodyTexture);
-    playerLegLeft->getSpritePtr()->setTextureRect(sf::IntRect(53, 67, 11, 7));
-    playerLegLeft->getTransformPtr()->set_position(-23.f, -65.f);
+    playerLegLeft->getSpritePtr()->setTextureRect(sf::IntRect(53, 63, 11, 11));
+    playerLegLeft->getTransformPtr()->set_position(-23.f, -63.f);
 
     playerLegRight = _scenePtr->createObject<GameObject>(getRenderLayer()-1);
     playerLegRight->addTag("PlayerLegRight");
     this->addChild(playerLegRight);
     playerLegRight->getSpritePtr()->setTexture(m_bodyTexture);
-    playerLegRight->getSpritePtr()->setTextureRect(sf::IntRect(68, 67, 11, 7));
-    playerLegRight->getTransformPtr()->set_position(10.f, -65.f);
+    playerLegRight->getSpritePtr()->setTextureRect(sf::IntRect(68, 63, 11, 11));
+    playerLegRight->getTransformPtr()->set_position(10.f, -63.f);
 
     playerCape = _scenePtr->createObject<GameObject>(getRenderLayer()+1);
     playerCape->addTag("PlayerCape");
