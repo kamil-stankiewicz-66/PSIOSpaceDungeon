@@ -57,7 +57,7 @@ public:
 
     //getters
     const Vector2 get_position() const;
-    const Vector2 get_localPosition() const;
+    const Vector2& get_localPosition() const;
     const Vector2& get_prePosition() const;
     const Vector2& get_scale() const;
     const float& get_rotation() const;

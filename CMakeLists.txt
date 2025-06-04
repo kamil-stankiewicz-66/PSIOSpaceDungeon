@@ -64,6 +64,8 @@ add_executable(PSIOSpaceDungeon
     source/engine/core/VMath.cpp
     include/game/player/PlayerAnim.h
     source/game/player/PlayerAnim.cpp
+    include/game/level/Tilemap.h
+    source/game/level/Tilemap.cpp
 )
 
 set_target_properties(

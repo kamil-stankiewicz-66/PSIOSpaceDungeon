@@ -36,12 +36,12 @@ protected:
     /// \details Used in render() method.
     ///
 
-    void generateMatrix(sf::Transform& transform, const int& width, const int& height,
+    void generateMatrix(const Engine* game, sf::Transform& transform, const int& width, const int& height,
                         const Vector2& position, const Vector2& scale, const float& rotationZ, const bool flipX, const bool isRect);
 
 public:
     //abstract methods
-    virtual void render(const Vector2& position, const Vector2& scale, const float& rotationZ, const bool flipX, const bool isRect) = 0;
+    virtual void render(const Engine* game, const Vector2& position, const Vector2& scale, const float& rotationZ, const bool flipX, const bool isRect) = 0;
     const virtual bool isInited() const = 0;
 
     //virtual methods
@@ -62,7 +62,7 @@ private:
     unique_ptr<sf::Texture> m_texture;
 
 public:
-    virtual void render(const Vector2& position, const Vector2& scale, const float& rotationZ, const bool flipX, const bool isRect) override;
+    virtual void render(const Engine* game, const Vector2& position, const Vector2& scale, const float& rotationZ, const bool flipX, const bool isRect) override;
     virtual const bool isInited() const override;
 
     virtual void dispose() override;
@@ -87,7 +87,7 @@ private:
     unique_ptr<sf::Font> m_font;
 
 public:
-    virtual void render(const Vector2& position, const Vector2& scale, const float& rotationZ, const bool flipX, const bool isRect) override;
+    virtual void render(const Engine* game, const Vector2& position, const Vector2& scale, const float& rotationZ, const bool flipX, const bool isRect) override;
     virtual const bool isInited() const override;
 
     virtual void dispose() override;

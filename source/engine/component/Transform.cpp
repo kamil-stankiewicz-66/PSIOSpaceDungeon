@@ -131,7 +131,7 @@ const Vector2 Transform::get_position() const
     }
 }
 
-const Vector2 Transform::get_localPosition() const
+const Vector2& Transform::get_localPosition() const
 {
     return this->position;
 }
