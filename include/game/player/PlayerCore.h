@@ -1,8 +1,10 @@
 #ifndef PLAYERCORE_H
 #define PLAYERCORE_H
 
+#include "engine/component/Collider.h"
 #include "engine/object/Object.h"
 #include "game/core/Asset.h"
+#include "game/physics/Rigidbody.h"
 #include "game/player/PlayerAnim.h"
 #include "game/player/PlayerMove.h"
 
@@ -28,6 +30,10 @@ private:
     //scripts
     PlayerMove* playerMove = nullptr;
     PlayerAnim* playerAnim = nullptr;
+
+    //components
+    CircleCollider* collider;
+    Rigidbody* rb;
 
 protected:
     virtual void onAwake() override;

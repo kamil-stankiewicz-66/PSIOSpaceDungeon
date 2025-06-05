@@ -74,6 +74,8 @@ add_executable(PSIOSpaceDungeon
     source/game/core/DataBlock.cpp
     include/game/player/TrackingCamera.h
     source/game/player/TrackingCamera.cpp
+    include/game/physics/Rigidbody.h
+    source/game/physics/Rigidbody.cpp
 )
 
 set_target_properties(

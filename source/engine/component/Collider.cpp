@@ -219,3 +219,85 @@ void BoxCollider::updateEdges()
     this->downEdge = position.y - (this->y / 2.0f);
     this->upEdge = position.y + (this->y / 2.0f);
 }
+
+
+
+
+
+
+
+///
+/// CircleCollider
+///
+
+
+void CircleCollider::set(float _radius)
+{
+    if (_radius > 0.0f) {
+        this->radius = _radius;
+    }
+}
+
+
+//for this collider
+bool CircleCollider::checkCollision(Collider* other_collider, Transform* other_transform)
+{
+    if (radius == 0.0f) {
+        return false;
+    }
+
+    const Vector2 position = getObject()->getTransformPtr()->get_position();
+    const Vector2 other_position = other_transform->get_position();
+
+    if (position.distanceToLite(other_position) <= (radius * radius)) {
+        return true;
+    }
+
+    return other_collider->isThisPointInCollider(getNearestColliderPointTo(other_position, 0.0f));
+}
+
+Vector2 CircleCollider::getNearestColliderPointTo(const Vector2& point, const float borderThickness)
+{
+    const Vector2& position = getObject()->getTransformPtr()->get_position();
+    Vector2 angleVector = (point - position).get_normalized();
+    return position + angleVector * (radius - borderThickness);
+}
+
+
+//for other collider
+bool CircleCollider::isThisPointInCollider(const Vector2& _point)
+{
+    if (radius == 0.0f) {
+        return false;
+    }
+
+    if (Transform* _transform = getObject()->getTransformPtr()) {
+        return _transform->get_position().distanceToLite(_point) <= (radius * radius);
+    }
+
+    return false;
+}
+
+
+//getter
+const float& CircleCollider::getRadius() const {
+    return radius;
+}
+
+
+//for chunks
+Edges CircleCollider::getEdges() const
+{
+    if (!getObject() || !getObject()->getTransformPtr()) {
+        return Edges();
+    }
+
+    const Vector2& position = getObject()->getTransformPtr()->get_position();
+
+    return Edges(
+        (int)(position.x - radius),
+        (int)(position.x + radius),
+        (int)(position.y - radius),
+        (int)(position.y + radius)
+        );
+}

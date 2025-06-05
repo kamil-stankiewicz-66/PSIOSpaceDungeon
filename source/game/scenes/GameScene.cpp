@@ -29,7 +29,7 @@ void GameScene::loadObjects()
     //tilemaps
     {
         const float cellSize = 16.0f;
-        const float scale = 2.0f * get_globalScale();
+        const float scale = 2.5f * get_globalScale();
 
         auto tilemap = createObject<Tilemap>(20);
         tilemap->addTag("tilemap");

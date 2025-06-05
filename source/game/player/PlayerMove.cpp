@@ -49,13 +49,16 @@ const bool PlayerMove::isRunning() const {
 void PlayerMove::move(float dt)
 {
     auto _t = playerCore->getTransformPtr();
+    auto _rb = playerCore->rb;
 
     if (!_t) {
         return;
     }
 
     //move
-    _t->add_position(m_move_dir * Parameters::get_player_moveSpeed() * dt * 0.075f);
+    if (_rb) {
+        _rb->addForce(m_move_dir * Parameters::get_player_moveSpeed() * dt * 0.075f);
+    }
 
     //flip
     if (m_move_dir.x < 0) {

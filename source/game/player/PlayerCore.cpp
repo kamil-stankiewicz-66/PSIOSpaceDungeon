@@ -44,6 +44,12 @@ void PlayerCore::onAwake()
     playerCape->getTransformPtr()->set_position(-30.f, -35.f);
 
 
+    //collider
+    collider = createComponent<CircleCollider>();
+    collider->set(80.0f);
+    rb = createComponent<Rigidbody>();
+
+
     //player movement
     playerMove = _scenePtr->createObject<PlayerMove>();
     playerMove->addTag("Script_PlayerMove");

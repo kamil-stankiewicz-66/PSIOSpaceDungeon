@@ -128,4 +128,28 @@ public:
     const float& getSize_y() const;
 };
 
+///
+/// Circle-shaped collider
+///
+
+class CircleCollider : public Collider
+{
+    float radius = 0.0f;
+
+    //Definition of abstract method.
+    bool checkCollision(Collider* other_collider, Transform* other_transform) override; //This method is called by the engine.
+
+public:
+    //Method that sets the size of the Collider.
+    void set(float radius);
+
+    //Definitions of abstract methods
+    bool isThisPointInCollider(const Vector2&) override;
+    Vector2 getNearestColliderPointTo(const Vector2&, const float borderThickness = 0.0f) override;
+    Edges getEdges() const override;
+
+    //getter
+    const float& getRadius() const;
+};
+
 #endif // COLLIDER_H

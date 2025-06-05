@@ -1,5 +1,6 @@
 #include "game/level/Tilemap.h"
 #include "game/core/Asset.h"
+#include <cmath>
 
 
 ///
@@ -88,15 +89,11 @@ void Tilemap::onUpdate(float)
 void Tilemap::render()
 {
     Vector2 _scaleVec(scale, scale);
-    Vector2 _position;
 
     for (auto it = tilemap.begin(); it != tilemap.end(); ++it)
     {
-        _position.x = getTransformPtr()->get_position().x + it->first.first * cellSize * scale;
-        _position.y = getTransformPtr()->get_position().y + it->first.second * cellSize * scale;
-
         if (auto& tile = it->second) {
-            tile->render(getGame(), _position, _scaleVec, 0.0f, false, false);
+            tile->render(getGame(), tile2realPos(it->first.first, it->first.second), _scaleVec, 0.0f, false, false);
         }
     }
 }
@@ -133,4 +130,27 @@ const Tile* Tilemap::getTile(const int& x, const int& y) const
     }
 
     return nullptr;
+}
+
+const Tile* Tilemap::getTileRealPos(const float& x, const float& y)
+{
+    auto _pos = real2tilePos(x, y);
+    return getTile(_pos.first, _pos.second);
+}
+
+
+const Vector2 Tilemap::tile2realPos(const int& x, const int& y)
+{
+    return Vector2(
+        getTransformPtr()->get_position().x + (x * cellSize * scale),
+        getTransformPtr()->get_position().y + (y * cellSize * scale)
+        );
+}
+
+const pair<int,int> Tilemap::real2tilePos(const float& x, const float& y)
+{
+    return make_pair(
+        getTransformPtr()->get_position().x + (x / cellSize / scale),
+        getTransformPtr()->get_position().y + (y / cellSize / scale)
+        );
 }

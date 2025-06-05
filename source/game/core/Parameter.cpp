@@ -15,7 +15,7 @@ int Parameters::levelGenerator_roomSize_min = 14;
 int Parameters::levelGenerator_roomSize_max = 20;
 int Parameters::levelGenerator_corridorLength_min = 3;
 int Parameters::levelGenerator_corridorLength_max = 8;
-int Parameters::levelGenerator_corridor_width = 4;
+int Parameters::levelGenerator_corridor_width = 5;
 int Parameters::levelGenerator_enemiesFrequency = 3;
 
 

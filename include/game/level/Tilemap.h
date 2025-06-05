@@ -50,6 +50,8 @@ private:
 
 class Tilemap : public GameObject
 {
+    friend class TilemapCollider;
+
 private:
     map<pair<int,int>, tptr> tilemap;
     float scale;
@@ -68,6 +70,10 @@ public:
 
     const map<pair<int,int>, tptr>& get() const;
     const Tile* getTile(const int& x, const int& y) const;
+    const Tile* getTileRealPos(const float& x, const float& y);
+
+    const Vector2 tile2realPos(const int& x, const int& y);
+    const pair<int,int> real2tilePos(const float& x, const float& y);
 };
 
 #endif // TILEMAP_H
