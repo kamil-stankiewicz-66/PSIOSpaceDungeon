@@ -1,6 +1,5 @@
 # skip all
 /*
-!bin/
 
 # code
 !include/
@@ -10,12 +9,9 @@
 !*.cpp
 !*.h
 
-# bin
-!bin/release/
-!bin/release/**
-!bin/debug/
-!bin/debug/**
-*bin/debug/*.exe
+# assets
+!assets/
+!assets/**
 
 #files
 !CMakeLists.txt
