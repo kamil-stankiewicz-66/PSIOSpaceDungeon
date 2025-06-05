@@ -4,8 +4,10 @@
 #include "engine/component/Collider.h"
 #include "engine/object/Object.h"
 #include "game/core/Asset.h"
+#include "game/entity/Weapon.h"
 #include "game/physics/Rigidbody.h"
 #include "game/player/PlayerAnim.h"
+#include "game/player/PlayerAttack.h"
 #include "game/player/PlayerMove.h"
 
 ///
@@ -17,6 +19,7 @@ class PlayerCore : public GameObject
 {
     friend class PlayerMove;
     friend class PlayerAnim;
+    friend class PlayerAttack;
 
 private:
     const string m_bodyTexture = Asset::Graphics::PLAYER_SKIN_02.data();
@@ -26,10 +29,12 @@ private:
     GameObject* playerLegLeft = nullptr;
     GameObject* playerLegRight = nullptr;
     GameObject* playerCape = nullptr;
+    Weapon* weapon = nullptr;
 
     //scripts
     PlayerMove* playerMove = nullptr;
     PlayerAnim* playerAnim = nullptr;
+    PlayerAttack* playerAttack = nullptr;
 
     //components
     CircleCollider* collider;
