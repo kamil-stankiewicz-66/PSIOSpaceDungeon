@@ -37,9 +37,6 @@ void Rigidbody::addForce(const Vector2& force)
     if (const Tile* tile = tilemap->getTileRealPos(transform->get_position().x, transform->get_position().y)) {
         tileFactor = tile->getExceedability();
     }
-    else {
-        tileFactor = 0.0f;
-    }
 
 
     Vector2 potentialPosition(transform->get_position() + (force * tileFactor));

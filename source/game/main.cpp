@@ -3,7 +3,7 @@
 int main()
 {
     Game game("Space Dungeon");
-    game.run();
+    game.run(165);
 
     return 0;
 }
