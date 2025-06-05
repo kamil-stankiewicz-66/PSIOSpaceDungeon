@@ -179,9 +179,14 @@ void LevelGenerator::generateRoom(int& x, int& y)
 
 void LevelGenerator::generateWalls()
 {
+    //shortcuts
     auto tilemap = levelManager->tilemap;
     auto fgtilemap = levelManager->fgTilemap;
 
+    //temp
+    list<Vector2> _toRemove;
+
+    //generate
     for (auto tile = tilemap->get().begin(); tile != tilemap->get().end(); ++tile)
     {
         if (!tile->second.get()) {
@@ -227,6 +232,9 @@ void LevelGenerator::generateWalls()
                 fgtilemap->setTile(walls[1][1], tilePos.x, tilePos.y);
                 fgtilemap->setTile(walls[1][2], downPos.x, downPos.y);
             }
+
+            //add to remove
+            _toRemove.emplace_back(tilePos.x,  tilePos.y);
         }
         else if (!down) //this is down tile
         {
@@ -244,5 +252,10 @@ void LevelGenerator::generateWalls()
             }
         }
     }
-}
 
+    //clear
+    for (const auto& v : _toRemove)
+    {
+        tilemap->removeTile(v.x, v.y);
+    }
+}

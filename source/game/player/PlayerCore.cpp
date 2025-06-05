@@ -16,6 +16,13 @@ void PlayerCore::onAwake()
     Scene* _scenePtr = this->getGame()->get_currentScene();
 
 
+    //rect
+    playerRect = _scenePtr->createObject<GameObject>();
+    playerRect->addTag("PlayerRect");
+    this->addChild(playerRect);
+    playerRect->getTransformPtr()->add_position(0.0f, -40.0f);
+
+
     //creating player body
     playerBody = _scenePtr->createObject<GameObject>(getRenderLayer());
     playerBody->addTag("PlayerBody");
@@ -55,8 +62,11 @@ void PlayerCore::onAwake()
 
     //collider
     collider = createComponent<CircleCollider>();
-    collider->set(80.0f);
+    collider->set(50.0f);
+
+    //rigidbody
     rb = createComponent<Rigidbody>();
+    rb->init(getTransformPtr(), playerRect->getTransformPtr());
 
 
     //player movement

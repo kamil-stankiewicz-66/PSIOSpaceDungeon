@@ -4,48 +4,46 @@
 
 void Rigidbody::onStart()
 {
-    if (!getObject()) {
-        return;
-    }
-
-    transform = getObject()->getTransformPtr();
-    collider = getObject()->getComponent<CircleCollider>(true);
     tilemap = getGame()->get_currentScene()->findObject<Tilemap>("tilemap");
 
-    if (!transform || !tilemap || !collider) {
-        VDebuger::print("<ERROR> RIGIDBODY :: ON_START :: collider or transform or tilemap is nullptr");
+    if (!tilemap) {
+        VDebuger::print("<ERROR> RIGIDBODY :: ON_START :: tilemap is nullptr");
     }
+}
+
+void Rigidbody::init(Transform* transform, Transform* rect)
+{
+    this->transform = transform;
+    this->rect = rect;
 }
 
 void Rigidbody::addForce(const Vector2& force)
 {
-    if (!tilemap) {
+    if (!tilemap || !transform || !rect) {
+        VDebuger::print("<ERROR> RIGIDBODY :: ADD_FORCE :: is not inited");
         return;
     }
 
-    if (!transform) {
-        return;
-    }
 
-    if (!collider) {
-        return;
-    }
-
+    //friction value from tile
 
     float tileFactor = 1.0f;
 
-    if (const Tile* tile = tilemap->getTileRealPos(transform->get_position().x, transform->get_position().y)) {
+    if (const Tile* tile = tilemap->getTileRealPos(rect->get_position().x, rect->get_position().y)) {
         tileFactor = tile->getExceedability();
     }
 
 
-    Vector2 potentialPosition(transform->get_position() + (force * tileFactor));
-    Vector2 potentialColEdgePosition = potentialPosition.get_normalized() * (potentialPosition.modulo() + collider->getRadius());
+    //checking if rect would be in collision after moving
 
-    if (auto tile = tilemap->getTileRealPos(potentialColEdgePosition.x, potentialColEdgePosition.y))
+    Vector2 potentialPosition(rect->get_position() + (force * tileFactor));
+
+    //if tile is nullptr, there is a collision
+    if (auto tile = tilemap->getTileRealPos(potentialPosition.x, potentialPosition.y))
     {
+        //move
         if (tile->getExceedability() > 0.0f) {
-            transform->set_position(potentialPosition);
+            transform->set_position(transform->get_position() + (force * tileFactor));
         }
     }
 }

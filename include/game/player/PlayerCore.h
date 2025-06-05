@@ -25,6 +25,7 @@ private:
     const string m_bodyTexture = Asset::Graphics::PLAYER_SKIN_02.data();
 
     //body
+    GameObject* playerRect = nullptr;
     GameObject* playerBody = nullptr;
     GameObject* playerLegLeft = nullptr;
     GameObject* playerLegRight = nullptr;

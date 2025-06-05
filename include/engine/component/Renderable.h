@@ -46,6 +46,9 @@ public:
 
     //virtual methods
     virtual void dispose();
+
+    //getter
+    const string_view getAssetRef() const;
 };
 
 
@@ -71,6 +74,7 @@ public:
     void setTexture(const string& asset_ref);
     void setColor(const sf::Color&);
     void setTextureRect(const sf::IntRect&);
+    const sf::IntRect& getTextureRect() const;
 };
 
 

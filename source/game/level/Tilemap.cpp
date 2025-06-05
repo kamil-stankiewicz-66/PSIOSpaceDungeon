@@ -61,9 +61,13 @@ void TilePallet::init()
 
     //light floor
     floor_light_main = make_shared<Tile>(0.25f);
-    floor_main->setTexture(Asset::Graphics::FLOOR_LIGHT.data());
-    floor_main->setTextureRect(sf::IntRect(4*16, 0, 16, 16));
+    floor_light_main->setTexture(Asset::Graphics::FLOOR_LIGHT.data());
+    floor_light_main->setTextureRect(sf::IntRect(4*16, 0, 16, 16));
     floor_light = make_pallet(Asset::Graphics::FLOOR_LIGHT, 0.25f, 4, 3);
+
+    //empty
+    empty = make_shared<Tile>(0.0f);
+    empty->setTexture(Asset::Graphics::EMPTY.data());
 }
 
 
@@ -108,7 +112,7 @@ void Tilemap::setTile(shared_ptr<Tile>& tile, const int& x, const int& y) {
     tilemap[make_pair(x, y)] = tile;
 }
 
-void Tilemap::remove(const int& x, const int& y) {
+void Tilemap::removeTile(const int& x, const int& y) {
     tilemap.erase(make_pair(x, y));
 }
 
@@ -139,18 +143,21 @@ const Tile* Tilemap::getTileRealPos(const float& x, const float& y)
 }
 
 
-const Vector2 Tilemap::tile2realPos(const int& x, const int& y)
+const std::pair<int, int> Tilemap::real2tilePos(const float& x, const float& y)
 {
-    return Vector2(
-        getTransformPtr()->get_position().x + (x * cellSize * scale),
-        getTransformPtr()->get_position().y + (y * cellSize * scale)
+    float scaledCellSize = cellSize * scale;
+    return std::make_pair(
+        static_cast<int>(std::floor(x / scaledCellSize)),
+        static_cast<int>(std::floor(y / scaledCellSize))
         );
 }
 
-const pair<int,int> Tilemap::real2tilePos(const float& x, const float& y)
+
+const Vector2 Tilemap::tile2realPos(const int& x, const int& y)
 {
-    return make_pair(
-        getTransformPtr()->get_position().x + (x / cellSize / scale),
-        getTransformPtr()->get_position().y + (y / cellSize / scale)
-        );
+    float scaledCellSize = cellSize * scale;
+    return {
+        x * scaledCellSize + scaledCellSize / 2.0f,
+        y * scaledCellSize + scaledCellSize / 2.0f
+    };
 }

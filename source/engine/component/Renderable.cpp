@@ -102,6 +102,12 @@ void VRenderable::dispose()
 }
 
 
+const string_view VRenderable::getAssetRef() const
+{
+    return this->m_assetRef;
+}
+
+
 
 ///
 /// Sprite
@@ -168,6 +174,11 @@ void VSprite::setColor(const sf::Color& _c)
 void VSprite::setTextureRect(const sf::IntRect& rect)
 {
     this->m_sprite.setTextureRect(rect);
+}
+
+const sf::IntRect& VSprite::getTextureRect() const
+{
+    return m_sprite.getTextureRect();
 }
 
 

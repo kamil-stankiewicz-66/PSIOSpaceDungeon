@@ -23,7 +23,7 @@ public:
 };
 
 ///
-/// \brief The TilePallet class
+/// \brief A class that stores the tile palette.
 ///
 
 struct TilePallet
@@ -38,6 +38,9 @@ struct TilePallet
     tptr floor_light_main;
     vtptr2 floor_light;
 
+    //empty
+    tptr empty;
+
 private:
     friend class Tilemap;
     bool isInited;
@@ -50,8 +53,6 @@ private:
 
 class Tilemap : public GameObject
 {
-    friend class TilemapCollider;
-
 private:
     map<pair<int,int>, tptr> tilemap;
     float scale;
@@ -59,19 +60,25 @@ private:
 
     virtual void onAwake() override;
     virtual void onUpdate(float) override;
-    void render();
+    void render(); //render all tiles
 
 public:
     static TilePallet tilepallet;
     void setData(const float& cellSize, const float& scale = 1.0f);
     void setTile(shared_ptr<Tile>& tile, const int& x, const int& y);
-    void remove(const int& x, const int& y);
+    void removeTile(const int& x, const int& y);
     void clear();
 
+    //getter - return tilemap
     const map<pair<int,int>, tptr>& get() const;
+
+    //get tile by grid position
     const Tile* getTile(const int& x, const int& y) const;
+
+    //get tile by world position
     const Tile* getTileRealPos(const float& x, const float& y);
 
+    //converters
     const Vector2 tile2realPos(const int& x, const int& y);
     const pair<int,int> real2tilePos(const float& x, const float& y);
 };
