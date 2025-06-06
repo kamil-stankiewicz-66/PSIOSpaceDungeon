@@ -72,6 +72,7 @@ public:
 
     //sprite api
     void setTexture(const string& asset_ref);
+    void setTexture(const sf::Texture*);
     void setColor(const sf::Color&);
     void setTextureRect(const sf::IntRect&);
     const sf::IntRect& getTextureRect() const;

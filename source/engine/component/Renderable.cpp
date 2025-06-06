@@ -166,6 +166,16 @@ void VSprite::setTexture(const string& asset_ref)
     this->m_assetRef = asset_ref;
 }
 
+void VSprite::setTexture(const sf::Texture* text)
+{
+    if (!text) {
+        return;
+    }
+
+    this->dispose();
+    this->m_sprite.setTexture(*text);
+}
+
 void VSprite::setColor(const sf::Color& _c)
 {
     this->m_sprite.setColor(_c);

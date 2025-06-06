@@ -78,8 +78,6 @@ add_executable(PSIOSpaceDungeon
     source/game/physics/Rigidbody.cpp
     include/game/entity/Entity.h
     source/game/entity/Entity.cpp
-    include/game/entity/Weapon.h
-    source/game/entity/Weapon.cpp
     include/game/player/PlayerAttack.h
     source/game/player/PlayerAttack.cpp
     include/game/physics/Rycast.h
@@ -87,6 +85,10 @@ add_executable(PSIOSpaceDungeon
     include/game/entity/BasicEntity.h
     source/game/entity/BasicEntity.cpp
     include/game/core/Tag.h
+    source/game/weapon/Weapon.cpp
+    include/game/weapon/Weapon.h
+    include/game/core/ScriptableObject.h
+    source/game/core/ScriptableObject.cpp
 )
 
 set_target_properties(

@@ -4,7 +4,7 @@
 #include "engine/component/Collider.h"
 #include "engine/object/Object.h"
 #include "game/core/Asset.h"
-#include "game/entity/Weapon.h"
+#include "game/weapon/Weapon.h"
 #include "game/physics/Rigidbody.h"
 #include "game/player/PlayerAnim.h"
 #include "game/player/PlayerAttack.h"
@@ -17,6 +17,7 @@
 
 class PlayerCore : public GameObject
 {
+    friend class LevelManager;
     friend class PlayerMove;
     friend class PlayerAnim;
     friend class PlayerAttack;
@@ -30,7 +31,7 @@ private:
     GameObject* playerLegLeft = nullptr;
     GameObject* playerLegRight = nullptr;
     GameObject* playerCape = nullptr;
-    Weapon* weapon = nullptr;
+    GameObject* hand = nullptr;
 
     //scripts
     PlayerMove* playerMove = nullptr;

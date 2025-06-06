@@ -3,7 +3,9 @@
 
 struct Parameters
 {
-private:
+    friend class Game;
+
+
     static float player_moveSpeed;
 
     static float camera_viewSize;
@@ -21,7 +23,15 @@ private:
     static int levelGenerator_corridor_width;
     static int levelGenerator_enemiesFrequency;
 
+    static float bullet_speed;
+
+
 public:
+
+    //init method
+    static void init();
+
+
     static const float& get_player_moveSpeed();
 
     static const float& get_camera_viewSize();
@@ -38,6 +48,8 @@ public:
     static const int& get_levelGenerator_corridorLength_max();
     static const int& get_levelGenerator_corridor_width();
     static const int& get_levelGenerator_enemiesFrequency();
+
+    static const float& get_bullet_speed();
 };
 
 #endif // PARAMETER_H

@@ -4,8 +4,8 @@
 #include "engine/component/AnimationController.h"
 #include "engine/component/Collider.h"
 #include "engine/object/Object.h"
-#include "game/entity/Weapon.h"
 #include "game/physics/Rigidbody.h"
+#include "game/weapon/Weapon.h"
 #include <random>
 
 using namespace std;
@@ -60,6 +60,7 @@ protected:
     AnimationController* animController = nullptr;
 
     //weapon
+    GameObject* hand = nullptr;
     Weapon* weaponCore = nullptr;
 
 private:

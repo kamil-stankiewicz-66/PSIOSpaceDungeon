@@ -1,7 +1,6 @@
 #include "game/player/PlayerCore.h"
 #include "engine/core/Engine.h"
 #include "game/core/Tag.h"
-#include "game/entity/Weapon.h"
 
 ///
 /// PlayerCore
@@ -53,12 +52,10 @@ void PlayerCore::onStart()
     playerCape->getTransformPtr()->set_position(-30.f, -35.f);
 
 
-    //weapon
-    weapon = _scenePtr->createObject<AssaultRifle>(getRenderLayer() + 2);
-    weapon->getSpritePtr()->setTexture(Asset::Graphics::ASSAULT_RIFLE_01.data());
-    playerBody->addChild(weapon);
-    weapon->getTransformPtr()->add_position(10.0f, -20.0f);
-
+    //hand
+    hand = _scenePtr->createObject<GameObject>(getRenderLayer() + 2);
+    playerBody->addChild(hand);
+    hand->getTransformPtr()->add_position(10.0f, -20.0f);
 
 
     //collider

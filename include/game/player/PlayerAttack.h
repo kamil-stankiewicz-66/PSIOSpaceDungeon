@@ -1,6 +1,8 @@
 #ifndef PLAYERATTACK_H
 #define PLAYERATTACK_H
+
 #include "engine/object/Object.h"
+
 class PlayerCore;
 
 ///
