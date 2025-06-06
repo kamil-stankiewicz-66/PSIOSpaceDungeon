@@ -7,7 +7,8 @@
 #include "game/level/Tilemap.h"
 
 ///
-/// \brief The physical component used to move objects, interacts with the tile map.
+/// \brief The physical component used to move objects.
+/// \details Interacts with the tilemap.
 ///
 
 class Rigidbody : public Component
@@ -17,6 +18,8 @@ class Rigidbody : public Component
     Transform* rect;
 
     virtual void onStart() override;
+
+    inline bool isNull() const;
 
 public:
     void init(Transform* transform, Transform* rect);

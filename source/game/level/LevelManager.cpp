@@ -1,5 +1,6 @@
 #include "game/level/LevelManager.h"
 #include "engine/core/Engine.h"
+#include "game/core/Tag.h"
 #include "game/level/LevelGenerator.h"
 #include "game/level/Tilemap.h"
 
@@ -9,9 +10,9 @@ void LevelManager::onStart()
     Scene* scene = getGame()->get_currentScene();
 
     //tilemaps
-    tilemap = scene->findObject<Tilemap>("tilemap");
-    fgTilemap = scene->findObject<Tilemap>("fg_tilemap");
-    bgTilemap = scene->findObject<Tilemap>("bg_tilemap");
+    tilemap = scene->findObject<Tilemap>(Tag::TILEMAP.data());
+    fgTilemap = scene->findObject<Tilemap>(Tag::TILEMAP_FG.data());
+    bgTilemap = scene->findObject<Tilemap>(Tag::TILEMAP_BG.data());
 
     //check
     if (!tilemap || !fgTilemap || !bgTilemap) {

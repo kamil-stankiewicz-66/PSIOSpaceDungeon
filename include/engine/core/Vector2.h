@@ -1,13 +1,14 @@
 #ifndef VECTOR2_H
 #define VECTOR2_H
 
+#include "SFML/System/Vector2.hpp"
 #include <iostream>
 
 ///
 /// \brief Structure that defines a vector with two components: x and y.
 ///
 
-struct Vector2
+struct Vector2 : public sf::Vector2f
 {
     //operators
     Vector2 operator+(const Vector2& other) const;
@@ -29,7 +30,7 @@ struct Vector2
     }
 
 
-    float x, y;
+    //cntr
     Vector2(float x = 0.0f, float y = 0.0f);
 
 

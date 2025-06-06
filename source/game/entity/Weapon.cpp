@@ -3,6 +3,11 @@
 #include "game/core/Asset.h"
 #include <cmath>
 
+const float& Weapon::getRange() const {
+    return this->range;
+}
+
+
 void Bullet::init(const float& damage, const float& rotation, bool flip)
 {
     this->damage = damage;

@@ -1,15 +1,16 @@
 #include "game/player/PlayerCore.h"
 #include "engine/core/Engine.h"
+#include "game/core/Tag.h"
 #include "game/entity/Weapon.h"
 
 ///
 /// PlayerCore
 ///
 
-void PlayerCore::onAwake()
+void PlayerCore::onStart()
 {
     //tag
-    this->addTag("Player");
+    this->addTag(Tag::PLAYER_CORE.data());
 
 
     //ptr
@@ -18,34 +19,34 @@ void PlayerCore::onAwake()
 
     //rect
     playerRect = _scenePtr->createObject<GameObject>();
-    playerRect->addTag("PlayerRect");
+    playerRect->addTag(Tag::PLAYER_RECT.data());
     this->addChild(playerRect);
     playerRect->getTransformPtr()->add_position(0.0f, -40.0f);
 
 
     //creating player body
     playerBody = _scenePtr->createObject<GameObject>(getRenderLayer());
-    playerBody->addTag("PlayerBody");
+    playerBody->addTag(Tag::PLAYER_BODY.data());
     this->addChild(playerBody);
     playerBody->getSpritePtr()->setTexture(m_bodyTexture);
     playerBody->getSpritePtr()->setTextureRect(sf::IntRect(49, 3, 41, 59));
 
     playerLegLeft = _scenePtr->createObject<GameObject>(getRenderLayer()-1);
-    playerLegLeft->addTag("PlayerLegLeft");
+    playerLegLeft->addTag(Tag::PLAYER_LEG_LEFT.data());
     this->addChild(playerLegLeft);
     playerLegLeft->getSpritePtr()->setTexture(m_bodyTexture);
     playerLegLeft->getSpritePtr()->setTextureRect(sf::IntRect(53, 63, 11, 11));
     playerLegLeft->getTransformPtr()->set_position(-23.f, -63.f);
 
     playerLegRight = _scenePtr->createObject<GameObject>(getRenderLayer()-1);
-    playerLegRight->addTag("PlayerLegRight");
+    playerLegRight->addTag(Tag::PLAYER_LEG_RIGHT.data());
     this->addChild(playerLegRight);
     playerLegRight->getSpritePtr()->setTexture(m_bodyTexture);
     playerLegRight->getSpritePtr()->setTextureRect(sf::IntRect(68, 63, 11, 11));
     playerLegRight->getTransformPtr()->set_position(10.f, -63.f);
 
     playerCape = _scenePtr->createObject<GameObject>(getRenderLayer()+1);
-    playerCape->addTag("PlayerCape");
+    playerCape->addTag(Tag::PLAYER_CAPE.data());
     playerBody->addChild(playerCape);
     playerCape->getSpritePtr()->setTexture(m_bodyTexture);
     playerCape->getSpritePtr()->setTextureRect(sf::IntRect(24, 35, 19, 28));

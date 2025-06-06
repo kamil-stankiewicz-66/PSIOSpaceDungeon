@@ -1,14 +1,19 @@
 #include "game/physics/Rigidbody.h"
 #include "engine/core/Engine.h"
 #include "engine/object/Object.h"
+#include "game/core/Tag.h"
 
 void Rigidbody::onStart()
 {
-    tilemap = getGame()->get_currentScene()->findObject<Tilemap>("tilemap");
+    tilemap = getGame()->get_currentScene()->findObject<Tilemap>(Tag::TILEMAP.data());
 
     if (!tilemap) {
         VDebuger::print("<ERROR> RIGIDBODY :: ON_START :: tilemap is nullptr");
     }
+}
+
+bool Rigidbody::isNull() const {
+    return !tilemap || !transform || !rect;
 }
 
 void Rigidbody::init(Transform* transform, Transform* rect)
@@ -19,9 +24,14 @@ void Rigidbody::init(Transform* transform, Transform* rect)
 
 void Rigidbody::addForce(const Vector2& force)
 {
-    if (!tilemap || !transform || !rect) {
-        VDebuger::print("<ERROR> RIGIDBODY :: ADD_FORCE :: is not inited");
-        return;
+    if (this->isNull())
+    {
+        tilemap = getGame()->get_currentScene()->findObject<Tilemap>(Tag::TILEMAP.data());
+
+        if (this->isNull()) {
+            VDebuger::print("<ERROR> RIGIDBODY :: ON_START :: tilemap is nullptr");
+            return;
+        }
     }
 
 

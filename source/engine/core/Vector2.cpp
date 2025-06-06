@@ -60,10 +60,8 @@ bool Vector2::operator>(const Vector2& other) const {
 /// methods
 ///
 
-Vector2::Vector2(float _x, float _y)
+Vector2::Vector2(float _x, float _y) : sf::Vector2f(_x, _y)
 {
-    this->x = _x;
-    this->y = _y;
 }
 
 void Vector2::clear()

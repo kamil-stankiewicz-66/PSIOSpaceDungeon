@@ -6,10 +6,14 @@
 class Weapon : public GameObject
 {
 protected:
+    float range;
     float damage;
 
 public:
     virtual void attack() = 0;
+
+    //getter
+    const float& getRange() const;
 };
 
 

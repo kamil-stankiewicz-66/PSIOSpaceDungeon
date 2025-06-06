@@ -42,7 +42,7 @@ private:
     Rigidbody* rb;
 
 protected:
-    virtual void onAwake() override;
+    virtual void onStart() override;
 };
 
 #endif // PLAYERCORE_H

@@ -15,6 +15,9 @@ class TrackingCamera : public Camera
 
     virtual void onStart() override;
     virtual void onUpdate(float dt) override;
+
+public:
+    const bool isOnScreen(const Vector2& point);
 };
 
 #endif // TRACKINGCAMERA_H

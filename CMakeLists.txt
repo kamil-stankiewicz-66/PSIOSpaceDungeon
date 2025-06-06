@@ -82,6 +82,11 @@ add_executable(PSIOSpaceDungeon
     source/game/entity/Weapon.cpp
     include/game/player/PlayerAttack.h
     source/game/player/PlayerAttack.cpp
+    include/game/physics/Rycast.h
+    source/game/physics/Rycast.cpp
+    include/game/entity/BasicEntity.h
+    source/game/entity/BasicEntity.cpp
+    include/game/core/Tag.h
 )
 
 set_target_properties(
