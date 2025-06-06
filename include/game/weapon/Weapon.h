@@ -78,6 +78,7 @@ public:
 
     //aim to point
     void aim(const Vector2& point);
+    void resetAim();
 };
 
 

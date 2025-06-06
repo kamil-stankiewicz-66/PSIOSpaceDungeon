@@ -105,6 +105,10 @@ void Gun::aim(const Vector2& point)
     getTransformPtr()->set_rotation(-static_cast<float>(aimAngle));
 }
 
+void Gun::resetAim() {
+    aimDir.clear();
+}
+
 void Bullet::init(const float& damage, const Vector2& dir)
 {
     this->damage = damage;

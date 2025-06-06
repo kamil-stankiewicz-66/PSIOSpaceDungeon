@@ -30,6 +30,11 @@ void PlayerAttack::onUpdate(float dt)
         }
     }
 
+
+    //weapon flip update
+    weapon->getTransformPtr()->set_flip_x(playerCore->getTransformPtr()->get_flipX());
+
+
     if (!playerCore->playerDetector) {
         return;
     }
@@ -47,6 +52,7 @@ void PlayerAttack::onUpdate(float dt)
     else
     {
         weapon->getTransformPtr()->set_rotation(0.0f);
+        weapon->resetAim();
     }
 
     //attack
