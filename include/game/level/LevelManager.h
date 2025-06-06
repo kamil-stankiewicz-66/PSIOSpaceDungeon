@@ -2,6 +2,7 @@
 #define LEVELMANAGER_H
 
 #include "engine/object/Object.h"
+#include "game/player/PlayerCore.h"
 
 class LevelGenerator;
 class Tilemap;
@@ -13,12 +14,17 @@ class Tilemap;
 class LevelManager : public Object
 {
 public:
-    Tilemap* tilemap;
-    Tilemap* fgTilemap;
-    Tilemap* bgTilemap;
+
+    //tilemaps
+    Tilemap* tilemap = nullptr;
+    Tilemap* fgTilemap = nullptr;
+    Tilemap* bgTilemap = nullptr;
+
+    //player
+    PlayerCore* player = nullptr;
 
 private:
-    LevelGenerator* levelGenerator;
+    LevelGenerator* levelGenerator = nullptr;
 
     virtual void onStart() override;
 

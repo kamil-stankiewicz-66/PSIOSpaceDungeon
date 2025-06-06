@@ -4,6 +4,7 @@
 #include "engine/component/Collider.h"
 #include "engine/object/Object.h"
 #include "game/core/Asset.h"
+#include "game/player/PlayerEnemyDetector.h"
 #include "game/weapon/Weapon.h"
 #include "game/physics/Rigidbody.h"
 #include "game/player/PlayerAnim.h"
@@ -37,13 +38,14 @@ private:
     PlayerMove* playerMove = nullptr;
     PlayerAnim* playerAnim = nullptr;
     PlayerAttack* playerAttack = nullptr;
+    PlayerEnemyDetector* playerDetector = nullptr;
 
     //components
     CircleCollider* collider;
     Rigidbody* rb;
 
 protected:
-    virtual void onStart() override;
+    virtual void onAwake() override;
 };
 
 #endif // PLAYERCORE_H

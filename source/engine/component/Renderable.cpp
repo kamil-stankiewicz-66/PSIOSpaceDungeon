@@ -155,7 +155,7 @@ void VSprite::setTexture(const string& asset_ref)
     }
 
     if (!m_texture) {
-        m_texture = make_unique<sf::Texture>();
+        m_texture = make_shared<sf::Texture>();
     }
 
     if (!m_texture->loadFromFile(asset_ref)) {
@@ -166,14 +166,16 @@ void VSprite::setTexture(const string& asset_ref)
     this->m_assetRef = asset_ref;
 }
 
-void VSprite::setTexture(const sf::Texture* text)
+void VSprite::setTexture(shared_ptr<sf::Texture>& texture)
 {
-    if (!text) {
+    if (!texture) {
         return;
     }
 
     this->dispose();
-    this->m_sprite.setTexture(*text);
+
+    m_texture = texture;
+    this->m_sprite.setTexture(*m_texture);
 }
 
 void VSprite::setColor(const sf::Color& _c)

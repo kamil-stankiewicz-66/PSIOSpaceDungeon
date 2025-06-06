@@ -16,11 +16,19 @@ void Entity::onStart()
     //state
     state = EntityState::Sleep;
 
+    //tag
+    this->addTag(Tag::ENEMY.data());
+
+
     //componets
     collider = createComponent<CircleCollider>();
+    collider->set(50.0f);
+
     rb = createComponent<Rigidbody>();
     rb->init(getTransformPtr(), getTransformPtr());
+
     animController = createComponent<AnimationController>();
+
 
     //find objects
     player = getGame()->get_currentScene()->findGameObject(Tag::PLAYER_RECT.data())->getTransformPtr();

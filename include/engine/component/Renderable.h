@@ -62,7 +62,7 @@ class VSprite : public VRenderable
 
 private:
     sf::Sprite m_sprite;
-    unique_ptr<sf::Texture> m_texture;
+    shared_ptr<sf::Texture> m_texture;
 
 public:
     virtual void render(const Engine* game, const Vector2& position, const Vector2& scale, const float& rotationZ, const bool flipX, const bool isRect) override;
@@ -72,7 +72,7 @@ public:
 
     //sprite api
     void setTexture(const string& asset_ref);
-    void setTexture(const sf::Texture*);
+    void setTexture(shared_ptr<sf::Texture>&);
     void setColor(const sf::Color&);
     void setTextureRect(const sf::IntRect&);
     const sf::IntRect& getTextureRect() const;

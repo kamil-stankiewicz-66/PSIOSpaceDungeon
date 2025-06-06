@@ -11,14 +11,14 @@
 
 void Weapon::onUpdate(float dt)
 {
-    if (timeAcc < data.attackTimeOut) {
+    if (timeAcc <= data.attackTimeOut) {
         timeAcc += dt;
     }
 }
 
 void Weapon::attack()
 {
-    if (data.attackTimeOut < timeAcc) {
+    if (data.attackTimeOut <= timeAcc) {
         this->attackCore();
         timeAcc = 0.0f;
     }
@@ -67,17 +67,25 @@ void Melee::attackCore()
 
 void Gun::attackCore()
 {
-    Bullet* bullet = getGame()->get_currentScene()->createObject<Bullet>();
-    bullet->getSpritePtr()->setTexture(this->bulletTxt.get());
-    bullet->init(getData().damage, this->aimPoint);
-    bullet->getTransformPtr()->set_position(getTransformPtr()->get_position());
+    Bullet* bullet = getGame()->get_currentScene()->createObject<Bullet>(getRenderLayer()-1);
+
+    if (aimDir.zero()) {
+        aimDir.x = getTransformPtr()->get_flipX() ? -1.0f : 1.0f;
+    }
+
+    bullet->getTransformPtr()->set_position(getTransformPtr()->get_position() + (aimDir*50.f));
+    bullet->getTransformPtr()->set_rotation(getTransformPtr()->get_rotation());
+    bullet->getTransformPtr()->set_flip_x(getTransformPtr()->get_flipX());
+
+    bullet->getSpritePtr()->setTexture(bulletTxt);
+    bullet->init(getData().damage, aimDir);
 }
 
 void Gun::set(const WeaponData& data)
 {
     Weapon::set(data);
 
-    bulletTxt = make_unique<sf::Texture>();
+    bulletTxt = make_shared<sf::Texture>();
     if (!bulletTxt->loadFromFile(Asset::Graphics::LASER_BULLET.data())) {
         VDebuger::print("<ERROR> :: GUN :: texture load error");
     }
@@ -85,7 +93,16 @@ void Gun::set(const WeaponData& data)
 
 void Gun::aim(const Vector2& point)
 {
-    this->aimPoint = point;
+    aimDir = Vector2(point - getTransformPtr()->get_position());
+    aimDir.normalize();
+
+    float aimAngle = atan2(aimDir.y, aimDir.x) * (180.0 / M_PI);
+
+    if (getTransformPtr()->get_flipX()) {
+        aimAngle = 180.0 - aimAngle;
+    }
+
+    getTransformPtr()->set_rotation(-static_cast<float>(aimAngle));
 }
 
 void Bullet::init(const float& damage, const Vector2& dir)
@@ -94,7 +111,7 @@ void Bullet::init(const float& damage, const Vector2& dir)
     this->dir = dir;
 
     getSpritePtr()->setColor(sf::Color::Yellow);
-    getTransformPtr()->scaleBy(0.25f);
+    getTransformPtr()->scaleBy(0.2f);
 }
 
 void Bullet::onUpdate(float dt)

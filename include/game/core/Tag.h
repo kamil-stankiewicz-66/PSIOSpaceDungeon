@@ -17,6 +17,9 @@ struct Tag
     static constexpr std::string_view TILEMAP = "tilemap";
     static constexpr std::string_view TILEMAP_BG = "bg_tilemap";
     static constexpr std::string_view TILEMAP_FG = "fg_tilemap";
+
+    //entity
+    static constexpr std::string_view ENEMY = "enemy";
 };
 
 #endif // TAG_H

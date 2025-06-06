@@ -8,13 +8,49 @@ void PlayerAttack::onAwake()
     playerCore = getGame()->get_currentScene()->findObject<PlayerCore>();
 
     if (!playerCore) {
-        VDebuger::print("<ERROR>[GAME] :: PLAYER_MOVE :: playerCore = nullptr");
+        VDebuger::print("<ERROR>[GAME] :: PLAYER_ATTACK :: playerCore = nullptr");
+        return;
+    }
+
+    if (!playerCore->hand) {
+        VDebuger::print("<ERROR>[GAME] :: PLAYER_ATTACK :: playerCore is not inited");
+        return;
     }
 }
 
 void PlayerAttack::onUpdate(float dt)
 {
-    // if (Input::Mouse::LEFT_BUTTON()){
-    //     playerCore->weapon->attack();
-    // }
+    if (!weapon)
+    {
+        weapon = dynamic_cast<Gun*>(playerCore->hand->getChilds()[0]);
+
+        if (!weapon) {
+            VDebuger::print("<ERROR>[GAME] :: PLAYER_ATTACK :: weapon is nullptr");
+            return;
+        }
+    }
+
+    if (!playerCore->playerDetector) {
+        return;
+    }
+
+
+    //aim
+    if (auto t = playerCore->playerDetector->getTarget())
+    {
+        Vector2 dir(t->getTransformPtr()->get_position() - playerCore->getTransformPtr()->get_position());
+        dir.normalize();
+
+        playerCore->getTransformPtr()->set_flip_x(dir.x < 0.0f);
+        weapon->aim(t->getTransformPtr()->get_position());
+    }
+    else
+    {
+        weapon->getTransformPtr()->set_rotation(0.0f);
+    }
+
+    //attack
+    if (Input::Mouse::LEFT_BUTTON() || Input::Keyboard::isKeyPressed(Input::Keyboard::Key::Space)) {
+        weapon->attack();
+    }
 }

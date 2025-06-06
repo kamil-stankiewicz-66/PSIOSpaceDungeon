@@ -2,6 +2,7 @@
 #define PLAYERATTACK_H
 
 #include "engine/object/Object.h"
+#include "game/weapon/Weapon.h"
 
 class PlayerCore;
 
@@ -15,6 +16,7 @@ class PlayerAttack : public Object
 
 private:
     PlayerCore* playerCore = nullptr;
+    Gun* weapon = nullptr;
 
 protected:
     virtual void onAwake() override;

@@ -1,24 +1,24 @@
 #include "game/core/Parameter.h"
 
 
-float Parameters::player_moveSpeed = 8.0f;
+float Parameters::player_moveSpeed;
 
-float Parameters::camera_viewSize = 1.2f;
-float Parameters::camera_trackingOn = 120.0f;
-float Parameters::camera_trackingOff = 5.0f;
-float Parameters::camera_speed = 12.0f;
+float Parameters::camera_viewSize;
+float Parameters::camera_trackingOn;
+float Parameters::camera_trackingOff;
+float Parameters::camera_speed;
 
-int Parameters::levelGenerator_levelNumberMultiplier = 5;
-int Parameters::levelGenerator_roomsNumber_min = 5;
-int Parameters::levelGenerator_roomsNumber_max = 10;
-int Parameters::levelGenerator_roomSize_min = 14;
-int Parameters::levelGenerator_roomSize_max = 20;
-int Parameters::levelGenerator_corridorLength_min = 3;
-int Parameters::levelGenerator_corridorLength_max = 8;
-int Parameters::levelGenerator_corridor_width = 5;
-int Parameters::levelGenerator_enemiesFrequency = 3;
+int Parameters::levelGenerator_levelNumberMultiplier;
+int Parameters::levelGenerator_roomsNumber_min;
+int Parameters::levelGenerator_roomsNumber_max;
+int Parameters::levelGenerator_roomSize_min;
+int Parameters::levelGenerator_roomSize_max;
+int Parameters::levelGenerator_corridorLength_min;
+int Parameters::levelGenerator_corridorLength_max;
+int Parameters::levelGenerator_corridor_width;
+int Parameters::levelGenerator_enemiesFrequency;
 
-float Parameters::bullet_speed = 30.0f;
+float Parameters::bullet_speed;
 
 
 

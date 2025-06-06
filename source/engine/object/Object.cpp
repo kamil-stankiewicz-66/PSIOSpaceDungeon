@@ -294,7 +294,7 @@ const string Object::getTag(const unsigned char& index) const
 
 
 const bool Object::checkTag(const string& arg_tag) const {
-    return this->tags.find(arg_tag) != this->tags.end();
+    return !tags.empty() && (this->tags.find(arg_tag) != this->tags.end());
 }
 
 

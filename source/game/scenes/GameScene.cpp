@@ -18,16 +18,6 @@ void GameScene::loadObjects()
         set_mainCamera(cam);
     }
 
-    //managers
-    {
-        createObject<LevelManager>();
-    }
-
-    //player
-    {
-        createObject<PlayerCore>(50);
-    }
-
     //tilemaps
     {
         const float cellSize = 16.0f;
@@ -44,6 +34,16 @@ void GameScene::loadObjects()
         auto fgtilemap = createObject<Tilemap>(30);
         fgtilemap->addTag(Tag::TILEMAP_FG.data());
         fgtilemap->setData(cellSize, scale);
+    }
+
+    //player
+    {
+        createObject<PlayerCore>(50);
+    }
+
+    //managers
+    {
+        createObject<LevelManager>();
     }
 
     //test entity

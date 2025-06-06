@@ -32,7 +32,10 @@ const WeaponData* WeaponSO::get(const uint& id)
 
 void WeaponSO::add(WeaponData* so)
 {
-    if (!get(so->id)) {
+    auto it = weapons.find(so->id);
+
+    if (it == weapons.end() && so)
+    {
         weapons[so->id] = unique_ptr<WeaponData>(so);
     }
 }
@@ -68,7 +71,7 @@ void WeaponSO::init()
         rifle->textureRef = Asset::Graphics::ASSAULT_RIFLE_01.data();
         rifle->coins = 10;
 
-        rifle->attackTimeOut = 1000.0f;
+        rifle->attackTimeOut = 500.0f;
         rifle->damage = 10.0f;
         rifle->range = 400.0f;
 

@@ -69,8 +69,8 @@ class Gun : public Weapon
     virtual void attackCore() override;
 
     //vars
-    unique_ptr<sf::Texture> bulletTxt;
-    Vector2 aimPoint;
+    shared_ptr<sf::Texture> bulletTxt = nullptr;
+    Vector2 aimDir;
 
 public:
     //setter

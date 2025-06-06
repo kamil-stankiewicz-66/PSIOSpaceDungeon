@@ -89,6 +89,8 @@ add_executable(PSIOSpaceDungeon
     include/game/weapon/Weapon.h
     include/game/core/ScriptableObject.h
     source/game/core/ScriptableObject.cpp
+    include/game/player/PlayerEnemyDetector.h
+    source/game/player/PlayerEnemyDetector.cpp
 )
 
 set_target_properties(

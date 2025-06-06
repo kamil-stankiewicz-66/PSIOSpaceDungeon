@@ -14,8 +14,8 @@
 
 void Transform::onUpdate(float _dt)
 {
-    this->m_inMove = this->position != this->pre_position;
-    this->pre_position = this->position;
+    this->m_inMove = this->get_position() != this->pre_position;
+    this->pre_position = this->get_position();
 }
 
 

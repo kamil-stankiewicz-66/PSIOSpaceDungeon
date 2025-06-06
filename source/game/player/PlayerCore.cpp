@@ -6,7 +6,7 @@
 /// PlayerCore
 ///
 
-void PlayerCore::onStart()
+void PlayerCore::onAwake()
 {
     //tag
     this->addTag(Tag::PLAYER_CORE.data());
@@ -81,5 +81,9 @@ void PlayerCore::onStart()
     playerAttack = _scenePtr->createObject<PlayerAttack>();
     playerAttack->addTag("Script_PlayerAttack");
     this->addChild(this->playerAttack);
+
+    //player enemy detector
+    playerDetector = _scenePtr->createObject<PlayerEnemyDetector>();
+    playerDetector->addTag("Script_PlayerEnemyDetector");
 }
 
