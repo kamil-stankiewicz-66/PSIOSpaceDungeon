@@ -93,6 +93,10 @@ add_executable(PSIOSpaceDungeon
     source/game/player/PlayerEnemyDetector.cpp
     include/game/physics/ParticleEffect.h
     source/game/physics/ParticleEffect.cpp
+    include/engine/core/ISerializable.h
+    source/engine/core/BinarySerializer.cpp
+
+
 )
 
 set_target_properties(
