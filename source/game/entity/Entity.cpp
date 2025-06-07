@@ -106,8 +106,8 @@ void Entity::set(const EntityData& data)
     this->getTransformPtr()->scaleBy(this->entityData.scale);
     hand->getTransformPtr()->add_position(2.5f * this->entityData.scale, -5.0f * this->entityData.scale);
 
-    this->collider->set(this->getSpritePtr()->getTextureRect().width * this->entityData.scale,
-                        this->getSpritePtr()->getTextureRect().height * this->entityData.scale);
+    this->collider->set(this->getSpritePtr()->getTextureRect().width * getTransformPtr()->get_scale().x,
+                        this->getSpritePtr()->getTextureRect().height * getTransformPtr()->get_scale().y);
 }
 
 

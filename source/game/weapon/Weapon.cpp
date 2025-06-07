@@ -129,9 +129,6 @@ void Gun::attackCore()
         aimDir.x = getTransformPtr()->get_flipX() ? -1.0f : 1.0f;
     }
 
-    //targer tag
-    bullet->addTag(getTargetTag());
-
     //transform
     bullet->getTransformPtr()->set_position(getTransformPtr()->get_position() + (aimDir*50.f));
     bullet->getTransformPtr()->set_rotation(getTransformPtr()->get_rotation());
@@ -141,7 +138,7 @@ void Gun::attackCore()
     bullet->getSpritePtr()->setTexture(bulletTxt);
 
     //init
-    bullet->init(getData().damage, aimDir, tilemap);
+    bullet->init(getData().damage, aimDir, this->getTargetTag(), tilemap);
 }
 
 void Gun::set(const WeaponData& data, const string& targetTag)
@@ -182,10 +179,11 @@ void Gun::resetAim() {
 
 shared_ptr<sf::Texture> Bullet::particleTexture = nullptr;
 
-void Bullet::init(const float& damage, const Vector2& dir, Tilemap* tilemap)
+void Bullet::init(const float& damage, const Vector2& dir, const string& targetTag, Tilemap* tilemap)
 {
     this->damage = damage;
     this->dir = dir;
+    this->targetTag = targetTag;
     this->tilemap = tilemap;
 
     getSpritePtr()->setColor(sf::Color::Yellow);
@@ -280,7 +278,7 @@ void Bullet::onUpdate(float dt)
         }
 
         //if this is not target skip
-        if (!obj->checkTag(this->getTag(0))) {
+        if (!obj->checkTag(this->targetTag)) {
             continue;
         }
 

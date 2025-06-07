@@ -95,6 +95,7 @@ class Bullet : public GameObject
 {
     friend class Gun;
     CircleCollider* collider;
+    string targetTag;
 
     //link
     Tilemap* tilemap = nullptr;
@@ -109,7 +110,7 @@ class Bullet : public GameObject
     virtual void onUpdate(float dt);
 
     //init bullet from gun
-    void init(const float& damage, const Vector2& dir, Tilemap* tilemap);
+    void init(const float& damage, const Vector2& dir, const string& targetTag, Tilemap* tilemap);
 
     //destroy
     void destroy(const sf::Color& color);
