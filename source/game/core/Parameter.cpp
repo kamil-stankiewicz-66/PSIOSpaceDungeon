@@ -20,6 +20,8 @@ int Parameters::levelGenerator_enemiesFrequency;
 
 float Parameters::bullet_speed;
 
+float Parameters::entity_rndMoveIntense;
+
 
 
 ///
@@ -46,6 +48,8 @@ void Parameters::init()
     Parameters::levelGenerator_enemiesFrequency = 3;
 
     Parameters::bullet_speed = 30.0f;
+
+    Parameters::entity_rndMoveIntense = 4000.0f;
 }
 
 
@@ -128,4 +132,13 @@ const int& Parameters::get_levelGenerator_enemiesFrequency() {
 
 const float& Parameters::get_bullet_speed() {
     return bullet_speed;
+}
+
+
+///
+/// entity
+///
+
+const float& Parameters::get_entity_rndMoveIntense() {
+    return entity_rndMoveIntense;
 }

@@ -15,6 +15,7 @@ enum class EntityState {
     Sleep, Attack, Seek
 };
 
+
 ///
 /// \brief Abstarct class for all entities.
 ///
@@ -38,15 +39,15 @@ private:
     float nextTime = 0.0f;
     float timeAcc = 0.0f;
 
-    //params
-    const float rndMoveIntense = 4000.0f;
-    const float walkSpeed = 2.0f;
-
     //engine
     virtual void onStart() override;
     virtual void onUpdate(float dt) override;
 
 protected:
+
+    //data
+    EntityData entityData;
+
     //random engine
     mt19937 rng;
 
@@ -62,6 +63,11 @@ protected:
     //weapon
     GameObject* hand = nullptr;
     Weapon* weaponCore = nullptr;
+
+
+    //set data
+    void set(const EntityData&);
+
 
 private:
     void seek(const float& dt);

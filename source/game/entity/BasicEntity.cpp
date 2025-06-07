@@ -6,6 +6,6 @@ void BasicEntity::attack(const float& dt)
 
     }
     else {
-        moveTo(player->get_position(), runSpeed, dt);
+        moveTo(player->get_position(), entityData.runSpeed, dt);
     }
 }

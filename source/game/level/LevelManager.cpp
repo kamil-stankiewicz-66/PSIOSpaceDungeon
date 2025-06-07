@@ -1,7 +1,5 @@
 #include "game/level/LevelManager.h"
 #include "engine/core/Engine.h"
-#include "game/core/DataBlock.h"
-#include "game/core/ScriptableObject.h"
 #include "game/core/Tag.h"
 #include "game/level/LevelGenerator.h"
 #include "game/level/Tilemap.h"
@@ -42,11 +40,15 @@ void LevelManager::onStart()
 
 void LevelManager::loadLevel()
 {
+    //link
+    Scene* scene = getGame()->get_currentScene();
+
+    if (!scene) {
+        return;
+    }
+
+
     //generate level
     levelGenerator->generate();
 
-    //load player data
-    Weapon* weapon = getGame()->get_currentScene()->createObject<Gun>(player->getRenderLayer()+1);
-    weapon->set(*WeaponSO::get(PlayerData::weapon_id), Tag::ENEMY.data());
-    player->hand->addChild(weapon);
 }

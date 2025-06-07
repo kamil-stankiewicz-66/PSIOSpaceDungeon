@@ -2,25 +2,11 @@
 #define WEAPON_H
 
 #include "engine/component/Collider.h"
+#include "engine/core/Scene.h"
 #include "engine/object/Object.h"
+#include "game/core/ScriptableObject.h"
 #include "game/level/Tilemap.h"
 using uint = unsigned int;
-
-///
-/// \brief Stores weapon data.
-///
-
-struct WeaponData
-{
-    uint id;
-    string name;
-    string textureRef;
-    uint coins;
-
-    float range;
-    float damage;
-    float attackTimeOut;
-};
 
 
 ///
@@ -41,6 +27,10 @@ private:
 public:
     void attack();
 
+    //aim to point
+    virtual void aim(const Vector2& point) = 0;
+    virtual void resetAim() = 0;
+
     //setter
     virtual void set(const WeaponData&, const string& targetTag);
 
@@ -48,6 +38,11 @@ public:
     const float& getRange() const;
     const WeaponData& getData() const;
     const string& getTargetTag() const;
+
+
+    //static
+    static Weapon* createWeapon(Scene* scene, const WeaponData& data, const string& targetTag = "",
+                                uint renderLayer = 0u, Object* parent = nullptr);
 };
 
 
@@ -58,7 +53,11 @@ public:
 class Melee : public Weapon
 {
     CircleCollider* collider;
+
+    //definitions
     virtual void attackCore() override;
+    virtual void aim(const Vector2& point) override;
+    virtual void resetAim() override;
 };
 
 
@@ -83,8 +82,8 @@ public:
     virtual void set(const WeaponData&, const string& targetTag) override;
 
     //aim to point
-    void aim(const Vector2& point);
-    void resetAim();
+    virtual void aim(const Vector2& point) override;
+    virtual void resetAim() override;
 };
 
 

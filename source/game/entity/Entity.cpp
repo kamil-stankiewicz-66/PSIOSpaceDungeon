@@ -1,5 +1,6 @@
 #include "game/entity/Entity.h"
 #include "engine/core/Engine.h"
+#include "game/core/Parameter.h"
 #include "game/core/Tag.h"
 #include "game/physics/Rycast.h"
 
@@ -69,6 +70,15 @@ void Entity::onUpdate(float dt)
 }
 
 
+
+void Entity::set(const EntityData& data)
+{
+    this->entityData = data;
+
+}
+
+
+
 ///
 /// states
 ///
@@ -85,14 +95,14 @@ void Entity::seek(const float& dt)
         rndDirection.normalize();
 
         //random time
-        uniform_real_distribution<float> rndDist(rndMoveIntense - 2.f, rndMoveIntense + 2.f);
+        uniform_real_distribution<float> rndDist(Parameters::get_entity_rndMoveIntense() - 2.f, Parameters::get_entity_rndMoveIntense() + 2.f);
         rnd = rndDist(rng);
 
         //time to next update
         nextTime = timeAcc + rnd;
     }
 
-    if (move(rndDirection, walkSpeed, dt))
+    if (move(rndDirection, entityData.walkSpeed, dt))
     {
         nextTime = 0.0f;
         timeAcc = 0.0f;

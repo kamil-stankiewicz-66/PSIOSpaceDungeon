@@ -2,6 +2,8 @@
 #include "engine/core/Input.h"
 #include "game/player/PlayerCore.h"
 #include "engine/core/Engine.h"
+#include "game/core/DataBlock.h"
+#include "game/core/Tag.h"
 
 void PlayerAttack::onAwake()
 {
@@ -16,18 +18,19 @@ void PlayerAttack::onAwake()
         VDebuger::print("<ERROR>[GAME] :: PLAYER_ATTACK :: playerCore is not inited");
         return;
     }
+
+    weapon = Weapon::createWeapon(getGame()->get_currentScene(),
+                                  *WeaponSO::get(PlayerData::weapon_id),
+                                  Tag::ENEMY.data(),
+                                  playerCore->getRenderLayer()+1u,
+                                  playerCore->hand);
 }
 
 void PlayerAttack::onUpdate(float dt)
 {
-    if (!weapon)
-    {
-        weapon = dynamic_cast<Gun*>(playerCore->hand->getChilds()[0]);
-
-        if (!weapon) {
-            VDebuger::print("<ERROR>[GAME] :: PLAYER_ATTACK :: weapon is nullptr");
-            return;
-        }
+    if (!weapon) {
+        VDebuger::print("<ERROR>[GAME] :: PLAYER_ATTACK :: weapon is nullptr");
+        return;
     }
 
 

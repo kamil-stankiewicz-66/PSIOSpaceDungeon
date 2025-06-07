@@ -1,11 +1,41 @@
 #ifndef SCRIPTABLEOBJECT_H
 #define SCRIPTABLEOBJECT_H
 
-#include "game/weapon/Weapon.h"
+#include <map>
+#include <memory>
+#include <string>
+using namespace std;
+using uint = unsigned int;
+
+
 
 ///
-/// \brief Scriptable objects.
+/// Base data object.
 ///
+
+struct ScriptableObject
+{
+    uint id;
+    string name;
+    string textureRef;
+};
+
+
+
+///
+/// \brief WeaponData scriptable objects.
+///
+
+struct WeaponData : ScriptableObject
+{
+    enum class Type { Melee, Gun };
+
+    Type type;
+    uint coins;
+    float range;
+    float damage;
+    float attackTimeOut;
+};
 
 class WeaponSO
 {
@@ -19,6 +49,35 @@ public:
 
 private:
     static void add(WeaponData*);
+    static void init();
+};
+
+
+///
+/// \brief EntitiData scriptable objects.
+///
+
+struct EntityData : ScriptableObject
+{
+    uint weaponID;
+    float walkSpeed;
+    float runSpeed;
+};
+
+class EntitySO
+{
+    friend class Game;
+
+    //all entity scriptable objects
+    static map<uint, unique_ptr<EntityData>> entities;
+
+public:
+    static const EntityData* get(const uint& id);
+
+private:
+    static void add(EntityData*);
+
+    //
     static void init();
 };
 

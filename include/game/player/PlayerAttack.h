@@ -16,7 +16,7 @@ class PlayerAttack : public Object
 
 private:
     PlayerCore* playerCore = nullptr;
-    Gun* weapon = nullptr;
+    Weapon* weapon = nullptr;
 
 protected:
     virtual void onAwake() override;

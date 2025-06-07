@@ -25,12 +25,16 @@ struct Parameters
 
     static float bullet_speed;
 
+    static float entity_rndMoveIntense;
+
 
 public:
 
     //init method
     static void init();
 
+
+    //getters
 
     static const float& get_player_moveSpeed();
 
@@ -50,6 +54,8 @@ public:
     static const int& get_levelGenerator_enemiesFrequency();
 
     static const float& get_bullet_speed();
+
+    static const float& get_entity_rndMoveIntense();
 };
 
 #endif // PARAMETER_H

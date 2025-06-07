@@ -50,6 +50,43 @@ const string& Weapon::getTargetTag() const {
 
 
 
+//static
+Weapon* Weapon::createWeapon(Scene* scene, const WeaponData& data, const string& targetTag,
+                                uint renderLayer, Object* parent)
+{
+    if (!scene) {
+        VDebuger::print("<ERROR> WEAPON :: CREATE_WEAPON :: scene is nullptr");
+        return nullptr;
+    }
+
+    //empty ptr
+    Weapon* weapon = nullptr;
+
+    //create object
+    switch (data.type)
+    {
+    case WeaponData::Type::Melee:
+        weapon = scene->createObject<Melee>(renderLayer, parent);
+        break;
+    case WeaponData::Type::Gun:
+        weapon = scene->createObject<Gun>(renderLayer, parent);
+        break;
+    default:
+        return nullptr;
+        break;
+    }
+
+    //init
+    if (weapon) {
+        weapon->set(*WeaponSO::get(data.id), targetTag);
+    }
+
+    return weapon;
+}
+
+
+
+
 ///
 /// Melee
 ///
@@ -65,6 +102,16 @@ void Melee::attackCore()
 
         //add damage
     }
+}
+
+void Melee::aim(const Vector2& point)
+{
+
+}
+
+void Melee::resetAim()
+{
+
 }
 
 
@@ -164,7 +211,7 @@ void Bullet::destroy(const sf::Color& color)
     effect(color);
 
     //destroy
-    getGame()->get_currentScene()->killObject(this);
+    getGame()->get_currentScene()->killObject(this, true);
 }
 
 void Bullet::effect(const sf::Color& color)
