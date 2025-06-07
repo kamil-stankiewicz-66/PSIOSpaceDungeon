@@ -3,6 +3,7 @@
 
 #include "engine/component/Collider.h"
 #include "engine/object/Object.h"
+#include "game/level/Tilemap.h"
 using uint = unsigned int;
 
 ///
@@ -32,6 +33,7 @@ class Weapon : public GameObject
 
 private:
     float timeAcc;
+    string targetTag;
 
     virtual void onUpdate(float dt) override;
     virtual void attackCore() = 0;
@@ -40,11 +42,12 @@ public:
     void attack();
 
     //setter
-    virtual void set(const WeaponData&);
+    virtual void set(const WeaponData&, const string& targetTag);
 
     //getter
     const float& getRange() const;
     const WeaponData& getData() const;
+    const string& getTargetTag() const;
 };
 
 
@@ -68,13 +71,16 @@ class Gun : public Weapon
     //attack definition
     virtual void attackCore() override;
 
+    //link
+    Tilemap* tilemap = nullptr;
+
     //vars
     shared_ptr<sf::Texture> bulletTxt = nullptr;
     Vector2 aimDir;
 
 public:
     //setter
-    virtual void set(const WeaponData&) override;
+    virtual void set(const WeaponData&, const string& targetTag) override;
 
     //aim to point
     void aim(const Vector2& point);
@@ -91,6 +97,12 @@ class Bullet : public GameObject
     friend class Gun;
     CircleCollider* collider;
 
+    //link
+    Tilemap* tilemap = nullptr;
+
+    //cache
+    static shared_ptr<sf::Texture> particleTexture;
+
     float damage;
     Vector2 dir;
 
@@ -98,7 +110,13 @@ class Bullet : public GameObject
     virtual void onUpdate(float dt);
 
     //init bullet from gun
-    void init(const float& damage, const Vector2& dir);
+    void init(const float& damage, const Vector2& dir, Tilemap* tilemap);
+
+    //destroy
+    void destroy(const sf::Color& color);
+
+    //onDestroy effect
+    void effect(const sf::Color& color);
 };
 
 #endif // WEAPON_H

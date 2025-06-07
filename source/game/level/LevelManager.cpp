@@ -47,6 +47,6 @@ void LevelManager::loadLevel()
 
     //load player data
     Weapon* weapon = getGame()->get_currentScene()->createObject<Gun>(player->getRenderLayer()+1);
-    weapon->set(*WeaponSO::get(PlayerData::weapon_id));
+    weapon->set(*WeaponSO::get(PlayerData::weapon_id), Tag::ENEMY.data());
     player->hand->addChild(weapon);
 }

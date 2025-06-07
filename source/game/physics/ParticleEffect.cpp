@@ -1,4 +1,5 @@
 #include "game/physics/ParticleEffect.h"
+#include "engine/core/Engine.h"
 
 
 
@@ -83,6 +84,11 @@ void ParticleEffect::onUpdate(float dt)
     particles.erase(remove_if(particles.begin(), particles.end(),
                                    [](const unique_ptr<Particle>& p){ return p->age >= p->lifeTime; }), particles.end());
 
+
+    //auto destroy
+    if (m_autoDestroy && particles.empty()) {
+        getGame()->get_currentScene()->killObject(this, true);
+    }
 }
 
 
@@ -93,14 +99,21 @@ void ParticleEffect::onUpdate(float dt)
 ///
 
 
-void ParticleEffect::invoke(const Vector2& dir)
+void ParticleEffect::invoke(const Vector2& dir, bool autoDestroy)
 {
+    if (autoDestroy) {
+        m_autoDestroy = true;
+    }
+
     uint N = getRndUInt(this->particleNum, this->particleNum_diff);
     particles.reserve(particles.size() + N);
 
     for (uint n = 0u; n < N; ++n)
     {
         auto particle = make_unique<Particle>();
+
+        particle->setTexture(this->texture);
+        particle->setColor(this->color);
 
         particle->dir = getRndDir(dir);
         particle->speed = getRndFloat(this->speed, this->speed_diff);
@@ -125,6 +138,13 @@ void ParticleEffect::setTexture(const string_view tex) {
     if (!texture->loadFromFile(tex.data())) {
         VDebuger::print("<ERROR> :: PARTICLE_EFFECT :: SET_TEXTURE:: cant load texture");
         texture = nullptr;
+    }
+}
+
+void ParticleEffect::setTexture(shared_ptr<sf::Texture>& texture)
+{
+    if (texture) {
+        this->texture = texture;
     }
 }
 

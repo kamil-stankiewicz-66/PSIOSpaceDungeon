@@ -23,6 +23,8 @@ class ParticleEffect : public GameObject
 {
     vector<unique_ptr<Particle>> particles;
 
+    bool m_autoDestroy;
+
     shared_ptr<sf::Texture> texture;
     sf::Color color;
     Vector2 scale;
@@ -50,10 +52,19 @@ class ParticleEffect : public GameObject
     virtual void onUpdate(float dt) override;
 
 public:
-    void invoke(const Vector2& dir);
+
+    ///
+    /// \brief Emit particles.
+    /// \param dir Base direction.
+    /// \param autoDestroy True - object will be removed from the scene after emit ends
+    ///
+
+    void invoke(const Vector2& dir, bool autoDestroy = true);
+
 
     //setters
     void setTexture(const string_view textureRef);
+    void setTexture(shared_ptr<sf::Texture>& texture);
     void setColor(const sf::Color& color);
     void setScale(const Vector2& scale);
     void setSpread(const float& spread);
