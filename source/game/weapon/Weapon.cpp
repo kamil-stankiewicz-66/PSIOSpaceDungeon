@@ -78,7 +78,7 @@ Weapon* Weapon::createWeapon(Scene* scene, const WeaponData& data, const string&
 
     //init
     if (weapon) {
-        weapon->set(*WeaponSO::get(data.id), targetTag);
+        weapon->set(data, targetTag);
     }
 
     return weapon;

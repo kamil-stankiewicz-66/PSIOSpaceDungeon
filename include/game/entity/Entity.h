@@ -22,6 +22,8 @@ enum class EntityState {
 
 class Entity : public GameObject
 {
+    friend class LevelGenerator;
+
 public:
     Entity(); //cntr
 
@@ -40,7 +42,7 @@ private:
     float timeAcc = 0.0f;
 
     //engine
-    virtual void onStart() override;
+    virtual void onAwake() override;
     virtual void onUpdate(float dt) override;
 
 protected:
@@ -52,11 +54,10 @@ protected:
     mt19937 rng;
 
     //ptr
-    Transform* weapon = nullptr;
     Transform* player = nullptr;
 
     //componets
-    CircleCollider* collider = nullptr;
+    BoxCollider* collider = nullptr;
     Rigidbody* rb = nullptr;
     AnimationController* animController = nullptr;
 

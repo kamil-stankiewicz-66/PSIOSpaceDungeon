@@ -1,7 +1,6 @@
 #include "game/scenes/GameScene.h"
 #include "game/core/Parameter.h"
 #include "game/core/Tag.h"
-#include "game/entity/BasicEntity.h"
 #include "game/level/LevelManager.h"
 #include "game/level/Tilemap.h"
 #include "game/player/PlayerCore.h"
@@ -44,12 +43,5 @@ void GameScene::loadObjects()
     //managers
     {
         createObject<LevelManager>();
-    }
-
-    //test entity
-    {
-        auto e = createObject<BasicEntity>(200);
-        e->getSpritePtr()->setTexture(Asset::Graphics::ORC_ARMORED.data());
-        e->getTransformPtr()->scaleBy(2.0f);
     }
 }

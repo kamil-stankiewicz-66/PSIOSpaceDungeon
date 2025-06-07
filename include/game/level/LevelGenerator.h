@@ -4,7 +4,12 @@
 #include "engine/component/Component.h"
 #include <random>
 
+using namespace std;
+
 class LevelManager;
+class Entity;
+class Scene;
+struct EntityData;
 
 ///
 /// \brief Generates a dungeon-style level.
@@ -34,6 +39,11 @@ private:
     void generateCorridor(int& x, int& y);
     void generateRoom(int& x, int& y);
     void generateWalls();
+
+
+    //entity creator
+    static Entity* createEntity(Scene* scene, const EntityData& data,
+                                uint renderLayer = 0u, Object* parent = nullptr);
 };
 
 #endif // LEVELGENERATOR_H

@@ -128,21 +128,6 @@ void EntitySO::add(EntityData* so)
 
 void EntitySO::init()
 {
-    // //fists
-    // {
-    //     WeaponData* fists = new WeaponData;
-
-    //     fists->id = 0;
-    //     fists->name = "Fists";
-    //     fists->coins = 10;
-
-    //     fists->attackTimeOut = 1500.0f;
-    //     fists->damage = 1.0f;
-    //     fists->range = 5.0f;
-
-    //     WeaponSO::add(fists);
-    // }
-
     //zombie
     {
         EntityData* zombie = new EntityData;
@@ -151,9 +136,13 @@ void EntitySO::init()
         zombie->name = "Zombie";
         zombie->textureRef = Asset::Graphics::ZOMBIE_BASIC.data();
 
-        zombie->weaponID = 0u;
+        zombie->type = EntityData::Type::Basic;
+        zombie->weaponID = 1u;
         zombie->walkSpeed = 2.0f;
         zombie->runSpeed = 4.0f;
+        zombie->scale = 2.0f;
+
+        EntitySO::add(zombie);
     }
 }
 

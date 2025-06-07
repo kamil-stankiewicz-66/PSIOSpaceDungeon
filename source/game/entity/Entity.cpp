@@ -12,7 +12,7 @@ Entity::Entity() : rng(std::random_device{}())
 /// engine
 ///
 
-void Entity::onStart()
+void Entity::onAwake()
 {
     //state
     state = EntityState::Sleep;
@@ -21,9 +21,13 @@ void Entity::onStart()
     this->addTag(Tag::ENEMY.data());
 
 
+    //parts
+    hand = getGame()->get_currentScene()->createObject<GameObject>();
+    this->addChild(hand);
+
+
     //componets
-    collider = createComponent<CircleCollider>();
-    collider->set(50.0f);
+    collider = createComponent<BoxCollider>();;
 
     rb = createComponent<Rigidbody>();
     rb->init(getTransformPtr(), getTransformPtr());
@@ -73,8 +77,37 @@ void Entity::onUpdate(float dt)
 
 void Entity::set(const EntityData& data)
 {
+    this->addTag(Tag::ENEMY.data());
+
+    //data
     this->entityData = data;
 
+    uniform_real_distribution<float> rndSpeed(data.runSpeed - (0.1 * data.runSpeed), data.runSpeed + (0.1 * data.runSpeed));
+    this->entityData.runSpeed = rndSpeed(rng);
+
+    uniform_real_distribution<float> rndScale(data.scale - (0.1 * data.scale), data.scale + (0.1 * data.scale));
+    this->entityData.scale = rndScale(rng);
+
+
+
+    if (!getGame()) {
+        VDebuger::print("<ERROR> ENTITY :: SET :: object is not inited");
+    }
+
+
+    getSpritePtr()->setTexture(data.textureRef);
+
+    weaponCore = Weapon::createWeapon(getGame()->get_currentScene(),
+                                      *WeaponSO::get(data.weaponID),
+                                      Tag::PLAYER_CORE.data(),
+                                      getRenderLayer()+1u,
+                                      hand);
+
+    this->getTransformPtr()->scaleBy(this->entityData.scale);
+    hand->getTransformPtr()->add_position(2.5f * this->entityData.scale, -5.0f * this->entityData.scale);
+
+    this->collider->set(this->getSpritePtr()->getTextureRect().width * this->entityData.scale,
+                        this->getSpritePtr()->getTextureRect().height * this->entityData.scale);
 }
 
 

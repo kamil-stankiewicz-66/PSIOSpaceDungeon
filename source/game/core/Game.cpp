@@ -13,6 +13,7 @@ Game::Game(string _title) : Engine(_title, false)
     //init
     Parameters::init();
     WeaponSO::init();
+    EntitySO::init();
 
     //create scenes
     this->createScene<MainScene>(MAIN_SCENE);

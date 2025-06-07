@@ -59,9 +59,13 @@ private:
 
 struct EntityData : ScriptableObject
 {
+    enum class Type { Basic };
+
+    Type type;
     uint weaponID;
     float walkSpeed;
     float runSpeed;
+    float scale;
 };
 
 class EntitySO

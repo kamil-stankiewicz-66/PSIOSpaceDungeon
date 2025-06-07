@@ -1,6 +1,7 @@
 #include "game/level/LevelGenerator.h"
 #include "engine/core/Engine.h"
 #include "engine/object/Object.h"
+#include "game/entity/BasicEntity.h"
 #include "game/level/LevelManager.h"
 #include "game/core/Parameter.h"
 #include "game/level/Tilemap.h"
@@ -18,7 +19,7 @@ void LevelGenerator::onAwake()
 {
     levelManager = getGame()->get_currentScene()->findObject<LevelManager>();
 
-    std::random_device rd;
+    random_device rd;
     gen = mt19937(rd());
 
     if (!levelManager) {
@@ -27,12 +28,50 @@ void LevelGenerator::onAwake()
 }
 
 
+///
+/// random int number
+///
+
 int LevelGenerator::getRndInt(const int& min, const int& max)
 {
-    std::uniform_int_distribution<> dist(min, max);
+    uniform_int_distribution<> dist(min, max);
     return dist(gen);
 }
 
+
+Entity* LevelGenerator::createEntity(Scene* scene, const EntityData& data, uint renderLayer, Object* parent)
+{
+    if (!scene) {
+        VDebuger::print("<ERROR> WEAPON :: CREATE_WEAPON :: scene is nullptr");
+        return nullptr;
+    }
+
+    //empty ptr
+    Entity* entity = nullptr;
+
+    //create object
+    switch (data.type)
+    {
+    case EntityData::Type::Basic:
+        entity = scene->createObject<BasicEntity>(renderLayer, parent);
+        break;
+    default:
+        return nullptr;
+        break;
+    }
+
+    //init
+    if (entity) {
+        entity->set(data);
+    }
+
+    return entity;
+}
+
+
+///
+/// core
+///
 
 void LevelGenerator::generate()
 {
@@ -46,6 +85,10 @@ void LevelGenerator::generate()
     VDebuger::print("LEVEL_GENERATOR :: GENERATE :: ended");
 }
 
+
+///
+/// corridors
+///
 
 void LevelGenerator::generateCorridors()
 {
@@ -157,6 +200,10 @@ void LevelGenerator::generateCorridor(int& x, int& y)
 }
 
 
+///
+/// room
+///
+
 void LevelGenerator::generateRoom(int& x, int& y)
 {
     m_room_size_x = getRndInt(Parameters::get_levelGenerator_roomSize_min(), Parameters::get_levelGenerator_roomSize_max());
@@ -166,6 +213,8 @@ void LevelGenerator::generateRoom(int& x, int& y)
     //log
     VDebuger::print("LEVEL_GENERATOR :: GENERATE_ROOM :: room size:", m_room_size_x, m_room_size_y);
 
+    auto entity = createEntity(levelManager->getGame()->get_currentScene(), *EntitySO::get(0u), 100u);
+    entity->getTransformPtr()->set_position(x*32,y*32);
 
     for (int _x = x - (m_room_size_x/2); _x < x + (m_room_size_x/2); ++_x)
     {
