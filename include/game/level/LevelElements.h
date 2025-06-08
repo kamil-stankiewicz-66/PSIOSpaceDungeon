@@ -54,6 +54,8 @@ class Chest : public GameObject
     void set(const string_view txt_close,
              const string_view txt_open_full,
              const string_view txt_open_empty);
+
+    void addCoins(const uint&);
 };
 
 

@@ -93,6 +93,11 @@ Weapon* Weapon::createWeapon(Scene* scene, const WeaponData& data, const string&
 
 void Melee::attackCore()
 {
+    if (!collider) {
+        VDebuger::print("<ERROR> MELEE :: ATACK_CORE :: collider is nullptr");
+        return;
+    }
+
     auto collisions = collider->getCollisions();
 
     for (auto it = collisions.begin(); it != collisions.end(); ++it)

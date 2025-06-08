@@ -16,7 +16,8 @@ int Parameters::levelGenerator_roomSize_max;
 int Parameters::levelGenerator_corridorLength_min;
 int Parameters::levelGenerator_corridorLength_max;
 int Parameters::levelGenerator_corridor_width;
-int Parameters::levelGenerator_enemiesFrequency;
+float Parameters::levelGenerator_enemiesFrequency;
+float Parameters::levelGenerator_chestsFrequency;
 
 float Parameters::bullet_speed;
 
@@ -45,7 +46,8 @@ void Parameters::init()
     Parameters::levelGenerator_corridorLength_min = 3;
     Parameters::levelGenerator_corridorLength_max = 8;
     Parameters::levelGenerator_corridor_width = 5;
-    Parameters::levelGenerator_enemiesFrequency = 3;
+    Parameters::levelGenerator_enemiesFrequency = 0.05f;
+    Parameters::levelGenerator_chestsFrequency = 0.05f;
 
     Parameters::bullet_speed = 30.0f;
 
@@ -121,8 +123,12 @@ const int& Parameters::get_levelGenerator_corridor_width() {
     return levelGenerator_corridor_width;
 }
 
-const int& Parameters::get_levelGenerator_enemiesFrequency() {
+const float& Parameters::get_levelGenerator_enemiesFrequency() {
     return levelGenerator_enemiesFrequency;
+}
+
+const float& Parameters::get_levelGenerator_chestsFrequency() {
+    return levelGenerator_chestsFrequency;
 }
 
 

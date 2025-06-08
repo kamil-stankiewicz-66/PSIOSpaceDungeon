@@ -1,12 +1,15 @@
 #include "game/level/LevelGenerator.h"
 #include "engine/core/Engine.h"
+#include "engine/core/VMath.h"
 #include "engine/object/Object.h"
+#include "game/core/DataBlock.h"
 #include "game/entity/BasicEntity.h"
 #include "game/level/LevelElements.h"
 #include "game/level/LevelManager.h"
 #include "game/core/Parameter.h"
 #include "game/level/Tilemap.h"
 #include <random>
+#include <cmath>
 
 using namespace std;
 
@@ -30,7 +33,7 @@ void LevelGenerator::onAwake()
 
 
 ///
-/// random int number
+/// random number
 ///
 
 int LevelGenerator::getRndInt(const int& min, const int& max)
@@ -39,6 +42,28 @@ int LevelGenerator::getRndInt(const int& min, const int& max)
     return dist(gen);
 }
 
+float LevelGenerator::getRndFloat(const float& min, const float& max)
+{
+    uniform_real_distribution<> dist(min, max);
+    return dist(gen);
+}
+
+
+///
+/// distance
+///
+
+float LevelGenerator::getDistanceInTiles(const tilePos& p1, const tilePos& p2)
+{
+    return sqrt(
+        (p1.first - p2.first) * (p1.first - p2.first) +
+        (p1.second - p2.second) * (p1.second - p2.second));
+}
+
+
+///
+/// entity creation
+///
 
 Entity* LevelGenerator::createEntity(Scene* scene, const EntityData& data, uint renderLayer, Object* parent)
 {
@@ -214,19 +239,34 @@ void LevelGenerator::generateRoom(int& x, int& y)
     //log
     VDebuger::print("LEVEL_GENERATOR :: GENERATE_ROOM :: room size:", m_room_size_x, m_room_size_y);
 
-    auto chest = getGame()->get_currentScene()->createObject<Chest>(50u);
-    chest->set(Asset::Graphics::CHEST_CLOSED, Asset::Graphics::CHEST_OPEN_FULL, Asset::Graphics::CHEST_OPEN_EMPTY);
-    chest->getTransformPtr()->set_position((x*32),y*32);
 
-    for (int _x = x - (m_room_size_x/2); _x < x + (m_room_size_x/2); ++_x)
+    //edges
+    auto leftDown = make_pair(x - (m_room_size_x/2), y - (m_room_size_y/2));
+    auto rightTop = make_pair(x + (m_room_size_x/2), y + (m_room_size_y/2));
+
+
+    //generate elements
+    if (getDistanceInTiles(make_pair(x, y), make_pair(0, 0)) > Parameters::get_levelGenerator_roomSize_min())
     {
-        for (int _y = y - (m_room_size_y/2); _y < y + (m_room_size_y/2); ++_y)
+        generateChestsInRoom(leftDown, rightTop);
+        generateEntitiesInRoom(leftDown, rightTop);
+    }
+
+
+    //generate tiles
+    for (int _x = leftDown.first; _x < rightTop.first; ++_x)
+    {
+        for (int _y = leftDown.second; _y < rightTop.second; ++_y)
         {
             levelManager->tilemap->setTile(Tilemap::tilepallet.floor_main, _x, _y);
         }
     }
 }
 
+
+///
+/// Walls
+///
 
 void LevelGenerator::generateWalls()
 {
@@ -308,5 +348,105 @@ void LevelGenerator::generateWalls()
     for (const auto& v : _toRemove)
     {
         tilemap->removeTile(v.x, v.y);
+    }
+}
+
+
+///
+/// Generate random positions
+///
+
+vector<Vector2> LevelGenerator::getRealRndPositionsInRoom(const tilePos& leftDown, const tilePos& rightTop,
+                                                          const int& number, const int& minDistance, const int& maxAttemptsNum)
+{
+    vector<Vector2> realPositions;
+    vector<tilePos> tilePositions;
+    realPositions.reserve(number);
+    tilePositions.reserve(number);
+
+    int border = 2;
+
+    for (int attemt = 0; (attemt < maxAttemptsNum && realPositions.size() < number); ++attemt)
+    {
+        int x = getRndInt(leftDown.first + border, rightTop.first - border);
+        int y = getRndInt(leftDown.second + border, rightTop.second - border);
+
+        bool flag = true;
+        for (const auto& pos : tilePositions)
+        {
+            int distance_x = pos.first - x;
+            int distance_y = pos.second - y;
+            int distance = (distance_x * distance_x) + (distance_y * distance_y);
+
+            if (distance * distance < minDistance) {
+                flag = false;
+                break;
+            }
+        }
+
+        if (flag)
+        {
+            tilePositions.emplace_back(make_pair(x, y));
+            realPositions.emplace_back(levelManager->tilemap->tile2realPos(x, y));
+        }
+    }
+
+    return realPositions;
+}
+
+
+///
+/// chests
+///
+
+void LevelGenerator::generateChestsInRoom(const tilePos& leftDown, const tilePos& rightTop)
+{
+    if (getRndInt(0, 3) == 1) {
+        return;
+    }
+
+    //room size
+    float size = getDistanceInTiles(leftDown, rightTop);
+
+    //generate positions
+    int chestNumber = Parameters::get_levelGenerator_chestsFrequency() * size;
+    vector<Vector2> chestPositions = getRealRndPositionsInRoom(leftDown, rightTop, chestNumber, 2, 50);
+
+    //create objects
+    for (const auto& pos : chestPositions)
+    {
+        auto chest = getGame()->get_currentScene()->createObject<Chest>(40u);
+        chest->getTransformPtr()->set_position(pos);
+        chest->set(Asset::Graphics::CHEST_CLOSED, Asset::Graphics::CHEST_OPEN_FULL, Asset::Graphics::CHEST_OPEN_EMPTY);
+        chest->addCoins(5);
+    }
+}
+
+
+///
+/// entities
+///
+
+void LevelGenerator::generateEntitiesInRoom(const tilePos& leftDown, const tilePos& rightTop)
+{
+    if (getRndInt(0, 20) == 1) {
+        return;
+    }
+
+    //room size
+    float size = getDistanceInTiles(leftDown, rightTop);
+
+    //generate positions
+    int entitiesNumber = static_cast<int>(Parameters::get_levelGenerator_enemiesFrequency() * size);
+    vector<Vector2> entitiesPositions = getRealRndPositionsInRoom(leftDown, rightTop, entitiesNumber, 3, 100);
+
+    //create objects
+    for (const auto& pos : entitiesPositions)
+    {
+        int rndID = getRndInt(0, LevelData::level_nr + 6);
+        rndID = VMath::clamp<int>(rndID, 0, EntitySO::getAll().size()-1);
+
+        auto entity = createEntity(getGame()->get_currentScene(), *EntitySO::get(rndID), 80u, nullptr);
+        entity->getTransformPtr()->set_position(pos);
     }
 }

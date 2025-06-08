@@ -21,7 +21,8 @@ struct Parameters
     static int levelGenerator_corridorLength_min;
     static int levelGenerator_corridorLength_max;
     static int levelGenerator_corridor_width;
-    static int levelGenerator_enemiesFrequency;
+    static float levelGenerator_enemiesFrequency;
+    static float levelGenerator_chestsFrequency;
 
     static float bullet_speed;
 
@@ -51,7 +52,8 @@ public:
     static const int& get_levelGenerator_corridorLength_min();
     static const int& get_levelGenerator_corridorLength_max();
     static const int& get_levelGenerator_corridor_width();
-    static const int& get_levelGenerator_enemiesFrequency();
+    static const float& get_levelGenerator_enemiesFrequency();
+    static const float& get_levelGenerator_chestsFrequency();
 
     static const float& get_bullet_speed();
 

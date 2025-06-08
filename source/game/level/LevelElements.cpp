@@ -52,13 +52,12 @@ void Chest::onAwake()
 
     parEff->setSpread(60.0f);
 
-    parEff->setSpeed(2.0f);
-    parEff->setSpeedDiff(0.5f);
+    parEff->setSpeed(5.0f);
+    parEff->setSpeedDiff(5.f);
 
     parEff->setLifeTime(300.0f);
     parEff->setLifeTimeDiff(200.0f);
 
-    parEff->setParticleNum(20u);
     parEff->setParticleNumDiff(0u);
 }
 
@@ -188,8 +187,8 @@ void Chest::set(const string_view txt_close_ref,
             //vibrations
 
             auto am_open_move1 = make_shared<AnimationTransformMove>(body->getTransformPtr(),
-                                                                     body->getTransformPtr()->get_position() - Vector2(2.f),
-                                                                     body->getTransformPtr()->get_position() + Vector2(2.f),
+                                                                     body->getTransformPtr()->get_localPosition() - Vector2(2.f),
+                                                                     body->getTransformPtr()->get_localPosition() + Vector2(2.f),
                                                                      body->getTransformPtr()->get_scale(),
                                                                      body->getTransformPtr()->get_scale(),
                                                                      body->getTransformPtr()->get_rotation(),
@@ -197,8 +196,8 @@ void Chest::set(const string_view txt_close_ref,
                                                                      d_move);
 
             auto am_open_move2 = make_shared<AnimationTransformMove>(body->getTransformPtr(),
-                                                                     body->getTransformPtr()->get_position() + Vector2(2.f),
-                                                                     body->getTransformPtr()->get_position() - Vector2(2.f),
+                                                                     body->getTransformPtr()->get_localPosition() + Vector2(2.f),
+                                                                     body->getTransformPtr()->get_localPosition() - Vector2(2.f),
                                                                      body->getTransformPtr()->get_scale(),
                                                                      body->getTransformPtr()->get_scale(),
                                                                      body->getTransformPtr()->get_rotation(),
@@ -206,7 +205,7 @@ void Chest::set(const string_view txt_close_ref,
                                                                      d_move);
 
             vector<shared_ptr<AnimationMove>> am_open_move;
-            for (int i = 0; i < (d_move_n/2.f); ++i)
+            for (int i = 0; i < 2; ++i)
             {
                 am_open_move.emplace_back(am_open_move1);
                 am_open_move.emplace_back(am_open_move2);
@@ -229,8 +228,8 @@ void Chest::set(const string_view txt_close_ref,
                                                                  0.1f);
 
             auto am_open_move = make_shared<AnimationTransformMove>(body->getTransformPtr(),
-                                                                    body->getTransformPtr()->get_position(),
-                                                                    body->getTransformPtr()->get_position(),
+                                                                    body->getTransformPtr()->get_localPosition(),
+                                                                    body->getTransformPtr()->get_localPosition(),
                                                                     body->getTransformPtr()->get_scale(),
                                                                     body->getTransformPtr()->get_scale(),
                                                                     body->getTransformPtr()->get_rotation(),
@@ -243,4 +242,9 @@ void Chest::set(const string_view txt_close_ref,
             ANIM_EMPTY = animContr->add(anim_open_empty);
         }
     }
+}
+
+void Chest::addCoins(const uint& coins) {
+    this->coins += coins;
+    parEff->setParticleNum(this->coins);
 }

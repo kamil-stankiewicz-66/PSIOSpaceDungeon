@@ -77,11 +77,10 @@ class EntitySO
 
 public:
     static const EntityData* get(const uint& id);
+    static const map<uint, unique_ptr<EntityData>>& getAll();
 
 private:
     static void add(EntityData*);
-
-    //
     static void init();
 };
 

@@ -110,6 +110,10 @@ const EntityData* EntitySO::get(const uint& id)
     }
 }
 
+const map<uint, unique_ptr<EntityData>>& EntitySO::getAll() {
+    return EntitySO::entities;
+}
+
 
 //add
 
@@ -173,7 +177,7 @@ void EntitySO::init()
         zombieShort->type = EntityData::Type::Basic;
         zombieShort->weaponID = 0u;
         zombieShort->walkSpeed = 5.0f;
-        zombieShort->runSpeed = 9.0f;
+        zombieShort->runSpeed = 6.0f;
         zombieShort->scale = 2.0f;
 
         EntitySO::add(zombieShort);
@@ -190,7 +194,7 @@ void EntitySO::init()
         zombieSmall->type = EntityData::Type::Basic;
         zombieSmall->weaponID = 0u;
         zombieSmall->walkSpeed = 2.0f;
-        zombieSmall->runSpeed = 9.0f;
+        zombieSmall->runSpeed = 5.5f;
         zombieSmall->scale = 2.0f;
 
         EntitySO::add(zombieSmall);
@@ -224,7 +228,7 @@ void EntitySO::init()
         skeleton->type = EntityData::Type::Basic;
         skeleton->weaponID = 0u;
         skeleton->walkSpeed = 0.5f;
-        skeleton->runSpeed = 10.0f;
+        skeleton->runSpeed = 6.5f;
         skeleton->scale = 2.0f;
 
         EntitySO::add(skeleton);

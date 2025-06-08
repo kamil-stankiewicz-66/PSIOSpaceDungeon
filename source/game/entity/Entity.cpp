@@ -22,9 +22,9 @@ void Entity::onAwake()
 
 
     //parts
-    body = getGame()->get_currentScene()->createObject<GameObject>();
+    body = getGame()->get_currentScene()->createObject<GameObject>(getRenderLayer());
     this->addChild(body);
-    hand = getGame()->get_currentScene()->createObject<GameObject>();
+    hand = getGame()->get_currentScene()->createObject<GameObject>(getRenderLayer());
     body->addChild(hand);
 
 
@@ -113,7 +113,7 @@ void Entity::set(const EntityData& data)
     //data
     this->entityData = data;
 
-    uniform_real_distribution<float> rndSpeed(data.runSpeed - (0.1 * data.runSpeed), data.runSpeed + (0.1 * data.runSpeed));
+    uniform_real_distribution<float> rndSpeed(data.runSpeed - (0.2 * data.runSpeed), data.runSpeed + (0.2 * data.runSpeed));
     this->entityData.runSpeed = rndSpeed(rng);
 
     uniform_real_distribution<float> rndScale(data.scale - (0.1 * data.scale), data.scale + (0.1 * data.scale));
