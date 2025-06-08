@@ -61,10 +61,16 @@ void PlayerMove::move(float dt)
     }
 
     //flip
-    if (m_move_dir.x < 0) {
-        _t->set_flip_x(true);
-    }
-    else if (m_move_dir.x > 0) {
-        _t->set_flip_x(false);
+    if (playerCore->playerDetector &&
+        !playerCore->playerDetector->getTarget())
+    {
+        if (m_move_dir.x < 0)
+        {
+            _t->set_flip_x(true);
+        }
+        else if (m_move_dir.x > 0)
+        {
+            _t->set_flip_x(false);
+        }
     }
 }

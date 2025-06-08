@@ -160,6 +160,10 @@ const bool Transform::get_flipX() const
     return this->flip_x;
 }
 
+const bool Transform::get_localFlipX() const {
+    return this->flip_x;
+}
+
 
 
 // info

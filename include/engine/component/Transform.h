@@ -62,6 +62,7 @@ public:
     const Vector2& get_scale() const;
     const float& get_rotation() const;
     const bool get_flipX() const;
+    const bool get_localFlipX() const;
 
     //info
     const bool isRect() const;
