@@ -2,6 +2,7 @@
 #include "engine/core/Engine.h"
 #include "engine/object/Object.h"
 #include "game/entity/BasicEntity.h"
+#include "game/level/LevelElements.h"
 #include "game/level/LevelManager.h"
 #include "game/core/Parameter.h"
 #include "game/level/Tilemap.h"
@@ -213,8 +214,9 @@ void LevelGenerator::generateRoom(int& x, int& y)
     //log
     VDebuger::print("LEVEL_GENERATOR :: GENERATE_ROOM :: room size:", m_room_size_x, m_room_size_y);
 
-    auto entity = createEntity(levelManager->getGame()->get_currentScene(), *EntitySO::get(0u), 100u);
-    entity->getTransformPtr()->set_position(x*32,y*32);
+    auto chest = getGame()->get_currentScene()->createObject<Chest>(50u);
+    chest->set(Asset::Graphics::CHEST_CLOSED, Asset::Graphics::CHEST_OPEN_FULL, Asset::Graphics::CHEST_OPEN_EMPTY);
+    chest->getTransformPtr()->set_position(x*32,y*32);
 
     for (int _x = x - (m_room_size_x/2); _x < x + (m_room_size_x/2); ++_x)
     {

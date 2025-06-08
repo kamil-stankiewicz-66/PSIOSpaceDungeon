@@ -136,16 +136,22 @@ Animation::Animation(const vector<AnimationCycle>& animation)
 
 bool Animation::update(const float& deltatime)
 {
-    bool flag = true;
-
-    for (AnimationCycle& cycle: animation)
+    for (int i = 0; i < animation.size(); ++i)
     {
-        if (!cycle.update(deltatime)) {
-            flag = false;
+        if (!data[i]) {
+            data[i] = animation[i].update(deltatime);
         }
     }
 
-    return flag;
+    for(auto it = data.begin(); it != data.end(); ++it)
+    {
+        if (!it->second) {
+            return false;
+        }
+    }
+
+    data.clear();
+    return true;
 }
 
 
@@ -171,8 +177,16 @@ const uint AnimationController::add(const Animation& animation) {
 
 void AnimationController::play(const uint& animID)
 {
+    if (runningAnim > -1) {
+        animations[runningAnim].data.clear();
+    }
+
     if (animID < animations.size()) {
         runningAnim = animID;
     }
+}
+
+const int &AnimationController::getCurrentAnimation() const {
+    return this->runningAnim;
 }
 

@@ -93,14 +93,11 @@ add_executable(PSIOSpaceDungeon
     source/game/player/PlayerEnemyDetector.cpp
     include/game/physics/ParticleEffect.h
     source/game/physics/ParticleEffect.cpp
+    include/game/level/LevelElements.h
+    source/game/level/LevelElements.cpp
     include/game/core/Serializer.h
-
-
-
-
-
-
-
+    include/game/effect/CustomAnimation.h
+    source/game/effect/CustomAnimation.cpp
 )
 
 set_target_properties(

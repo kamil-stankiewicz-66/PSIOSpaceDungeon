@@ -3,6 +3,7 @@
 
 #include "engine/component/Component.h"
 #include "engine/component/Transform.h"
+#include <map>
 #include <memory>
 #include <vector>
 using namespace std;
@@ -18,7 +19,7 @@ class AnimationMove
     friend class AnimationCycle;
 
 protected:
-    float duration;
+    float duration; //in seconds
 
 public:
     AnimationMove(const float& durationInSeconds);
@@ -118,6 +119,7 @@ class Animation
 {
     friend class AnimationController;
     vector<AnimationCycle> animation;
+    map<uint, bool> data; //is cycle completed
 
 public:
     Animation(const vector<AnimationCycle>& animation);
@@ -148,6 +150,8 @@ protected:
 public:
     const uint add(const Animation&);
     void play(const uint& animID);
+
+    const int& getCurrentAnimation() const;
 };
 
 #endif // ANIMATIONCONTROLLER_H
