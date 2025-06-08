@@ -26,7 +26,19 @@ Game::Game(string _title) : Engine(_title, false)
 void Game::onUpdate(float deltatime)
 {
     //exit
-    if (Input::Keyboard::isKeyPressed(Input::Keyboard::Key::Escape)) {
-        this->shutdown();
+    if (Input::Keyboard::isKeyPressed(Input::Keyboard::Key::Escape))
+    {
+        if(!m_isFullScreenButtonPressed)
+        {
+            m_isFullScreenButtonPressed = true;
+            m_isFullScreen = !m_isFullScreen;
+            this->get_window()->setFullscreen(m_isFullScreen);
+        }
     }
+    else
+    {
+        m_isFullScreenButtonPressed = false;
+    }
+
+    cout<< m_isFullScreen << " " << m_isFullScreenButtonPressed <<endl;
 }

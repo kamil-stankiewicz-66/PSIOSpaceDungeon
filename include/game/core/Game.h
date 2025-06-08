@@ -10,6 +10,10 @@ inline const std::string GAME_SCENE = "game_scene";
 //game class
 class Game : public Engine
 {
+private:
+    bool m_isFullScreen = false;
+    bool m_isFullScreenButtonPressed = false;
+
 public:
     Game(string _title);
     virtual void onUpdate(float dt) override;
