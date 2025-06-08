@@ -216,7 +216,7 @@ void LevelGenerator::generateRoom(int& x, int& y)
 
     auto chest = getGame()->get_currentScene()->createObject<Chest>(50u);
     chest->set(Asset::Graphics::CHEST_CLOSED, Asset::Graphics::CHEST_OPEN_FULL, Asset::Graphics::CHEST_OPEN_EMPTY);
-    chest->getTransformPtr()->set_position(x*32,y*32);
+    chest->getTransformPtr()->set_position((x*32),y*32);
 
     for (int _x = x - (m_room_size_x/2); _x < x + (m_room_size_x/2); ++_x)
     {

@@ -3,9 +3,11 @@
 
 #include "engine/component/AnimationController.h"
 #include "engine/object/Object.h"
+#include "game/player/PlayerCore.h"
 
 using uint = unsigned int;
 class CircleCollider;
+class ParticleEffect;
 
 
 ///
@@ -17,12 +19,19 @@ class Chest : public GameObject
     friend class LevelManager;
     friend class LevelGenerator;
 
+    //link
+    PlayerCore* player = nullptr;
+
     //components
     CircleCollider* collider = nullptr;
     AnimationController* animContr = nullptr;
 
     //parts
     GameObject* body = nullptr;
+    ParticleEffect* parEff = nullptr;
+
+    //textures
+    static shared_ptr<sf::Texture> particleTexture;
 
     //anims
     uint ANIM_OPEN;
@@ -41,7 +50,7 @@ class Chest : public GameObject
     void open();
     void empty();
 
-    //setter - for level manager
+    //setter - for level generator
     void set(const string_view txt_close,
              const string_view txt_open_full,
              const string_view txt_open_empty);

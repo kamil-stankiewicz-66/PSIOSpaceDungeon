@@ -52,7 +52,7 @@ void WeaponSO::init()
     {
         WeaponData* fists = new WeaponData;
 
-        fists->id = 0;
+        fists->id = 0u;
         fists->name = "Fists";
 
         fists->type = WeaponData::Type::Melee;
@@ -68,7 +68,7 @@ void WeaponSO::init()
     {
         WeaponData* rifle = new WeaponData;
 
-        rifle->id = 1;
+        rifle->id = 1u;
         rifle->name = "Assault Rifle";
         rifle->textureRef = Asset::Graphics::ASSAULT_RIFLE_01.data();
 
@@ -137,12 +137,182 @@ void EntitySO::init()
         zombie->textureRef = Asset::Graphics::ZOMBIE_BASIC.data();
 
         zombie->type = EntityData::Type::Basic;
-        zombie->weaponID = 1u;
+        zombie->weaponID = 0u;
         zombie->walkSpeed = 2.0f;
-        zombie->runSpeed = 4.0f;
+        zombie->runSpeed = 3.0f;
         zombie->scale = 2.0f;
 
         EntitySO::add(zombie);
+    }
+
+    //zombie green
+    {
+        EntityData* zombieGreen = new EntityData;
+
+        zombieGreen->id = 1u;
+        zombieGreen->name = "Green Zombie";
+        zombieGreen->textureRef = Asset::Graphics::ZOMBIE_GREEN.data();
+
+        zombieGreen->type = EntityData::Type::Basic;
+        zombieGreen->weaponID = 0u;
+        zombieGreen->walkSpeed = 1.0f;
+        zombieGreen->runSpeed = 3.0f;
+        zombieGreen->scale = 2.0f;
+
+        EntitySO::add(zombieGreen);
+    }
+
+    //zombie short
+    {
+        EntityData* zombieShort = new EntityData;
+
+        zombieShort->id = 2u;
+        zombieShort->name = "Short Zombie";
+        zombieShort->textureRef = Asset::Graphics::ZOMBIE_SHORT.data();
+
+        zombieShort->type = EntityData::Type::Basic;
+        zombieShort->weaponID = 0u;
+        zombieShort->walkSpeed = 5.0f;
+        zombieShort->runSpeed = 9.0f;
+        zombieShort->scale = 2.0f;
+
+        EntitySO::add(zombieShort);
+    }
+
+    //zombie small
+    {
+        EntityData* zombieSmall = new EntityData;
+
+        zombieSmall->id = 3u;
+        zombieSmall->name = "Small Zombie";
+        zombieSmall->textureRef = Asset::Graphics::ZOMBIE_SMALL.data();
+
+        zombieSmall->type = EntityData::Type::Basic;
+        zombieSmall->weaponID = 0u;
+        zombieSmall->walkSpeed = 2.0f;
+        zombieSmall->runSpeed = 9.0f;
+        zombieSmall->scale = 2.0f;
+
+        EntitySO::add(zombieSmall);
+    }
+
+    //zombie tall
+    {
+        EntityData* zombieTall = new EntityData;
+
+        zombieTall->id = 4u;
+        zombieTall->name = "Tall Zombie";
+        zombieTall->textureRef = Asset::Graphics::ZOMBIE_TALL.data();
+
+        zombieTall->type = EntityData::Type::Basic;
+        zombieTall->weaponID = 0u;
+        zombieTall->walkSpeed = 0.5f;
+        zombieTall->runSpeed = 1.0f;
+        zombieTall->scale = 2.0f;
+
+        EntitySO::add(zombieTall);
+    }
+
+    //zombie skeleton
+    {
+        EntityData* skeleton = new EntityData;
+
+        skeleton->id = 5u;
+        skeleton->name = "Skeleton";
+        skeleton->textureRef = Asset::Graphics::ZOMBIE_SKELETON.data();
+
+        skeleton->type = EntityData::Type::Basic;
+        skeleton->weaponID = 0u;
+        skeleton->walkSpeed = 0.5f;
+        skeleton->runSpeed = 10.0f;
+        skeleton->scale = 2.0f;
+
+        EntitySO::add(skeleton);
+    }
+
+    //orc
+    {
+        EntityData* orc = new EntityData;
+
+        orc->id = 6u;
+        orc->name = "Orc";
+        orc->textureRef = Asset::Graphics::ORC_BASIC.data();
+
+        orc->type = EntityData::Type::Basic;
+        orc->weaponID = 1u;
+        orc->walkSpeed = 2.5f;
+        orc->runSpeed = 5.0f;
+        orc->scale = 2.2f;
+
+        EntitySO::add(orc);
+    }
+
+    //armored orc
+    {
+        EntityData* orcArmored = new EntityData;
+
+        orcArmored->id = 7u;
+        orcArmored->name = "Armored Orc";
+        orcArmored->textureRef = Asset::Graphics::ORC_ARMORED.data();
+
+        orcArmored->type = EntityData::Type::Basic;
+        orcArmored->weaponID = 1u;
+        orcArmored->walkSpeed = 2.0f;
+        orcArmored->runSpeed = 4.0f;
+        orcArmored->scale = 2.4f;
+
+        EntitySO::add(orcArmored);
+    }
+
+    //masked orc
+    {
+        EntityData* orcMasked = new EntityData;
+
+        orcMasked->id = 8u;
+        orcMasked->name = "Masked Orc";
+        orcMasked->textureRef = Asset::Graphics::ORC_MASKED.data();
+
+        orcMasked->type = EntityData::Type::Basic;
+        orcMasked->weaponID = 1u;
+        orcMasked->walkSpeed = 2.5f;
+        orcMasked->runSpeed = 5.0f;
+        orcMasked->scale = 2.2f;
+
+        EntitySO::add(orcMasked);
+    }
+
+    //orc shaman
+    {
+        EntityData* orcShaman = new EntityData;
+
+        orcShaman->id = 9u;
+        orcShaman->name = "Orc Shaman";
+        orcShaman->textureRef = Asset::Graphics::ORC_SHAMAN.data();
+
+        orcShaman->type = EntityData::Type::Basic;
+        orcShaman->weaponID = 1u;
+        orcShaman->walkSpeed = 2.0f;
+        orcShaman->runSpeed = 4.5f;
+        orcShaman->scale = 2.0f;
+
+        EntitySO::add(orcShaman);
+    }
+
+    //orc veteran
+    {
+        EntityData* orcVeteran = new EntityData;
+
+        orcVeteran->id = 10u;
+        orcVeteran->name = "Orc Veteran";
+        orcVeteran->textureRef = Asset::Graphics::ORC_VETERAN.data();
+
+        orcVeteran->type = EntityData::Type::Basic;
+        orcVeteran->weaponID = 1u;
+        orcVeteran->walkSpeed = 2.8f;
+        orcVeteran->runSpeed = 5.5f;
+        orcVeteran->scale = 2.3f;
+
+        EntitySO::add(orcVeteran);
     }
 }
 

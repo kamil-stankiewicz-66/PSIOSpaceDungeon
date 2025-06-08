@@ -21,7 +21,7 @@ bool VRenderable::init(Engine* game, Object* parent)
 }
 
 
-void VRenderable::onLateUpdate(float)
+void VRenderable::onUpdate(float)
 {
     if (!getGame()) {
         return;

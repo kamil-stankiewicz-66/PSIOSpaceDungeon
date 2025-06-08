@@ -4,14 +4,20 @@
 #include "game/core/DataBlock.h"
 #include "game/core/Tag.h"
 #include "game/effect/CustomAnimation.h"
+#include "game/physics/ParticleEffect.h"
 
 
 ///
-/// AbstractChest
+/// Chest
 ///
+
+shared_ptr<sf::Texture> Chest::particleTexture = nullptr;
 
 void Chest::onAwake()
 {
+    //tag
+    this->addTag("chest");
+
     //parts
     body = getGame()->get_currentScene()->createObject<GameObject>(getRenderLayer());
     body->getTransformPtr()->scaleBy(2.f);
@@ -23,13 +29,45 @@ void Chest::onAwake()
 
     //animations
     animContr = createComponent<AnimationController>();
+
+
+    //particle effects
+    parEff = getGame()->get_currentScene()->createObject<ParticleEffect>(body->getRenderLayer()+1u);
+    parEff->addTag("particle_effect_chest");
+    this->addChild(parEff);
+
+    if (!particleTexture)
+    {
+        particleTexture = make_shared<sf::Texture>();
+
+        if (!particleTexture->loadFromFile(Asset::Graphics::PARTICLE.data())) {
+            VDebuger::print("<ERROR> CHEST :: ON_AWAKE :: cant load particle texture");
+        }
+    }
+
+    parEff->setTexture(particleTexture);
+
+    parEff->setColor(sf::Color::Yellow);
+    parEff->setScale(Vector2(0.15f, 0.15f));
+
+    parEff->setSpread(60.0f);
+
+    parEff->setSpeed(2.0f);
+    parEff->setSpeedDiff(0.5f);
+
+    parEff->setLifeTime(300.0f);
+    parEff->setLifeTimeDiff(200.0f);
+
+    parEff->setParticleNum(20u);
+    parEff->setParticleNumDiff(0u);
 }
 
 void Chest::onUpdate(float)
 {
     if (m_isOpened)
     {
-        if (animContr->getCurrentAnimation() < 0) {
+        if (!m_isLooted &&
+            animContr->getCurrentAnimation() < 0) {
             this->empty();
         }
 
@@ -83,6 +121,16 @@ void Chest::empty()
     PlayerData::coins += this->coins;
     this->coins = 0u;
     animContr->play(ANIM_EMPTY);
+
+    if (player && parEff)
+    {
+        parEff->invoke(Vector2(0.f, 1.f), false);
+    }
+    else
+    {
+        VDebuger::print("<ERROR> CHEST :: player is nullptr");
+    }
+
 }
 
 void Chest::set(const string_view txt_close_ref,
@@ -92,6 +140,16 @@ void Chest::set(const string_view txt_close_ref,
     //body
     if (!body) {
         VDebuger::print("<ERROR> CHEST :: SET :: body is nullptr");
+        return;
+    }
+
+
+    //find player
+    player = getGame()->get_currentScene()->findObject<PlayerCore>();
+
+    if (!player) {
+        VDebuger::print("<ERROR> CHEST :: SET :: player is nullptr");
+        return;
     }
 
 

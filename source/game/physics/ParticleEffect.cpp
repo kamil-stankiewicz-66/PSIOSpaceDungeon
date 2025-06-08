@@ -118,7 +118,7 @@ void ParticleEffect::invoke(const Vector2& dir, bool autoDestroy)
         particle->dir = getRndDir(dir);
         particle->speed = getRndFloat(this->speed, this->speed_diff);
         particle->lifeTime = getRndFloat(this->lifeTime, this->lifeTime_diff);
-        particle->pos = getTransformPtr()->get_localPosition();
+        particle->pos = getTransformPtr()->get_position();
 
         particles.emplace_back(std::move(particle));
     }

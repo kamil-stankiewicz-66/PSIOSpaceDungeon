@@ -30,7 +30,7 @@ protected:
 
     //engine methods
     bool init(Engine* engine, Object* parent) override; //This method is called by the engine.
-    void onLateUpdate(float) override; //This method is called by the engine.
+    void onUpdate(float) override; //This method is called by the engine.
 
     ///
     /// \brief Calculates common data required for rendering.
