@@ -62,6 +62,7 @@ protected:
     AnimationController* animController = nullptr;
 
     //weapon
+    GameObject* body = nullptr;
     GameObject* hand = nullptr;
     Weapon* weaponCore = nullptr;
 
@@ -69,9 +70,6 @@ protected:
     //set data
     void set(const EntityData&);
 
-
-private:
-    void seek(const float& dt);
 
 protected:
 
@@ -81,6 +79,15 @@ protected:
     ///
 
     virtual void attack(const float& dt) = 0;
+
+
+    ///
+    /// \brief Defines seek style.
+    /// \param dt deltatime
+    ///
+
+    virtual void seek(const float& dt);
+
 
     //helpers
     float distanceToPlayer();

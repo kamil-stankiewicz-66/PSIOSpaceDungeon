@@ -23,6 +23,7 @@ struct Vector2;
 
 class VRenderable : public Component
 {
+    bool m_renderWithLocalFlip = false;
 
 protected:
     string m_assetRef;
@@ -46,6 +47,9 @@ public:
 
     //virtual methods
     virtual void dispose();
+
+    //render with local or parent dependent reflection
+    void setRenderWithLocalFlip(const bool);
 
     //getter
     const string_view getAssetRef() const;

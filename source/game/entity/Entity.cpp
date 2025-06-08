@@ -22,8 +22,10 @@ void Entity::onAwake()
 
 
     //parts
+    body = getGame()->get_currentScene()->createObject<GameObject>();
+    this->addChild(body);
     hand = getGame()->get_currentScene()->createObject<GameObject>();
-    this->addChild(hand);
+    body->addChild(hand);
 
 
     //componets
@@ -46,6 +48,8 @@ void Entity::onAwake()
 
 void Entity::onUpdate(float dt)
 {
+    //states
+
     //seek
     if (state == EntityState::Seek)
     {
@@ -71,6 +75,33 @@ void Entity::onUpdate(float dt)
             state = EntityState::Attack;
         }
     }
+
+
+    //anims
+
+    if (getTransformPtr()->inMove())
+    {
+        animController->play(ANIM_RUN);
+    }
+    else
+    {
+        animController->play(ANIM_IDLE);
+
+    }
+
+
+    //flip
+
+    if (state == EntityState::Seek)
+    {
+        bool flip = (getTransformPtr()->get_position().x - getTransformPtr()->get_prePosition().x) >= 0.0f;
+        getTransformPtr()->set_flip_x(flip);
+    }
+    else if (state == EntityState::Attack)
+    {
+        bool flip = (player->get_position().x - getTransformPtr()->get_position().x) >= 0.0f;
+        getTransformPtr()->set_flip_x(flip);
+    }
 }
 
 
@@ -95,19 +126,67 @@ void Entity::set(const EntityData& data)
     }
 
 
-    getSpritePtr()->setTexture(data.textureRef);
+
+    body->getSpritePtr()->setTexture(data.textureRef);
 
     weaponCore = Weapon::createWeapon(getGame()->get_currentScene(),
                                       *WeaponSO::get(data.weaponID),
                                       Tag::PLAYER_CORE.data(),
                                       getRenderLayer()+1u,
                                       hand);
+    weaponCore->getSpritePtr()->setRenderWithLocalFlip(true);
 
-    this->getTransformPtr()->scaleBy(this->entityData.scale);
+    body->getTransformPtr()->scaleBy(this->entityData.scale);
     hand->getTransformPtr()->add_position(2.5f * this->entityData.scale, -5.0f * this->entityData.scale);
 
-    this->collider->set(this->getSpritePtr()->getTextureRect().width * getTransformPtr()->get_scale().x,
-                        this->getSpritePtr()->getTextureRect().height * getTransformPtr()->get_scale().y);
+    this->collider->set(body->getSpritePtr()->getTextureRect().width * body->getTransformPtr()->get_scale().x,
+                        body->getSpritePtr()->getTextureRect().height * body->getTransformPtr()->get_scale().y);
+
+
+
+
+    //anims
+    {
+        //AnimationCycle cycle_idle({am_idle1, am_idle2});
+
+        auto am_idle = make_shared<AnimationTransformMove>(body->getTransformPtr(),
+                                                           body->getTransformPtr()->get_localPosition(),
+                                                           body->getTransformPtr()->get_localPosition(),
+                                                           body->getTransformPtr()->get_scale(),
+                                                           body->getTransformPtr()->get_scale(),
+                                                           body->getTransformPtr()->get_rotation(),
+                                                           body->getTransformPtr()->get_rotation(),
+                                                           1.f);
+
+        AnimationCycle cycle_idle({am_idle});
+        Animation anim_idle({cycle_idle});
+
+
+        auto am_run1 = make_shared<AnimationTransformMove>(body->getTransformPtr(),
+                                                           body->getTransformPtr()->get_localPosition(),
+                                                           body->getTransformPtr()->get_localPosition(),
+                                                           body->getTransformPtr()->get_scale(),
+                                                           body->getTransformPtr()->get_scale(),
+                                                           getTransformPtr()->get_rotation() - 4.f,
+                                                           getTransformPtr()->get_rotation() + 4.f,
+                                                           1.f/data.runSpeed);
+
+        auto am_run2 = make_shared<AnimationTransformMove>(body->getTransformPtr(),
+                                                           body->getTransformPtr()->get_localPosition(),
+                                                           body->getTransformPtr()->get_localPosition(),
+                                                           body->getTransformPtr()->get_scale(),
+                                                           body->getTransformPtr()->get_scale(),
+                                                           body->getTransformPtr()->get_rotation() + 4.f,
+                                                           body->getTransformPtr()->get_rotation() - 4.f,
+                                                           1.f/data.runSpeed);
+
+        AnimationCycle cycle_run({am_run1, am_run2});
+        Animation anim_run({cycle_run});
+
+
+        ANIM_IDLE = animController->add(anim_idle);
+        ANIM_RUN = animController->add(anim_run);
+    }
 }
 
 

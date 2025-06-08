@@ -33,7 +33,7 @@ void VRenderable::onLateUpdate(float)
                      _t->get_position(),
                      _t->get_scale(),
                      _t->get_rotation(),
-                     _t->get_flipX(),
+                     m_renderWithLocalFlip ? _t->get_localFlipX() : _t->get_flipX(),
                      _t->isRect());
     }
 }
@@ -99,6 +99,11 @@ void VRenderable::generateMatrix(const Engine* game, sf::Transform& sftransform,
 void VRenderable::dispose()
 {
     m_assetRef.clear();
+}
+
+
+void VRenderable::setRenderWithLocalFlip(const bool b) {
+    this->m_renderWithLocalFlip = b;
 }
 
 

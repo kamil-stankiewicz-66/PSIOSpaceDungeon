@@ -132,10 +132,11 @@ void Gun::attackCore()
     //transform
     bullet->getTransformPtr()->set_position(getTransformPtr()->get_position() + (aimDir*50.f));
     bullet->getTransformPtr()->set_rotation(getTransformPtr()->get_rotation());
-    bullet->getTransformPtr()->set_flip_x(getTransformPtr()->get_flipX());
+    bullet->getTransformPtr()->set_flip_x(getTransformPtr()->get_localFlipX());
 
     //add texture
     bullet->getSpritePtr()->setTexture(bulletTxt);
+    bullet->getSpritePtr()->setRenderWithLocalFlip(true);
 
     //init
     bullet->init(getData().damage, aimDir, this->getTargetTag(), tilemap);
@@ -163,7 +164,7 @@ void Gun::aim(const Vector2& point)
 
     float aimAngle = atan2(aimDir.y, aimDir.x) * (180.0 / M_PI);
 
-    if (getTransformPtr()->get_flipX()) {
+    if (getTransformPtr()->get_localFlipX()) {
         aimAngle = 180.0 - aimAngle;
     }
 
@@ -171,6 +172,7 @@ void Gun::aim(const Vector2& point)
 }
 
 void Gun::resetAim() {
+    getTransformPtr()->set_rotation(0.0f);
     aimDir.clear();
 }
 

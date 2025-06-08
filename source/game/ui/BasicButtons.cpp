@@ -26,7 +26,7 @@ void MenuButton::onAwake()
     textObj = this->getGame()->get_currentScene()->createObject<TextObject>();
     this->addChild(textObj);
 
-    textObj->getTextPtr()->setFont(Asset::Fonts::BANGERS.data());    
+    textObj->getTextPtr()->setFont(Asset::Fonts::BANGERS.data());
     textObj->getTextPtr()->setCharacterSize(50);
 }
 
