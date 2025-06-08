@@ -6,6 +6,7 @@
 //scene names
 inline const std::string MAIN_SCENE = "main_scene";
 inline const std::string GAME_SCENE = "game_scene";
+inline const std::string STORE_SCENE = "store_scene";
 
 //game class
 class Game : public Engine

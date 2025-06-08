@@ -9,8 +9,13 @@
 
 class MenuButton : public Button
 {
+    TextObject* textObj;
+
 protected:
     virtual void onAwake() override;
+
+public:
+    void setText(const string&);
 };
 
 #endif // BASICBUTTONS_H

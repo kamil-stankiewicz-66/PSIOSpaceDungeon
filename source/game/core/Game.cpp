@@ -28,7 +28,7 @@ void Game::onUpdate(float deltatime)
     //exit
     if (Input::Keyboard::isKeyPressed(Input::Keyboard::Key::Escape))
     {
-        if(!m_isFullScreenButtonPressed)
+        if(!m_isFullScreenButtonPressed && this->get_window())
         {
             m_isFullScreenButtonPressed = true;
             m_isFullScreen = !m_isFullScreen;
@@ -39,6 +39,4 @@ void Game::onUpdate(float deltatime)
     {
         m_isFullScreenButtonPressed = false;
     }
-
-    cout<< m_isFullScreen << " " << m_isFullScreenButtonPressed <<endl;
 }

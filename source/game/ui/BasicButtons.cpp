@@ -23,10 +23,18 @@ void MenuButton::onAwake()
 
 
     //text
-    auto textObj = this->getGame()->get_currentScene()->createObject<TextObject>();
+    textObj = this->getGame()->get_currentScene()->createObject<TextObject>();
     this->addChild(textObj);
 
-    textObj->getTextPtr()->setFont(Asset::Fonts::BANGERS.data());
-    textObj->getTextPtr()->setText("Play");
+    textObj->getTextPtr()->setFont(Asset::Fonts::BANGERS.data());    
     textObj->getTextPtr()->setCharacterSize(50);
+}
+
+void MenuButton::setText(const string& text)
+{
+    if (!textObj) {
+        return;
+    }
+
+    textObj->getTextPtr()->setText(text);
 }
