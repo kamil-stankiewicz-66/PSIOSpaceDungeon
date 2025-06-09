@@ -63,6 +63,7 @@ struct EntityData : ScriptableObject
 
     Type type;
     uint weaponID;
+    uint healthID;
     float walkSpeed;
     float runSpeed;
     float scale;
@@ -83,5 +84,41 @@ private:
     static void add(EntityData*);
     static void init();
 };
+
+///
+/// \brief HealthData scriptable objects.
+///
+
+struct HealthData : ScriptableObject
+
+{
+    float maxHealth;   // maksymalne hp jakie mozna miec
+    float regenRate;   //ile hp na sekunde odzyskuje
+};
+
+class HealthSO
+
+{
+    friend class Game;
+
+    // mapa z wszystkimi obiektami zdrowia
+    static map<uint, unique_ptr<HealthData>> healthDataMap;
+
+
+public:
+    //  pobiera dane zdrowia po ida
+    static const HealthData* get(const uint& id);
+
+    // zwraca cala mape danych zdrowia
+    static const map<uint, unique_ptr<HealthData>>& getAll();
+
+private:
+
+    //dodaje nowy wpis do mapy
+    static void add(HealthData*);
+
+    static void init();
+};
+
 
 #endif // SCRIPTABLEOBJECT_H

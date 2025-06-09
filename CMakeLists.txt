@@ -100,6 +100,7 @@ add_executable(PSIOSpaceDungeon
     source/game/effect/CustomAnimation.cpp
     include/game/ui/Notification.h
     source/game/ui/Notification.cpp
+    include/engine/component/Health.h
 )
 
 set_target_properties(
