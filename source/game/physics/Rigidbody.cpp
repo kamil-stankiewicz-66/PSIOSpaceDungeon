@@ -52,8 +52,35 @@ void Rigidbody::addForce(const Vector2& force)
     if (auto tile = tilemap->getTileRealPos(potentialPosition.x, potentialPosition.y))
     {
         //move
-        if (tile->getExceedability() > 0.0f) {
+        if (tile->getExceedability() > 0.0f)
+        {
             transform->set_position(transform->get_position() + (force * tileFactor));
+            return;
+        }
+    }
+
+
+    //try slide
+
+    //if tile is nullptr, there is a collision
+    if (auto tile = tilemap->getTileRealPos(potentialPosition.x, rect->get_position().y))
+    {
+        //move
+        if (tile->getExceedability() > 0.0f)
+        {
+            transform->set_position(transform->get_position().x + (force.x * tileFactor), transform->get_position().y);
+            return;
+        }
+    }
+
+    //if tile is nullptr, there is a collision
+    if (auto tile = tilemap->getTileRealPos(rect->get_position().x, potentialPosition.y))
+    {
+        //move
+        if (tile->getExceedability() > 0.0f)
+        {
+            transform->set_position(transform->get_position().x, transform->get_position().y + (force.y * tileFactor));
+            return;
         }
     }
 }
