@@ -1,4 +1,5 @@
 #include "game/core/DataBlock.h"
+#include <cmath>
 
 uint PlayerData::exp_points = 0u;
 uint PlayerData::weapon_id = 1u;
@@ -38,4 +39,8 @@ uint PlayerData::getExpLevel() {
 
 float PlayerData::getMaxHealth() {
     return 100.f + (static_cast<float>(getExpLevel()) * 10.f);
+}
+
+uint PlayerData::getDamage() {
+    return 2 + static_cast<uint>(floor(getExpLevel() * 0.5f));
 }

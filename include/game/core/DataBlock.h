@@ -40,6 +40,7 @@ public:
     static uint getCoins();
     static uint getExpLevel();
     static float getMaxHealth();
+    static uint getDamage();
 };
 
 /// [serializable]
