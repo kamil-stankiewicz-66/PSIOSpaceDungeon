@@ -132,8 +132,19 @@ void LevelGenerator::generateCorridors()
     for (int _roomNr = 0; _roomNr < roomsNumber; ++_roomNr)
     {
         generateCorridor(x, y);
+
+        tilePos nextRoom = make_pair(x, y);
+        if (getDistanceInTiles(nextRoom, make_pair(0, 0)) > getDistanceInTiles(lastRoom, make_pair(0, 0)))
+        {
+            lastRoom = nextRoom;
+        }
+
         generateRoom(x, y);
     }
+
+    //add finish point
+    auto finishPoint = getGame()->get_currentScene()->createObject<FinishPoint>(40u);
+    finishPoint->getTransformPtr()->set_position(levelManager->tilemap->tile2realPos(lastRoom.first, lastRoom.second));
 }
 
 

@@ -5,7 +5,7 @@
 #include "engine/component/Collider.h"
 #include "engine/object/Object.h"
 #include "game/physics/Rigidbody.h"
-#include "game/weapon/Weapon.h"
+#include "game/entity/Weapon.h"
 #include <random>
 
 using namespace std;

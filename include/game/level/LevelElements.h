@@ -8,6 +8,7 @@
 using uint = unsigned int;
 class CircleCollider;
 class ParticleEffect;
+class LevelManager;
 
 
 ///
@@ -20,7 +21,7 @@ class Chest : public GameObject
     friend class LevelGenerator;
 
     //link
-    PlayerCore* player = nullptr;
+    //PlayerCore* player = nullptr;
 
     //components
     CircleCollider* collider = nullptr;
@@ -58,5 +59,22 @@ class Chest : public GameObject
     void addCoins(const uint&);
 };
 
+
+///
+/// \brief The FinishPoint class.
+///
+
+class FinishPoint : public GameObject
+{
+    //link
+    LevelManager* levelManager = nullptr;
+
+    //components
+    CircleCollider* collider = nullptr;
+
+    //engine
+    virtual void onAwake() override;
+    virtual void onUpdate(float) override;
+};
 
 #endif // LEVELELEMENTS_H

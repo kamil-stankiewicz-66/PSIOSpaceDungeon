@@ -27,6 +27,7 @@ class LevelGenerator : public Component
     int m_direction;
     int m_room_size_x;
     int m_room_size_y;
+    tilePos lastRoom;
 
     int getRndInt(const int& min, const int& max);
     float getRndFloat(const float& min, const float& max);

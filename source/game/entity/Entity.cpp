@@ -96,11 +96,13 @@ void Entity::onUpdate(float dt)
     {
         bool flip = (getTransformPtr()->get_position().x - getTransformPtr()->get_prePosition().x) >= 0.0f;
         getTransformPtr()->set_flip_x(flip);
+        weaponCore->getTransformPtr()->set_flip_x(!flip);
     }
     else if (state == EntityState::Attack)
     {
         bool flip = (player->get_position().x - getTransformPtr()->get_position().x) >= 0.0f;
         getTransformPtr()->set_flip_x(flip);
+        weaponCore->getTransformPtr()->set_flip_x(!flip);
     }
 }
 

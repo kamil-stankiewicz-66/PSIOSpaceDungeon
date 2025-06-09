@@ -1,9 +1,9 @@
-#include "game/weapon/Weapon.h"
+#include "game/entity/Weapon.h"
 #include "engine/core/Engine.h"
 #include "game/core/Asset.h"
 #include "game/core/Parameter.h"
 #include "game/core/Tag.h"
-#include "game/physics/ParticleEffect.h"
+#include "game/effect/ParticleEffect.h"
 #include <cmath>
 
 

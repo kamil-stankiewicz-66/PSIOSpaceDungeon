@@ -4,7 +4,8 @@
 #include "game/core/DataBlock.h"
 #include "game/core/Tag.h"
 #include "game/effect/CustomAnimation.h"
-#include "game/physics/ParticleEffect.h"
+#include "game/effect/ParticleEffect.h"
+#include "game/level/LevelManager.h"
 
 
 ///
@@ -121,7 +122,7 @@ void Chest::empty()
     this->coins = 0u;
     animContr->play(ANIM_EMPTY);
 
-    if (player && parEff)
+    if (/*player && */parEff)
     {
         parEff->invoke(Vector2(0.f, 1.f), false);
     }
@@ -144,12 +145,12 @@ void Chest::set(const string_view txt_close_ref,
 
 
     //find player
-    player = getGame()->get_currentScene()->findObject<PlayerCore>();
+    //player = getGame()->get_currentScene()->findObject<PlayerCore>();
 
-    if (!player) {
-        VDebuger::print("<ERROR> CHEST :: SET :: player is nullptr");
-        return;
-    }
+    // if (!player) {
+    //     VDebuger::print("<ERROR> CHEST :: SET :: player is nullptr");
+    //     return;
+    // }
 
 
     //main
@@ -247,4 +248,76 @@ void Chest::set(const string_view txt_close_ref,
 void Chest::addCoins(const uint& coins) {
     this->coins += coins;
     parEff->setParticleNum(this->coins);
+}
+
+
+///
+/// \brief FinishPoint
+///
+
+void FinishPoint::onAwake()
+{
+    if (!getGame() || !getGame()->get_currentScene()) {
+        VDebuger::print("<ERROR> FINISH_POINTER :: ON_AWAKE :: game or scene is nullptr");
+    }
+
+
+    //level manager
+
+    levelManager = getGame()->get_currentScene()->findObject<LevelManager>();
+
+    if (!levelManager) {
+        VDebuger::print("<ERROR> FINISH_POINTER :: ON_AWAKE :: levelManager is nullptr");
+    }
+
+
+    //collider
+
+    collider = createComponent<CircleCollider>();
+
+    if (collider)
+    {
+        collider->set(50.f);
+    }
+    else
+    {
+        VDebuger::print("<ERROR> FINISH_POINTER :: ON_AWAKE :: collider is nullptr");
+    }
+
+
+    //texture
+
+    getSpritePtr()->setTexture(Asset::Graphics::FLOOR_LADDER.data());
+
+
+    //scale
+
+    getTransformPtr()->scaleBy(2.f);
+}
+
+void FinishPoint::onUpdate(float)
+{
+    if (!collider) {
+        return;
+    }
+
+
+    for (const auto& coll : collider->getCollisions())
+    {
+        if (!coll) {
+            continue;
+        }
+
+        auto obj = coll->getObject();
+
+        if (!obj) {
+            continue;
+        }
+
+        //only for player
+        if (obj->checkTag(Tag::PLAYER_CORE.data()))
+        {
+            //finish
+        }
+    }
 }

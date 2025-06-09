@@ -85,14 +85,14 @@ add_executable(PSIOSpaceDungeon
     include/game/entity/BasicEntity.h
     source/game/entity/BasicEntity.cpp
     include/game/core/Tag.h
-    source/game/weapon/Weapon.cpp
-    include/game/weapon/Weapon.h
+    source/game/entity/Weapon.cpp
+    include/game/entity/Weapon.h
     include/game/core/ScriptableObject.h
     source/game/core/ScriptableObject.cpp
     include/game/player/PlayerEnemyDetector.h
     source/game/player/PlayerEnemyDetector.cpp
-    include/game/physics/ParticleEffect.h
-    source/game/physics/ParticleEffect.cpp
+    include/game/effect/ParticleEffect.h
+    source/game/effect/ParticleEffect.cpp
     include/game/level/LevelElements.h
     source/game/level/LevelElements.cpp
     include/game/core/Serializer.h

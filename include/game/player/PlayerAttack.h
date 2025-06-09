@@ -2,7 +2,7 @@
 #define PLAYERATTACK_H
 
 #include "engine/object/Object.h"
-#include "game/weapon/Weapon.h"
+#include "game/entity/Weapon.h"
 
 class PlayerCore;
 
