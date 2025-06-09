@@ -1,16 +1,17 @@
 #include "game/core/ScriptableObject.h"
 #include "engine/core/Debuger.h"
 #include "game/core/Asset.h"
+#include "game/core/Parameter.h"
 
 
 
-        ///
-        /// Weapons
-        ///
+///
+/// Weapons
+///
 
 
-            //static var
-            map<uint, unique_ptr<WeaponData>> WeaponSO::weapons;
+//static var
+map<uint, unique_ptr<WeaponData>> WeaponSO::weapons;
 
 
 //getter
@@ -110,6 +111,41 @@ const EntityData* EntitySO::get(const uint& id)
     }
 }
 
+void EntitySO::getStats(const EntityData::Attribute& attribute, float& health, float& strength)
+{
+    switch (attribute) {
+    case EntityData::Attribute::HeavyTank:
+        health = Parameters::get_entity_heavyTank_health();
+        strength = Parameters::get_entity_heavyTank_strength();
+        break;
+
+    case EntityData::Attribute::Tank:
+        health = Parameters::get_entity_tank_health();
+        strength = Parameters::get_entity_tank_strength();
+        break;
+
+    case EntityData::Attribute::Medium:
+        health = Parameters::get_entity_medium_health();
+        strength = Parameters::get_entity_medium_strength();
+        break;
+
+    case EntityData::Attribute::Assasin:
+        health = Parameters::get_entity_assasin_health();
+        strength = Parameters::get_entity_assasin_strength();
+        break;
+
+    case EntityData::Attribute::LightAssasin:
+        health = Parameters::get_entity_lightAssasin_health();
+        strength = Parameters::get_entity_lightAssasin_strength();
+        break;
+
+    default:
+        health = 0.0f;
+        strength = 0.0f;
+        break;
+    }
+}
+
 const map<uint, unique_ptr<EntityData>>& EntitySO::getAll() {
     return EntitySO::entities;
 }
@@ -141,12 +177,13 @@ void EntitySO::init()
         zombie->textureRef = Asset::Graphics::ZOMBIE_BASIC.data();
 
         zombie->type = EntityData::Type::Basic;
+        zombie->attribute = EntityData::Attribute::Medium;
+        zombie->level = 1u;
         zombie->weaponID = 0u;
         zombie->walkSpeed = 2.0f;
         zombie->runSpeed = 3.0f;
         zombie->scale = 2.0f;
 
-        zombie->healthID = 0u; // Basic Health
         EntitySO::add(zombie);
     }
 
@@ -159,11 +196,12 @@ void EntitySO::init()
         zombieGreen->textureRef = Asset::Graphics::ZOMBIE_GREEN.data();
 
         zombieGreen->type = EntityData::Type::Basic;
+        zombieGreen->attribute = EntityData::Attribute::Tank;
+        zombieGreen->level = 2u;
         zombieGreen->weaponID = 0u;
         zombieGreen->walkSpeed = 1.0f;
         zombieGreen->runSpeed = 3.0f;
         zombieGreen->scale = 2.0f;
-        zombieGreen->healthID = 0u; // Basic Health
 
         EntitySO::add(zombieGreen);
     }
@@ -177,11 +215,12 @@ void EntitySO::init()
         zombieShort->textureRef = Asset::Graphics::ZOMBIE_SHORT.data();
 
         zombieShort->type = EntityData::Type::Basic;
+        zombieShort->attribute = EntityData::Attribute::Assasin;
+        zombieShort->level = 2u;
         zombieShort->weaponID = 0u;
         zombieShort->walkSpeed = 5.0f;
         zombieShort->runSpeed = 6.0f;
         zombieShort->scale = 2.0f;
-        zombieShort->healthID = 0u; // Basic Health
 
         EntitySO::add(zombieShort);
     }
@@ -195,12 +234,13 @@ void EntitySO::init()
         zombieSmall->textureRef = Asset::Graphics::ZOMBIE_SMALL.data();
 
         zombieSmall->type = EntityData::Type::Basic;
+        zombieSmall->attribute = EntityData::Attribute::Assasin;
+        zombieSmall->level = 1u;
         zombieSmall->weaponID = 0u;
         zombieSmall->walkSpeed = 2.0f;
         zombieSmall->runSpeed = 5.5f;
         zombieSmall->scale = 2.0f;
 
-        zombieSmall->healthID = 0u; // Basic Health
         EntitySO::add(zombieSmall);
     }
 
@@ -213,12 +253,12 @@ void EntitySO::init()
         zombieTall->textureRef = Asset::Graphics::ZOMBIE_TALL.data();
 
         zombieTall->type = EntityData::Type::Basic;
+        zombieTall->attribute = EntityData::Attribute::HeavyTank;
+        zombieTall->level = 5u;
         zombieTall->weaponID = 0u;
         zombieTall->walkSpeed = 0.5f;
         zombieTall->runSpeed = 1.0f;
         zombieTall->scale = 2.0f;
-        zombieTall->healthID = 0u; // Basic Health
-
 
         EntitySO::add(zombieTall);
     }
@@ -232,14 +272,35 @@ void EntitySO::init()
         skeleton->textureRef = Asset::Graphics::ZOMBIE_SKELETON.data();
 
         skeleton->type = EntityData::Type::Basic;
+        skeleton->attribute = EntityData::Attribute::LightAssasin;
+        skeleton->level = 5u;
         skeleton->weaponID = 0u;
         skeleton->walkSpeed = 0.5f;
         skeleton->runSpeed = 6.5f;
         skeleton->scale = 2.0f;
-        skeleton->healthID = 0u; // Basic Health
 
         EntitySO::add(skeleton);
     }
+
+    //orc
+    {
+        EntityData* orc = new EntityData;
+
+        orc->id = 6u;
+        orc->name = "Orc";
+        orc->textureRef = Asset::Graphics::ORC_BASIC.data();
+
+        orc->type = EntityData::Type::Basic;
+        orc->attribute = EntityData::Attribute::Assasin;
+        orc->level = 2u;
+        orc->weaponID = 1u;
+        orc->walkSpeed = 2.5f;
+        orc->runSpeed = 5.0f;
+        orc->scale = 2.2f;
+
+        EntitySO::add(orc);
+    }
+
     //armored orc
     {
         EntityData* orcArmored = new EntityData;
@@ -248,12 +309,13 @@ void EntitySO::init()
         orcArmored->name = "Armored Orc";
         orcArmored->textureRef = Asset::Graphics::ORC_ARMORED.data();
 
-        orcArmored->type = EntityData::Type::Basic;
+        orcArmored->type = EntityData::Type::Basic;        
+        orcArmored->attribute = EntityData::Attribute::Tank;
+        orcArmored->level = 3u;
         orcArmored->weaponID = 1u;
         orcArmored->walkSpeed = 2.0f;
         orcArmored->runSpeed = 4.0f;
         orcArmored->scale = 2.4f;
-        orcArmored->healthID = 1u; // Elite Health
 
         EntitySO::add(orcArmored);
     }
@@ -267,115 +329,52 @@ void EntitySO::init()
         orcMasked->textureRef = Asset::Graphics::ORC_MASKED.data();
 
         orcMasked->type = EntityData::Type::Basic;
+        orcMasked->attribute = EntityData::Attribute::Assasin;
+        orcMasked->level = 3u;
         orcMasked->weaponID = 1u;
         orcMasked->walkSpeed = 2.5f;
         orcMasked->runSpeed = 5.0f;
         orcMasked->scale = 2.2f;
-        orcMasked->healthID = 1u; // Elite Health
 
         EntitySO::add(orcMasked);
     }
-//orc shaman
-{
-    EntityData* orcShaman = new EntityData;
 
-    orcShaman->id = 9u;
-    orcShaman->name = "Orc Shaman";
-    orcShaman->textureRef = Asset::Graphics::ORC_SHAMAN.data();
-
-    orcShaman->type = EntityData::Type::Basic;
-    orcShaman->weaponID = 1u;
-    orcShaman->walkSpeed = 2.0f;
-    orcShaman->runSpeed = 4.5f;
-    orcShaman->scale = 2.0f;
-    orcShaman->healthID = 1u; // Elite Health
-
-    EntitySO::add(orcShaman);
-}
-
-//orc veteran
-{
-    EntityData* orcVeteran = new EntityData;
-
-    orcVeteran->id = 10u;
-    orcVeteran->name = "Orc Veteran";
-    orcVeteran->textureRef = Asset::Graphics::ORC_VETERAN.data();
-
-    orcVeteran->type = EntityData::Type::Basic;
-    orcVeteran->weaponID = 1u;
-    orcVeteran->walkSpeed = 2.8f;
-    orcVeteran->runSpeed = 5.5f;
-    orcVeteran->scale = 2.3f;
-    orcVeteran->healthID = 1u; // Elite Health
-
-    EntitySO::add(orcVeteran);
-}
-}
-
-///
-/// Health
-///
-
-
-// mapa ze wszystkimi danymi zdrowia
-map<uint, unique_ptr<HealthData>> HealthSO::healthDataMap;
-
-
-// funkcja ktora pobiera dane zdrowia
-const HealthData* HealthSO::get(const uint& id)
-
-{
-    auto it = healthDataMap.find(id);
-    if (it != healthDataMap.end() && it->second)
+    //orc shaman
     {
-        return it->second.get();
+        EntityData* orcShaman = new EntityData;
+
+        orcShaman->id = 9u;
+        orcShaman->name = "Orc Shaman";
+        orcShaman->textureRef = Asset::Graphics::ORC_SHAMAN.data();
+
+        orcShaman->type = EntityData::Type::Basic;
+        orcShaman->attribute = EntityData::Attribute::Medium;
+        orcShaman->level = 1u;
+        orcShaman->weaponID = 1u;
+        orcShaman->walkSpeed = 2.0f;
+        orcShaman->runSpeed = 4.5f;
+        orcShaman->scale = 2.0f;
+
+        EntitySO::add(orcShaman);
     }
-    else
-    {
 
-        VDebuger::print("<ERROR> HEALTH_SO :: health data with id", id, "not exist");
-        return nullptr;
+    //orc veteran
+    {
+        EntityData* orcVeteran = new EntityData;
+
+        orcVeteran->id = 10u;
+        orcVeteran->name = "Orc Veteran";
+        orcVeteran->textureRef = Asset::Graphics::ORC_VETERAN.data();
+
+        orcVeteran->type = EntityData::Type::Basic;
+        orcVeteran->attribute = EntityData::Attribute::Assasin;
+        orcVeteran->level = 3u;
+        orcVeteran->weaponID = 1u;
+        orcVeteran->walkSpeed = 2.8f;
+        orcVeteran->runSpeed = 5.5f;
+        orcVeteran->scale = 2.3f;
+
+        EntitySO::add(orcVeteran);
     }
 }
 
-
-const map<uint, unique_ptr<HealthData>>& HealthSO::getAll()
-{
-    return HealthSO::healthDataMap;
-}
-
-//Dodaje nowy obiekt HealthData do mapy
-void HealthSO::add(HealthData* so)
-{
-    auto it = healthDataMap.find(so->id);
-    if (it == healthDataMap.end() && so)
-    {
-        healthDataMap[so->id] = unique_ptr<HealthData>(so);
-    }
-}
-
-
-void HealthSO::init()
-{
-    {
-        // Zwykle zdrowie
-        HealthData* basicHealth = new HealthData;
-        basicHealth->id = 0u;
-        basicHealth->name = "Basic Health";
-        basicHealth->textureRef = "";
-        basicHealth->maxHealth = 100.0f;
-        basicHealth->regenRate = 2.0f;
-        HealthSO::add(basicHealth);
-    }
-
-    {
-        // elite
-        HealthData* eliteHealth = new HealthData;
-        eliteHealth->id = 1u;
-        eliteHealth->name = "Elite Health";
-        eliteHealth->textureRef = "";
-        eliteHealth->maxHealth = 250.0f;
-        eliteHealth->regenRate = 5.0f;
-        HealthSO::add(eliteHealth);
-    }
-}

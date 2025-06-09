@@ -429,7 +429,13 @@ void LevelGenerator::generateChestsInRoom(const tilePos& leftDown, const tilePos
         auto chest = getGame()->get_currentScene()->createObject<Chest>(40u);
         chest->getTransformPtr()->set_position(pos);
         chest->set(Asset::Graphics::CHEST_CLOSED, Asset::Graphics::CHEST_OPEN_FULL, Asset::Graphics::CHEST_OPEN_EMPTY);
-        chest->addCoins(5);
+
+        int coins = PlayerData::getExpLevel() * Parameters::get_levelGenerator_chestsCoinsMultiplier();
+        int coins_diff = static_cast<int>(ceil(static_cast<float>(coins) * 0.3333f));
+        coins = getRndInt(coins - coins_diff, coins + coins_diff);
+        coins = VMath::clamp(coins, 1, coins + coins_diff);
+
+        chest->addCoins(coins);
     }
 }
 

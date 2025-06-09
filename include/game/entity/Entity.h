@@ -4,6 +4,7 @@
 #include "engine/component/AnimationController.h"
 #include "engine/component/Collider.h"
 #include "engine/object/Object.h"
+#include "game/entity/HealthSystem.h"
 #include "game/physics/Rigidbody.h"
 #include "game/entity/Weapon.h"
 #include <random>
@@ -44,6 +45,7 @@ private:
     //engine
     virtual void onAwake() override;
     virtual void onUpdate(float dt) override;
+    virtual void onDestroy() override;
 
 protected:
 
@@ -60,6 +62,7 @@ protected:
     BoxCollider* collider = nullptr;
     Rigidbody* rb = nullptr;
     AnimationController* animController = nullptr;
+    EntityHealthSystem* healthSystem = nullptr;
 
     //weapon
     GameObject* body = nullptr;

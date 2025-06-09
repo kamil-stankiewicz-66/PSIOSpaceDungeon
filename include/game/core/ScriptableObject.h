@@ -53,6 +53,7 @@ private:
 };
 
 
+
 ///
 /// \brief EntitiData scriptable objects.
 ///
@@ -60,10 +61,12 @@ private:
 struct EntityData : ScriptableObject
 {
     enum class Type { Basic };
+    enum class Attribute { HeavyTank, Tank, Medium, Assasin, LightAssasin };
 
     Type type;
+    Attribute attribute;
+    uint level;
     uint weaponID;
-    uint healthID;
     float walkSpeed;
     float runSpeed;
     float scale;
@@ -80,45 +83,11 @@ public:
     static const EntityData* get(const uint& id);
     static const map<uint, unique_ptr<EntityData>>& getAll();
 
+    static void getStats(const EntityData::Attribute&, float& health, float& strength);
+
 private:
     static void add(EntityData*);
     static void init();
 };
-
-///
-/// \brief HealthData scriptable objects.
-///
-
-struct HealthData : ScriptableObject
-
-{
-    float maxHealth;   // maksymalne hp jakie mozna miec
-    float regenRate;   //ile hp na sekunde odzyskuje
-};
-
-class HealthSO
-
-{
-    friend class Game;
-
-    // mapa z wszystkimi obiektami zdrowia
-    static map<uint, unique_ptr<HealthData>> healthDataMap;
-
-
-public:
-    //  pobiera dane zdrowia po ida
-    static const HealthData* get(const uint& id);
-
-    // zwraca cala mape danych zdrowia
-    static const map<uint, unique_ptr<HealthData>>& getAll();
-
-private:
-
-    //dodaje nowy wpis do mapy
-    static void add(HealthData*);
-
-    static void init();
-};
-
 
 #endif // SCRIPTABLEOBJECT_H

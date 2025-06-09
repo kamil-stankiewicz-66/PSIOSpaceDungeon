@@ -1,6 +1,7 @@
 #include "engine/object/Object.h"
 #include "engine/core/Debuger.h"
 #include "engine/component/Renderable.h"
+#include "engine/core/Engine.h"
 
 #include <algorithm>
 
@@ -25,6 +26,7 @@ std::ostream& operator<<(std::ostream& os, ObjectState state)
 void Object::onStart() {}
 void Object::onAwake() {}
 void Object::onUpdate(float deltaTime) {}
+void Object::onDestroy() {}
 
 
 void Object::set_state(ObjectState _state)
@@ -308,6 +310,30 @@ const string Object::getLog()
         << ", tag[0]: " << getTag(0);
 
     return oss.str();
+}
+
+
+
+void Object::destroy(bool destroyChilds)
+{
+    this->onDestroy();
+
+    if (getGame() && getGame()->get_currentScene())
+    {
+        getGame()->get_currentScene()->killObject(this);
+    }
+    else
+    {
+        VDebuger::print("<ERROR> ENGINE :: OBJECT :: game or scene is nullptr");
+    }
+
+    if (destroyChilds)
+    {
+        for (auto& child : childs)
+        {
+            child->destroy(true);
+        }
+    }
 }
 
 

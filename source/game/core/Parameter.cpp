@@ -18,10 +18,22 @@ int Parameters::levelGenerator_corridorLength_max;
 int Parameters::levelGenerator_corridor_width;
 float Parameters::levelGenerator_enemiesFrequency;
 float Parameters::levelGenerator_chestsFrequency;
+int Parameters::levelGenerator_chestsCoinsMultiplier;
 
 float Parameters::bullet_speed;
 
 float Parameters::entity_rndMoveIntense;
+float Parameters::entity_heavyTank_health;
+float Parameters::entity_heavyTank_strength;
+float Parameters::entity_tank_health;
+float Parameters::entity_tank_strength;
+float Parameters::entity_medium_health;
+float Parameters::entity_medium_strength;
+float Parameters::entity_assasin_health;
+float Parameters::entity_assasin_strength;
+float Parameters::entity_lightAssasin_health;
+float Parameters::entity_lightAssasin_strength;
+
 
 
 
@@ -48,10 +60,21 @@ void Parameters::init()
     Parameters::levelGenerator_corridor_width = 5;
     Parameters::levelGenerator_enemiesFrequency = 0.05f;
     Parameters::levelGenerator_chestsFrequency = 0.05f;
+    Parameters::levelGenerator_chestsCoinsMultiplier = 3;
 
     Parameters::bullet_speed = 30.0f;
 
     Parameters::entity_rndMoveIntense = 4000.0f;
+    Parameters::entity_heavyTank_health = 200.0f;
+    Parameters::entity_heavyTank_strength = 150.0f;
+    Parameters::entity_tank_health = 120.0f;
+    Parameters::entity_tank_strength = 80.0f;
+    Parameters::entity_medium_health = 100.0f;
+    Parameters::entity_medium_strength = 40.0f;
+    Parameters::entity_assasin_health = 50.0f;
+    Parameters::entity_assasin_strength = 30.0f;
+    Parameters::entity_lightAssasin_health = 15.0f;
+    Parameters::entity_lightAssasin_strength = 40.0f;
 }
 
 
@@ -131,6 +154,10 @@ const float& Parameters::get_levelGenerator_chestsFrequency() {
     return levelGenerator_chestsFrequency;
 }
 
+const int& Parameters::get_levelGenerator_chestsCoinsMultiplier() {
+    return levelGenerator_chestsCoinsMultiplier;
+}
+
 
 ///
 /// weapons
@@ -147,4 +174,44 @@ const float& Parameters::get_bullet_speed() {
 
 const float& Parameters::get_entity_rndMoveIntense() {
     return entity_rndMoveIntense;
+}
+
+const float& Parameters::get_entity_heavyTank_health() {
+    return entity_heavyTank_health;
+}
+
+const float& Parameters::get_entity_heavyTank_strength() {
+    return entity_heavyTank_strength;
+}
+
+const float& Parameters::get_entity_tank_health() {
+    return entity_tank_health;
+}
+
+const float& Parameters::get_entity_tank_strength() {
+    return entity_tank_strength;
+}
+
+const float& Parameters::get_entity_medium_health() {
+    return entity_medium_health;
+}
+
+const float& Parameters::get_entity_medium_strength() {
+    return entity_medium_strength;
+}
+
+const float& Parameters::get_entity_assasin_health() {
+    return entity_assasin_health;
+}
+
+const float& Parameters::get_entity_assasin_strength() {
+    return entity_assasin_strength;
+}
+
+const float& Parameters::get_entity_lightAssasin_health() {
+    return entity_lightAssasin_health;
+}
+
+const float& Parameters::get_entity_lightAssasin_strength() {
+    return entity_lightAssasin_strength;
 }

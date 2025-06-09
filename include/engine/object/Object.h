@@ -68,6 +68,7 @@ protected:
     virtual void onStart(); //in first frame.
     virtual void onAwake(); //when object is created on scene.
     virtual void onUpdate(float deltaTime); //every frame.
+    virtual void onDestroy(); //before remove
 
 
 public:
@@ -115,6 +116,11 @@ public:
     //log
 
     const string getLog();
+
+
+    //destroy
+
+    void destroy(bool destroyChilds = false);
 
 
     //components

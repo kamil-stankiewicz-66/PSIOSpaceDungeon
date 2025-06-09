@@ -36,6 +36,8 @@ void Entity::onAwake()
 
     animController = createComponent<AnimationController>();
 
+    healthSystem = createComponent<EntityHealthSystem>();
+
 
     //find objects
     player = getGame()->get_currentScene()->findGameObject(Tag::PLAYER_RECT.data())->getTransformPtr();
@@ -106,6 +108,11 @@ void Entity::onUpdate(float dt)
     }
 }
 
+void Entity::onDestroy()
+{
+
+}
+
 
 
 void Entity::set(const EntityData& data)
@@ -120,6 +127,26 @@ void Entity::set(const EntityData& data)
 
     uniform_real_distribution<float> rndScale(data.scale - (0.1 * data.scale), data.scale + (0.1 * data.scale));
     this->entityData.scale = rndScale(rng);
+
+
+    float health = 0.0f;
+    float strength = 0.0f;
+    EntitySO::getStats(data.attribute, health, strength);
+
+    if (health == 0.0f || strength == 0.0f) {
+        VDebuger::print("<ERROR> ENTITY :: SET :: loading attributes error");
+    }
+
+
+    if (healthSystem)
+    {
+        uniform_real_distribution<float> rndHealth(health - (0.1 * health), health + (0.1 * health));
+        healthSystem->setHealth(rndHealth(rng));
+    }
+    else
+    {
+        VDebuger::print("<ERROR> ENTITY :: SET :: health system is nullptr");
+    }
 
 
 
@@ -137,6 +164,22 @@ void Entity::set(const EntityData& data)
                                       getRenderLayer()+1u,
                                       hand);
     weaponCore->getSpritePtr()->setRenderWithLocalFlip(true);
+
+
+
+
+    if (weaponCore)
+    {
+        uniform_real_distribution<float> rndStrength(strength - (0.1 * strength), strength + (0.1 * strength));
+        weaponCore->scaleDamage(rndStrength(rng));
+    }
+    else
+    {
+        VDebuger::print("<ERROR> ENTITY :: SET :: weapon core is nullptr");
+    }
+
+
+
 
     body->getTransformPtr()->scaleBy(this->entityData.scale);
     hand->getTransformPtr()->add_position(2.5f * this->entityData.scale, -5.0f * this->entityData.scale);

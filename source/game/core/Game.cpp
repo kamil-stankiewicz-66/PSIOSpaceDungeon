@@ -6,7 +6,6 @@
 #include "game/core/Serializer.h"
 #include "game/scenes/MainScene.h"
 #include "game/scenes/GameScene.h"
-#include "engine/component/Health.h"
 
 Game::Game(string _title) : Engine(_title, false)
 {
@@ -24,7 +23,6 @@ Game::Game(string _title) : Engine(_title, false)
     Parameters::init();
     WeaponSO::init();
     EntitySO::init();
-    HealthSO::init();
 
     //create scenes
     this->createScene<MainScene>(MAIN_SCENE);

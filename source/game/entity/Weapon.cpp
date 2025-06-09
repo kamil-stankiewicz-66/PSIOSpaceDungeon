@@ -4,6 +4,7 @@
 #include "game/core/Parameter.h"
 #include "game/core/Tag.h"
 #include "game/effect/ParticleEffect.h"
+#include "game/entity/HealthSystem.h"
 #include <cmath>
 
 
@@ -33,6 +34,12 @@ void Weapon::set(const WeaponData& data, const string& targetTag)
     this->data = data;
     getSpritePtr()->setTexture(data.textureRef);
     this->targetTag = targetTag;
+}
+
+
+void Weapon::scaleDamage(const float& factor)
+{
+    data.damage *= factor;
 }
 
 
@@ -287,6 +294,10 @@ void Bullet::onUpdate(float dt)
         //if this is not target skip
         if (!obj->checkTag(this->targetTag)) {
             continue;
+        }
+
+        if (auto healthSys = obj->getComponent<HealthSystem>(true)) {
+            healthSys->addDamage(damage);
         }
 
         this->destroy(sf::Color::Red);

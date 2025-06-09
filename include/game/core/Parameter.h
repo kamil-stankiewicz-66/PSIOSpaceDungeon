@@ -23,10 +23,22 @@ struct Parameters
     static int levelGenerator_corridor_width;
     static float levelGenerator_enemiesFrequency;
     static float levelGenerator_chestsFrequency;
+    static int levelGenerator_chestsCoinsMultiplier;
 
     static float bullet_speed;
 
     static float entity_rndMoveIntense;
+    static float entity_heavyTank_health;
+    static float entity_heavyTank_strength;
+    static float entity_tank_health;
+    static float entity_tank_strength;
+    static float entity_medium_health;
+    static float entity_medium_strength;
+    static float entity_assasin_health;
+    static float entity_assasin_strength;
+    static float entity_lightAssasin_health;
+    static float entity_lightAssasin_strength;
+
 
 
 public:
@@ -54,10 +66,22 @@ public:
     static const int& get_levelGenerator_corridor_width();
     static const float& get_levelGenerator_enemiesFrequency();
     static const float& get_levelGenerator_chestsFrequency();
+    static const int& get_levelGenerator_chestsCoinsMultiplier();
 
     static const float& get_bullet_speed();
 
     static const float& get_entity_rndMoveIntense();
+    static const float& get_entity_heavyTank_health();
+    static const float& get_entity_heavyTank_strength();
+    static const float& get_entity_tank_health();
+    static const float& get_entity_tank_strength();
+    static const float& get_entity_medium_health();
+    static const float& get_entity_medium_strength();
+    static const float& get_entity_assasin_health();
+    static const float& get_entity_assasin_strength();
+    static const float& get_entity_lightAssasin_health();
+    static const float& get_entity_lightAssasin_strength();
+
 };
 
 #endif // PARAMETER_H

@@ -34,6 +34,9 @@ public:
     //setter
     virtual void set(const WeaponData&, const string& targetTag);
 
+    //damage
+    void scaleDamage(const float&);
+
     //getter
     const float& getRange() const;
     const WeaponData& getData() const;
