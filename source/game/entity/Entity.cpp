@@ -149,7 +149,7 @@ void Entity::set(const EntityData& data)
     {
         //AnimationCycle cycle_idle({am_idle1, am_idle2});
 
-        auto am_idle = make_shared<AnimationTransformMove>(body->getTransformPtr(),
+        auto am_idle = make_shared<AnimationTransformStep>(body->getTransformPtr(),
                                                            body->getTransformPtr()->get_localPosition(),
                                                            body->getTransformPtr()->get_localPosition(),
                                                            body->getTransformPtr()->get_scale(),
@@ -162,7 +162,7 @@ void Entity::set(const EntityData& data)
         Animation anim_idle({cycle_idle});
 
 
-        auto am_run1 = make_shared<AnimationTransformMove>(body->getTransformPtr(),
+        auto am_run1 = make_shared<AnimationTransformStep>(body->getTransformPtr(),
                                                            body->getTransformPtr()->get_localPosition(),
                                                            body->getTransformPtr()->get_localPosition(),
                                                            body->getTransformPtr()->get_scale(),
@@ -171,7 +171,7 @@ void Entity::set(const EntityData& data)
                                                            getTransformPtr()->get_rotation() + 4.f,
                                                            1.f/data.runSpeed);
 
-        auto am_run2 = make_shared<AnimationTransformMove>(body->getTransformPtr(),
+        auto am_run2 = make_shared<AnimationTransformStep>(body->getTransformPtr(),
                                                            body->getTransformPtr()->get_localPosition(),
                                                            body->getTransformPtr()->get_localPosition(),
                                                            body->getTransformPtr()->get_scale(),

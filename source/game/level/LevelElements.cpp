@@ -186,7 +186,7 @@ void Chest::set(const string_view txt_close_ref,
 
             //vibrations
 
-            auto am_open_move1 = make_shared<AnimationTransformMove>(body->getTransformPtr(),
+            auto am_open_move1 = make_shared<AnimationTransformStep>(body->getTransformPtr(),
                                                                      body->getTransformPtr()->get_localPosition() - Vector2(2.f),
                                                                      body->getTransformPtr()->get_localPosition() + Vector2(2.f),
                                                                      body->getTransformPtr()->get_scale(),
@@ -195,7 +195,7 @@ void Chest::set(const string_view txt_close_ref,
                                                                      body->getTransformPtr()->get_rotation(),
                                                                      d_move);
 
-            auto am_open_move2 = make_shared<AnimationTransformMove>(body->getTransformPtr(),
+            auto am_open_move2 = make_shared<AnimationTransformStep>(body->getTransformPtr(),
                                                                      body->getTransformPtr()->get_localPosition() + Vector2(2.f),
                                                                      body->getTransformPtr()->get_localPosition() - Vector2(2.f),
                                                                      body->getTransformPtr()->get_scale(),
@@ -204,7 +204,7 @@ void Chest::set(const string_view txt_close_ref,
                                                                      body->getTransformPtr()->get_rotation(),
                                                                      d_move);
 
-            vector<shared_ptr<AnimationMove>> am_open_move;
+            vector<shared_ptr<AnimationStep>> am_open_move;
             for (int i = 0; i < 2; ++i)
             {
                 am_open_move.emplace_back(am_open_move1);
@@ -227,7 +227,7 @@ void Chest::set(const string_view txt_close_ref,
                                                                  body->getSpritePtr()->getTextureRect(),
                                                                  0.1f);
 
-            auto am_open_move = make_shared<AnimationTransformMove>(body->getTransformPtr(),
+            auto am_open_move = make_shared<AnimationTransformStep>(body->getTransformPtr(),
                                                                     body->getTransformPtr()->get_localPosition(),
                                                                     body->getTransformPtr()->get_localPosition(),
                                                                     body->getTransformPtr()->get_scale(),

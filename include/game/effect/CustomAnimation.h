@@ -9,7 +9,7 @@
 /// \brief Change texture after duration time.
 ///
 
-class AnimationTextureMove : public AnimationMove
+class AnimationTextureMove : public AnimationStep
 {
     //accumulation
     float timeAcc;

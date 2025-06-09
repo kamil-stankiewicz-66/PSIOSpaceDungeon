@@ -31,7 +31,7 @@ void PlayerAnim::onAwake()
 
         //body
 
-        auto bodyAnimDown = make_shared<AnimationTransformMove>(body,
+        auto bodyAnimDown = make_shared<AnimationTransformStep>(body,
                                                                 body->get_localPosition(),
                                                                 body->get_localPosition() - range,
                                                                 body->get_scale(),
@@ -40,7 +40,7 @@ void PlayerAnim::onAwake()
                                                                 body->get_rotation(),
                                                                 duration);
 
-        auto bodyAnimUp = make_shared<AnimationTransformMove>(body,
+        auto bodyAnimUp = make_shared<AnimationTransformStep>(body,
                                                               body->get_localPosition() - range,
                                                               body->get_localPosition(),
                                                               body->get_scale(),
@@ -53,7 +53,7 @@ void PlayerAnim::onAwake()
 
 
         //cape
-        auto capeAnim = make_shared<AnimationTransformMove>(cape,
+        auto capeAnim = make_shared<AnimationTransformStep>(cape,
                                                             cape->get_localPosition(),
                                                             cape->get_localPosition(),
                                                             cape->get_scale(),
@@ -67,7 +67,7 @@ void PlayerAnim::onAwake()
 
         //left leg
 
-        auto leftLegAnim = make_shared<AnimationTransformMove>(leftLeg,
+        auto leftLegAnim = make_shared<AnimationTransformStep>(leftLeg,
                                                                  leftLeg->get_localPosition(),
                                                                  leftLeg->get_localPosition(),
                                                                  leftLeg->get_scale(),
@@ -81,7 +81,7 @@ void PlayerAnim::onAwake()
 
         //right leg
 
-        auto rightLegAnim = make_shared<AnimationTransformMove>(rightLeg,
+        auto rightLegAnim = make_shared<AnimationTransformStep>(rightLeg,
                                                                   rightLeg->get_localPosition(),
                                                                   rightLeg->get_localPosition(),
                                                                   rightLeg->get_scale(),
@@ -106,7 +106,7 @@ void PlayerAnim::onAwake()
 
         //body
 
-        auto bodyAnim01 = make_shared<AnimationTransformMove>(body,
+        auto bodyAnim01 = make_shared<AnimationTransformStep>(body,
                                                               body->get_localPosition(),
                                                               body->get_localPosition(),
                                                               body->get_scale(),
@@ -115,7 +115,7 @@ void PlayerAnim::onAwake()
                                                               body->get_rotation() + 10.0f,
                                                               duration * capeAnimDurationMulplier);
 
-        auto bodyAnim02 = make_shared<AnimationTransformMove>(body,
+        auto bodyAnim02 = make_shared<AnimationTransformStep>(body,
                                                               body->get_localPosition(),
                                                               body->get_localPosition(),
                                                               body->get_scale(),
@@ -129,7 +129,7 @@ void PlayerAnim::onAwake()
 
         //cape
 
-        auto capeAnim01 = make_shared<AnimationTransformMove>(cape,
+        auto capeAnim01 = make_shared<AnimationTransformStep>(cape,
                                                               cape->get_localPosition() + Vector2(-5.0f, 8.0f),
                                                               cape->get_localPosition() + Vector2(-10.0f, 12.0f),
                                                               cape->get_scale(),
@@ -138,7 +138,7 @@ void PlayerAnim::onAwake()
                                                               cape->get_rotation() + 25.0f,
                                                               duration * capeAnimDurationMulplier);
 
-        auto capeAnim02 = make_shared<AnimationTransformMove>(cape,
+        auto capeAnim02 = make_shared<AnimationTransformStep>(cape,
                                                               cape->get_localPosition() + Vector2(-10.0f, 12.0f),
                                                               cape->get_localPosition() + Vector2(-5.0f, 8.0f),
                                                               cape->get_scale(),
@@ -152,7 +152,7 @@ void PlayerAnim::onAwake()
 
         //left leg
 
-        auto leftLegAnimUp = make_shared<AnimationTransformMove>(leftLeg,
+        auto leftLegAnimUp = make_shared<AnimationTransformStep>(leftLeg,
                                                                  leftLeg->get_localPosition() + Vector2(legShift, 0.0f),
                                                                  leftLeg->get_localPosition() + Vector2(legShift, 10.0f),
                                                                  leftLeg->get_scale(),
@@ -161,7 +161,7 @@ void PlayerAnim::onAwake()
                                                                  leftLeg->get_rotation(),
                                                                  duration);
 
-        auto leftLegAnimDown = make_shared<AnimationTransformMove>(leftLeg,
+        auto leftLegAnimDown = make_shared<AnimationTransformStep>(leftLeg,
                                                                    leftLeg->get_localPosition() + Vector2(legShift, 10.0f),
                                                                    leftLeg->get_localPosition() + Vector2(legShift, 0.0f),
                                                                    leftLeg->get_scale(),
@@ -175,7 +175,7 @@ void PlayerAnim::onAwake()
 
         //right leg
 
-        auto rightLegAnimUp = make_shared<AnimationTransformMove>(rightLeg,
+        auto rightLegAnimUp = make_shared<AnimationTransformStep>(rightLeg,
                                                                   rightLeg->get_localPosition() + Vector2(legShift, 0.0f),
                                                                   rightLeg->get_localPosition() + Vector2(legShift, 10.0f),
                                                                   rightLeg->get_scale(),
@@ -184,7 +184,7 @@ void PlayerAnim::onAwake()
                                                                   rightLeg->get_rotation(),
                                                                   duration);
 
-        auto rightLegAnimDown = make_shared<AnimationTransformMove>(rightLeg,
+        auto rightLegAnimDown = make_shared<AnimationTransformStep>(rightLeg,
                                                                     rightLeg->get_localPosition() + Vector2(legShift, 10.0f),
                                                                     rightLeg->get_localPosition() + Vector2(legShift, 0.0f),
                                                                     rightLeg->get_scale(),

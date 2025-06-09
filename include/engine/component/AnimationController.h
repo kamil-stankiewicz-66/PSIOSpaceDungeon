@@ -14,7 +14,7 @@ using uint = unsigned int;
 /// \brief Abstract class representing one single step in animation.
 ///
 
-class AnimationMove
+class AnimationStep
 {
     friend class AnimationCycle;
 
@@ -22,7 +22,7 @@ protected:
     float duration; //in seconds
 
 public:
-    AnimationMove(const float& durationInSeconds);
+    AnimationStep(const float& durationInSeconds);
 
 protected:
 
@@ -47,7 +47,7 @@ protected:
 /// \brief Class representing one single step in transform animation.
 ///
 
-class AnimationTransformMove : public AnimationMove
+class AnimationTransformStep : public AnimationStep
 {
     Transform* transform;
 
@@ -72,7 +72,7 @@ class AnimationTransformMove : public AnimationMove
     float currentRotation;
 
 public:
-    AnimationTransformMove(Transform* transform,
+    AnimationTransformStep(Transform* transform,
                            const Vector2& initPosition,
                            const Vector2& targetPosition,
                            const Vector2& initScale,
@@ -94,11 +94,11 @@ private:
 class AnimationCycle
 {
     friend class Animation;
-    vector<shared_ptr<AnimationMove>> cycle;
+    vector<shared_ptr<AnimationStep>> cycle;
     uint step;
 
 public:
-    AnimationCycle(const vector<shared_ptr<AnimationMove>>& cycle);
+    AnimationCycle(const vector<shared_ptr<AnimationStep>>& cycle);
 
 private:
 
@@ -108,6 +108,8 @@ private:
     ///
 
     bool update(const float& deltatime);
+
+    void reset();
 };
 
 
@@ -132,6 +134,8 @@ private:
     ///
 
     bool update(const float& deltatime);
+
+    void reset();
 };
 
 
@@ -148,9 +152,32 @@ protected:
     virtual void onUpdate(float deltaTime) override;
 
 public:
+
+    ///
+    /// \brief Add new animation.
+    /// \return animation id
+    ///
+
     const uint add(const Animation&);
+
+
+    ///
+    /// \brief Start animation.
+    /// \param animID animation id
+    ///
+
     void play(const uint& animID);
 
+
+    ///
+    /// \brief Stop animation...
+    /// \details ...and reset all elements.
+    ///
+
+    void reset();
+
+
+    //getter
     const int& getCurrentAnimation() const;
 };
 

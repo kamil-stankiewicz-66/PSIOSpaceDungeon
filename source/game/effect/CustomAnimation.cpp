@@ -3,7 +3,7 @@
 AnimationTextureMove::AnimationTextureMove(VSprite* sprite,
                                            const shared_ptr<sf::Texture>& nextTexture,
                                            const sf::IntRect& nextRect,
-                                           const float& duration) : AnimationMove(duration)
+                                           const float& duration) : AnimationStep(duration)
 {
     this->sprite = sprite;
     this->nextTxt = nextTexture;

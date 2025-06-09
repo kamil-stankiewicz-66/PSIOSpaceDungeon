@@ -4,20 +4,20 @@
 
 
 ///
-/// AnimationMove
+/// AnimationStep
 ///
 
-AnimationMove::AnimationMove(const float& durationInSeconds)
+AnimationStep::AnimationStep(const float& durationInSeconds)
     : duration(durationInSeconds)
 {
 }
 
 
 ///
-/// AnimationTransformMove
+/// AnimationTransformStep
 ///
 
-AnimationTransformMove::AnimationTransformMove(Transform* transform,
+AnimationTransformStep::AnimationTransformStep(Transform* transform,
                                                const Vector2& initPosition,
                                                const Vector2& targetPosition,
                                                const Vector2& initScale,
@@ -25,7 +25,7 @@ AnimationTransformMove::AnimationTransformMove(Transform* transform,
                                                const float& initRotation,
                                                const float& targetRotation,
                                                const float& durationInSeconds)
-    : AnimationMove(durationInSeconds), transform(transform),
+    : AnimationStep(durationInSeconds), transform(transform),
     targetPosition(targetPosition), targetScale(targetScale), targetRotation(targetRotation),
     initPosition(initPosition), initScale(initScale), initRotation(initRotation)
 {
@@ -39,10 +39,10 @@ AnimationTransformMove::AnimationTransformMove(Transform* transform,
     stepRotation = (targetRotation - initRotation) / (durationInSeconds * 1000.0f);
 
     //set calculation vars
-    AnimationTransformMove::reset();
+    AnimationTransformStep::reset();
 }
 
-bool AnimationTransformMove::update(const float& deltatime)
+bool AnimationTransformStep::update(const float& deltatime)
 {
     curentPosition = curentPosition + (stepPosition * deltatime);
     currentScale = currentScale + (stepScale * deltatime);
@@ -74,7 +74,7 @@ bool AnimationTransformMove::update(const float& deltatime)
 
     bool flagRotation = false;
     {
-        bool outOfRotation = (targetRotation - currentRotation) * (targetRotation - initRotation) <= 0.0f;
+        bool outOfRotation = ((targetRotation - currentRotation) * (targetRotation - initRotation)) <= 0.01f;
         if (!outOfRotation) {
             transform->set_rotation(currentRotation);
         }
@@ -87,7 +87,7 @@ bool AnimationTransformMove::update(const float& deltatime)
     return flagPosition && flagScale && flagRotation;
 }
 
-void AnimationTransformMove::reset()
+void AnimationTransformStep::reset()
 {
     this->curentPosition = this->initPosition;
     this->currentScale = this->initScale;
@@ -99,7 +99,7 @@ void AnimationTransformMove::reset()
 /// AnimationCycle
 ///
 
-AnimationCycle::AnimationCycle(const vector<shared_ptr<AnimationMove>>& cycle)
+AnimationCycle::AnimationCycle(const vector<shared_ptr<AnimationStep>>& cycle)
     : cycle(cycle), step(0)
 {
 }
@@ -117,11 +117,18 @@ bool AnimationCycle::update(const float& deltatime)
     bool flag = cycle[step]->update(deltatime);
 
     if (flag) {
-        cycle[step]->reset();
         ++step;
     }
 
     return flag && (step >= cycle.size());
+}
+
+void AnimationCycle::reset()
+{
+    for (auto& step : cycle)
+    {
+        step->reset();
+    }
 }
 
 
@@ -150,8 +157,16 @@ bool Animation::update(const float& deltatime)
         }
     }
 
-    data.clear();
     return true;
+}
+
+void Animation::reset()
+{
+    for (auto& cycle : animation)
+    {
+        cycle.reset();
+    }
+    data.clear();
 }
 
 
@@ -177,12 +192,22 @@ const uint AnimationController::add(const Animation& animation) {
 
 void AnimationController::play(const uint& animID)
 {
-    if (runningAnim > -1) {
-        animations[runningAnim].data.clear();
+    if (animID >= animations.size()) {
+        return;
     }
 
-    if (animID < animations.size()) {
+    if (animID != runningAnim)
+    {
+        reset();
         runningAnim = animID;
+    }
+}
+
+void AnimationController::reset()
+{
+    for (auto& animation : animations)
+    {
+        animation.reset();
     }
 }
 
