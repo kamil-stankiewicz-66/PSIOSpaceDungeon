@@ -1,7 +1,9 @@
 #include "game/core/Game.h"
 #include "engine/core/Input.h"
+#include "game/core/DataBlock.h"
 #include "game/core/Parameter.h"
 #include "game/core/ScriptableObject.h"
+#include "game/core/Serializer.h"
 #include "game/scenes/MainScene.h"
 #include "game/scenes/GameScene.h"
 #include "engine/component/Health.h"
@@ -10,6 +12,13 @@ Game::Game(string _title) : Engine(_title, false)
 {
     //background color
     this->get_window()->setBGColor(sf::Color(12, 21, 36));
+
+    //load player data
+    SPlayerData data;
+    Serializer::deserializeFromFile(data, FilePath::PLAYER_DATA.data());
+    PlayerData::setExpPoints(data.exp_points);
+    PlayerData::setWeaponID(data.weapon_id);
+    PlayerData::setCoins(data.coins);
 
     //init
     Parameters::init();
@@ -23,6 +32,16 @@ Game::Game(string _title) : Engine(_title, false)
 
     //load main scene
     this->changeScene(MAIN_SCENE);
+}
+
+Game::~Game()
+{
+    //save player data
+    SPlayerData data;
+    data.exp_points = PlayerData::getExpPoints();
+    data.weapon_id = PlayerData::getWeaponID();
+    data.coins = PlayerData::getCoins();
+    Serializer::serializeToFile(data, FilePath::PLAYER_DATA.data());
 }
 
 void Game::onUpdate(float deltatime)

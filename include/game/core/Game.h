@@ -17,6 +17,8 @@ private:
 
 public:
     Game(string _title);
+    ~Game();
+
     virtual void onUpdate(float dt) override;
 };
 

@@ -126,7 +126,7 @@ void Chest::empty()
     }
 
     m_isLooted = true;
-    PlayerData::coins += this->coins;
+    PlayerData::setCoins(PlayerData::getCoins() + this->coins);
 
     //notifacation
     if (notificationManager)

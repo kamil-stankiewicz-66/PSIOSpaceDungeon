@@ -1,26 +1,18 @@
 #ifndef DATABLOCKS_H
 #define DATABLOCKS_H
 
+#include <string_view>
 using uint = unsigned int;
 
 
 ///
-/// \brief Static level data struct.
-/// \details Stores level data and passes it between scenes
+/// \brief File paths.
 ///
 
-struct LevelData
+struct FilePath
 {
-    static uint level_nr;
+    static constexpr std::string_view PLAYER_DATA = "playerdata.save";
 };
-
-
-/// [serializable]
-struct SLevelData
-{
-    uint level_nr;
-};
-
 
 
 ///
@@ -28,20 +20,36 @@ struct SLevelData
 /// \details stores player data and passes it between scenes
 ///
 
-struct PlayerData
+class PlayerData
 {
+private:
     static uint exp_points;
     static uint weapon_id;
     static uint coins;
-};
 
+public:
+
+    //setters
+    static void setExpPoints(const uint&);
+    static void setWeaponID(const uint&);
+    static void setCoins(const uint&);
+
+    //getters
+    static uint getExpPoints();
+    static uint getWeaponID();
+    static uint getCoins();
+    static uint getExpLevel();
+    static float getMaxHealth();
+};
 
 /// [serializable]
+#pragma pack(push, 1)
 struct SPlayerData
 {
-    uint exp_points;
-    uint weapon_id;
-    uint coins;
+    uint exp_points = 0u;
+    uint weapon_id = 1u;
+    uint coins = 0u;
 };
+#pragma pack(pop)
 
 #endif // DATABLOCKS_H

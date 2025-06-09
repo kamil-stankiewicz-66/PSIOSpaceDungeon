@@ -454,7 +454,7 @@ void LevelGenerator::generateEntitiesInRoom(const tilePos& leftDown, const tileP
     //create objects
     for (const auto& pos : entitiesPositions)
     {
-        int rndID = getRndInt(0, LevelData::level_nr + 6);
+        int rndID = getRndInt(0, PlayerData::getExpLevel() + 6);
         rndID = VMath::clamp<int>(rndID, 0, EntitySO::getAll().size()-1);
 
         auto entity = createEntity(getGame()->get_currentScene(), *EntitySO::get(rndID), 80u, nullptr);

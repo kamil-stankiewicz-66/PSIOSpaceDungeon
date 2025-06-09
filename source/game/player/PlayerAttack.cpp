@@ -20,7 +20,7 @@ void PlayerAttack::onAwake()
     }
 
     weapon = Weapon::createWeapon(getGame()->get_currentScene(),
-                                  *WeaponSO::get(PlayerData::weapon_id),
+                                  *WeaponSO::get(PlayerData::getWeaponID()),
                                   Tag::ENEMY.data(),
                                   playerCore->getRenderLayer()+1u,
                                   playerCore->hand);
