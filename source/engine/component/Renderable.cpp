@@ -42,7 +42,7 @@ void VRenderable::onUpdate(float)
 void VRenderable::generateMatrix(const Engine* game, sf::Transform& sftransform, const int& width, const int& height,
                                  const Vector2& position, const Vector2& scale, const float& rotationZ, const bool flipX, const bool isRect)
 {
-    if (!game) {
+    if (!game || !game->get_window()) {
         return;
     }
 
@@ -58,7 +58,7 @@ void VRenderable::generateMatrix(const Engine* game, sf::Transform& sftransform,
 
     //relative to the camera
     Camera* _camera = game->get_currentScene()->get_mainCamera();
-    if (!isRect && _camera)
+    if (!isRect && _camera && _camera->getTransformPtr())
     {
         r_sizeX /= _camera->get_viewSize();
         r_sizeY /= _camera->get_viewSize();
@@ -135,7 +135,10 @@ void VSprite::render(const Engine* game, const Vector2& position, const Vector2&
                          position, scale, rotationZ, flipX, isRect);
 
     //draw
-    game->get_window()->get_renderwindow()->draw(m_sprite, transform);
+    if (game && game->get_window() && game->get_window()->get_renderwindow())
+    {
+        game->get_window()->get_renderwindow()->draw(m_sprite, transform);
+    }
 }
 
 
@@ -224,7 +227,10 @@ void VText::render(const Engine* game, const Vector2& position, const Vector2& s
                          position, Vector2(1.f, 1.f), rotationZ, flipX, isRect);
 
     //draw
-    game->get_window()->get_renderwindow()->draw(m_text, transform);
+    if (game && game->get_window() && game->get_window()->get_renderwindow())
+    {
+        game->get_window()->get_renderwindow()->draw(m_text, transform);
+    }
 }
 
 

@@ -246,6 +246,24 @@ bool CircleCollider::checkCollision(Collider* other_collider, Transform* other_t
         return false;
     }
 
+    if (!other_collider)
+    {
+        VDebuger::print("<ERROR> CIRCLE_COLLIDER :: CHECK_COLLISION :: other_collider is nullptr");
+        return false;
+    }
+
+    if (!other_transform)
+    {
+        VDebuger::print("<ERROR> CIRCLE_COLLIDER :: CHECK_COLLISION :: other_transform is nullptr");
+        return false;
+    }
+
+    if (!getObject() || !getObject()->getTransformPtr())
+    {
+        VDebuger::print("<ERROR> CIRCLE_COLLIDER :: CHECK_COLLISION :: getObject() or getObject()->getTransformPtr() is nullptr");
+        return false;
+    }
+
     const Vector2 position = getObject()->getTransformPtr()->get_position();
     const Vector2 other_position = other_transform->get_position();
 
@@ -258,6 +276,12 @@ bool CircleCollider::checkCollision(Collider* other_collider, Transform* other_t
 
 Vector2 CircleCollider::getNearestColliderPointTo(const Vector2& point, const float borderThickness)
 {
+    if (!getObject() || !getObject()->getTransformPtr())
+    {
+        VDebuger::print("<ERROR> CIRCLE_COLLIDER :: GET_NEAREST_COLLIDER_POINT_TO :: getObject() or getObject()->getTransformPtr() is nullptr");
+        return false;
+    }
+
     const Vector2& position = getObject()->getTransformPtr()->get_position();
     Vector2 angleVector = (point - position).get_normalized();
     return position + angleVector * (radius - borderThickness);
@@ -268,6 +292,10 @@ Vector2 CircleCollider::getNearestColliderPointTo(const Vector2& point, const fl
 bool CircleCollider::isThisPointInCollider(const Vector2& _point)
 {
     if (radius == 0.0f) {
+        return false;
+    }
+
+    if (!getObject()) {
         return false;
     }
 
