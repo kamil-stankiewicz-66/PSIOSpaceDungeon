@@ -102,6 +102,8 @@ add_executable(PSIOSpaceDungeon
     source/game/ui/Notification.cpp
     include/game/entity/HealthSystem.h
     source/game/entity/HealthSystem.cpp
+    include/game/ui/Slider.h
+    source/game/ui/Slider.cpp
 )
 
 set_target_properties(

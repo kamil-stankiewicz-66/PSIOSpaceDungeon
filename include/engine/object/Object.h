@@ -202,6 +202,14 @@ public:
 
         this->components[_c->PRIORITY].push_back(_c);
 
+
+        //if this transform add to shortcut
+        if (is_base_of<Transform, T>::value && !this->transform)
+        {
+            this->transform = dynamic_cast<Transform*>(_c.get());
+        }
+
+
         T* _r = dynamic_cast<T*>(_c.get());
         return _r;
     }
