@@ -114,6 +114,7 @@ public:
 
     //text api getters
     const string getText() const;
+    const sf::FloatRect getLocalBounds() const;
 };
 
 #endif // RENDERABLE_H

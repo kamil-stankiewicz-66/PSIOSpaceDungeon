@@ -3,6 +3,7 @@
 
 #include "engine/object/Object.h"
 #include "game/player/PlayerCore.h"
+#include "game/ui/Notification.h"
 
 class LevelGenerator;
 class Tilemap;
@@ -13,6 +14,9 @@ class Tilemap;
 
 class LevelManager : public Object
 {
+    friend class LevelGenerator;
+    friend class FinishPoint; //for call finish level
+
 public:
 
     //tilemaps
@@ -20,15 +24,22 @@ public:
     Tilemap* fgTilemap = nullptr;
     Tilemap* bgTilemap = nullptr;
 
-    //player
+    //link
     PlayerCore* player = nullptr;
+    NotificationManager* notificationManager = nullptr;
+
+    //entities
+    vector<Entity*> enemies;
 
 private:
     LevelGenerator* levelGenerator = nullptr;
 
+    //engine
     virtual void onStart() override;
 
+    //actions
     void loadLevel();
+    void finishLevel();
 };
 
 #endif // LEVELMANAGER_H

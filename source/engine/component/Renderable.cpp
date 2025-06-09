@@ -221,7 +221,7 @@ void VText::render(const Engine* game, const Vector2& position, const Vector2& s
     //transform
     sf::Transform transform;
     this->generateMatrix(game, transform, m_text.getLocalBounds().width, m_text.getLocalBounds().height,
-                         position, scale, rotationZ, flipX, isRect);
+                         position, Vector2(1.f, 1.f), rotationZ, flipX, isRect);
 
     //draw
     game->get_window()->get_renderwindow()->draw(m_text, transform);
@@ -304,4 +304,8 @@ void VText::setOutlineThickness(const float& thickness)
 const string VText::getText() const
 {
     return this->m_text.getString();
+}
+
+const sf::FloatRect VText::getLocalBounds() const {
+    return m_text.getLocalBounds();
 }

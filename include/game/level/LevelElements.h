@@ -4,6 +4,7 @@
 #include "engine/component/AnimationController.h"
 #include "engine/object/Object.h"
 #include "game/player/PlayerCore.h"
+#include "game/ui/Notification.h"
 
 using uint = unsigned int;
 class CircleCollider;
@@ -21,7 +22,7 @@ class Chest : public GameObject
     friend class LevelGenerator;
 
     //link
-    //PlayerCore* player = nullptr;
+    NotificationManager* notificationManager = nullptr;
 
     //components
     CircleCollider* collider = nullptr;

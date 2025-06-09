@@ -32,6 +32,14 @@ void Chest::onAwake()
     animContr = createComponent<AnimationController>();
 
 
+    //notification manager
+    notificationManager = getGame()->get_currentScene()->findObject<NotificationManager>();
+
+    if (!notificationManager) {
+        VDebuger::print("<ERROR> CHEST :: ON_AWAKE :: notificationManager is nullptr");
+    }
+
+
     //particle effects
     parEff = getGame()->get_currentScene()->createObject<ParticleEffect>(body->getRenderLayer()+1u);
     parEff->addTag("particle_effect_chest");
@@ -119,10 +127,19 @@ void Chest::empty()
 
     m_isLooted = true;
     PlayerData::coins += this->coins;
+
+    //notifacation
+    if (notificationManager)
+    {
+        std::ostringstream oss;
+        oss << "+" << this->coins << " coins";
+        notificationManager->message(oss.str());
+    }
+
     this->coins = 0u;
     animContr->play(ANIM_EMPTY);
 
-    if (/*player && */parEff)
+    if (parEff)
     {
         parEff->invoke(Vector2(0.f, 1.f), false);
     }
@@ -142,15 +159,6 @@ void Chest::set(const string_view txt_close_ref,
         VDebuger::print("<ERROR> CHEST :: SET :: body is nullptr");
         return;
     }
-
-
-    //find player
-    //player = getGame()->get_currentScene()->findObject<PlayerCore>();
-
-    // if (!player) {
-    //     VDebuger::print("<ERROR> CHEST :: SET :: player is nullptr");
-    //     return;
-    // }
 
 
     //main
@@ -295,7 +303,7 @@ void FinishPoint::onAwake()
     getTransformPtr()->scaleBy(2.f);
 }
 
-void FinishPoint::onUpdate(float)
+void FinishPoint::onUpdate(float dt)
 {
     if (!collider) {
         return;
@@ -318,6 +326,7 @@ void FinishPoint::onUpdate(float)
         if (obj->checkTag(Tag::PLAYER_CORE.data()))
         {
             //finish
+            //levelManager->finishLevel();
         }
     }
 }

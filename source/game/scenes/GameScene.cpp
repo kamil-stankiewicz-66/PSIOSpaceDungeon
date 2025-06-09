@@ -1,10 +1,12 @@
 #include "game/scenes/GameScene.h"
+#include "engine/core/Engine.h"
 #include "game/core/Parameter.h"
 #include "game/core/Tag.h"
 #include "game/level/LevelManager.h"
 #include "game/level/Tilemap.h"
 #include "game/player/PlayerCore.h"
 #include "game/player/TrackingCamera.h"
+#include "game/ui/Notification.h"
 
 void GameScene::loadObjects()
 {
@@ -42,6 +44,11 @@ void GameScene::loadObjects()
 
     //managers
     {
+        auto notManager = createObject<NotificationManager>();
+        notManager->getTransformPtr()->set_position(
+            getGame()->get_window()->get_cornerPositions().rightUp - Vector2(0.0f, 0.2f * getGame()->get_window()->get_displaymode().height)
+            );
+
         createObject<LevelManager>();
     }
 }

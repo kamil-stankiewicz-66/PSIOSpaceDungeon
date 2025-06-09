@@ -98,6 +98,8 @@ add_executable(PSIOSpaceDungeon
     include/game/core/Serializer.h
     include/game/effect/CustomAnimation.h
     source/game/effect/CustomAnimation.cpp
+    include/game/ui/Notification.h
+    source/game/ui/Notification.cpp
 )
 
 set_target_properties(
