@@ -41,6 +41,10 @@ public:
     static uint getExpLevel();
     static float getMaxHealth();
     static uint getDamage();
+
+    static void addCoins(uint val);
+    static void removeCoins(uint val);
+
 };
 
 /// [serializable]

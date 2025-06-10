@@ -16,6 +16,7 @@ protected:
 
 public:
     void setText(const string&);
+    TextObject* getTextObj() const;
 };
 
 #endif // BASICBUTTONS_H

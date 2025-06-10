@@ -81,6 +81,27 @@ void WeaponSO::init()
 
         WeaponSO::add(rifle);
     }
+
+    // Nowe bron do systemu bronii
+
+    //shotgun
+    {
+        WeaponData* shotgun = new WeaponData;
+
+        shotgun->id = 2u;
+        shotgun->name = "Shotgun";
+        shotgun->textureRef = Asset::Graphics::ASSAULT_RIFLE_01.data();
+        shotgun->type = WeaponData::Type::Gun;
+        shotgun->coins = 25u;
+        shotgun->attackTimeOut = 800.0f;
+        shotgun->damage = 20.0f;
+        shotgun->range = 200.0f;
+
+        WeaponSO::add(shotgun);
+    }
+
+
+
 }
 
 

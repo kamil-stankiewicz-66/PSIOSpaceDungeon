@@ -44,3 +44,15 @@ float PlayerData::getMaxHealth() {
 uint PlayerData::getDamage() {
     return 2 + static_cast<uint>(floor(getExpLevel() * 0.5f));
 }
+void PlayerData::addCoins(uint val)
+{
+    coins += val;
+}
+
+void PlayerData::removeCoins(uint val)
+{
+    if (coins >= val)
+        coins -= val;
+    else
+        coins = 0u;
+}
