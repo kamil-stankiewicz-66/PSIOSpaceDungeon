@@ -7,6 +7,7 @@
 #include "game/entity/HealthSystem.h"
 #include "game/physics/Rigidbody.h"
 #include "game/entity/Weapon.h"
+#include "game/ui/Slider.h"
 #include <random>
 
 using namespace std;
@@ -57,6 +58,7 @@ protected:
 
     //ptr
     Transform* player = nullptr;
+    Slider* healthBar = nullptr;
 
     //componets
     BoxCollider* collider = nullptr;

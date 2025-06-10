@@ -7,6 +7,7 @@ struct Parameters
 
 
     static float player_moveSpeed;
+    static float player_baseHealth;
     static int player_progressExp;
 
     static float camera_viewSize;
@@ -51,7 +52,8 @@ public:
     //getters
 
     static const float& get_player_moveSpeed();
-    static const int& get_player_progressExp();
+    static const float& get_player_baseHealth();
+    static const int& get_player_progressExp();    
 
     static const float& get_camera_viewSize();
     static const float& get_camera_trackingOn();

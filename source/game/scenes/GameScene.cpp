@@ -37,6 +37,25 @@ void GameScene::loadObjects()
         fgtilemap->setData(cellSize, scale);
     }
 
+    //ui
+    {
+        //health bar
+        auto healthBar = getGame()->get_currentScene()->createObject<Slider>(2000u);
+        healthBar->addTag(Tag::PLAYER_HEALTH_BAR.data());
+        healthBar->init(true);
+        healthBar->setFillColor(sf::Color::Red);
+        healthBar->setBackgroundColor(sf::Color(23, 26, 33));
+        healthBar->scaleWidth(0.5);
+        healthBar->scaleHeight(0.7f);
+
+        if (auto t = healthBar->getTransformPtr())
+        {
+            t->set_position(getGame()->get_window()->get_cornerPositions().leftUp);
+            const auto& display = getGame()->get_window()->get_displaymode();
+            t->add_position(0.08f * display.width, -0.05f * display.height);
+        }
+    }
+
     //player
     {
         createObject<PlayerCore>(50);

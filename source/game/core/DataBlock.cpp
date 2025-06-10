@@ -40,9 +40,9 @@ uint PlayerData::getExpLevel() {
 }
 
 float PlayerData::getMaxHealth() {
-    return 100.f + (static_cast<float>(getExpLevel()) * 10.f);
+    return Parameters::get_player_baseHealth() + (static_cast<float>(getExpLevel()) * Parameters::get_player_baseHealth() * 0.1f);
 }
 
 uint PlayerData::getDamage() {
-    return 2 + static_cast<uint>(floor(getExpLevel() * 0.5f));
+    return 1 + static_cast<uint>(floor(getExpLevel() * 0.5f));
 }

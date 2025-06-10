@@ -27,6 +27,16 @@ void Entity::onAwake()
     hand = getGame()->get_currentScene()->createObject<GameObject>(getRenderLayer());
     body->addChild(hand);
 
+    //health bar
+    healthBar = getGame()->get_currentScene()->createObject<Slider>(getRenderLayer()+1u);
+    this->addChild(healthBar);
+    healthBar->init(false);
+    healthBar->setFillColor(sf::Color::Red);
+    healthBar->setBackgroundColor(sf::Color(23, 26, 33));
+    healthBar->scaleWidth(0.2);
+    healthBar->scaleHeight(0.25f);
+
+
 
     //componets
     collider = createComponent<BoxCollider>();;
@@ -106,6 +116,12 @@ void Entity::onUpdate(float dt)
         getTransformPtr()->set_flip_x(flip);
         weaponCore->getTransformPtr()->set_flip_x(!flip);
     }
+
+    if (healthBar && healthBar->getTransformPtr())
+    {
+        healthBar->getTransformPtr()->set_flip_x(getTransformPtr()->get_flipX());
+        healthBar->refresh();
+    }
 }
 
 void Entity::onDestroy()
@@ -171,7 +187,7 @@ void Entity::set(const EntityData& data)
     if (weaponCore)
     {
         uniform_real_distribution<float> rndStrength(strength - (0.1 * strength), strength + (0.1 * strength));
-        weaponCore->scaleDamage(rndStrength(rng));
+        weaponCore->scaleDamage(rndStrength(rng) / weaponCore->getData().damage);
     }
     else
     {
@@ -186,6 +202,25 @@ void Entity::set(const EntityData& data)
 
     this->collider->set(body->getSpritePtr()->getTextureRect().width * body->getTransformPtr()->get_scale().x,
                         body->getSpritePtr()->getTextureRect().height * body->getTransformPtr()->get_scale().y);
+
+
+
+
+    if (healthBar)
+    {
+        healthBar->setValueMax(healthSystem->getHealthMax());
+        healthBar->setValue(healthSystem->getHealth());
+
+        auto t = healthBar->getTransformPtr();
+        if (t && body && body->getSpritePtr())
+        {
+            t->add_position(Vector2(0.0f, 15.0f + (body->getSpritePtr()->getTextureRect().height) * this->entityData.scale));
+        }
+    }
+    else
+    {
+        VDebuger::print("<ERROR> ENTITY :: SET :: healthBar is nullptr");
+    }
 
 
 

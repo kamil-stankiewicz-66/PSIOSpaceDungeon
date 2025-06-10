@@ -112,7 +112,7 @@ void MainScene::loadObjects()
             texts[1]->setFillColor(sf::Color::White);
 
             std::ostringstream os_damage;
-            os_damage << "Damage: +" << PlayerData::getDamage();
+            os_damage << "Damage: x" << PlayerData::getDamage();
 
             texts[2]->setText(os_damage.str());
             texts[2]->setFillColor(sf::Color::White);

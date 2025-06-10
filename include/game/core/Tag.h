@@ -12,6 +12,7 @@ struct Tag
     static constexpr std::string_view PLAYER_CAPE = "PlayerCape";
     static constexpr std::string_view PLAYER_LEG_LEFT = "PlayerLegLeft";
     static constexpr std::string_view PLAYER_LEG_RIGHT = "PlayerLegRight";
+    static constexpr std::string_view PLAYER_HEALTH_BAR = "PlayerHealthBar";
 
     //tilemaps
     static constexpr std::string_view TILEMAP = "tilemap";

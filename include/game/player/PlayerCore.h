@@ -8,6 +8,7 @@
 #include "game/physics/Rigidbody.h"
 #include "game/player/PlayerAnim.h"
 #include "game/player/PlayerAttack.h"
+#include "game/player/PlayerHealthSystem.h"
 #include "game/player/PlayerMove.h"
 
 ///
@@ -40,8 +41,9 @@ private:
     PlayerEnemyDetector* playerDetector = nullptr;
 
     //components
-    CircleCollider* collider;
-    Rigidbody* rb;
+    CircleCollider* collider = nullptr;
+    Rigidbody* rb = nullptr;
+    PlayerHealthSystem* healthSystem = nullptr;
 
 protected:
     virtual void onAwake() override;

@@ -11,6 +11,9 @@ void Slider::onAwake()
     background->getSpritePtr()->setTexture(Asset::Graphics::HEALTHBAR.data());
     slider->getSpritePtr()->setTexture(Asset::Graphics::HEALTHBAR.data());
 
+    background->getSpritePtr()->setRenderWithLocalFlip(true);
+    slider->getSpritePtr()->setRenderWithLocalFlip(true);
+
     this->addChild(background);
     this->addChild(slider);
 }
@@ -22,7 +25,7 @@ void Slider::refresh()
         return;
     }
 
-    if (!background->getTransformPtr() || !slider->getTransformPtr())
+    if (!this->getTransformPtr() || !background->getTransformPtr() || !slider->getTransformPtr())
     {
         VDebuger::print("<ERROR> SLIDER :: REFRESH :: slider is not inited");
         return;
@@ -33,7 +36,8 @@ void Slider::refresh()
     slider->getTransformPtr()->set_scale(Vector2(fill * background->getTransformPtr()->get_scale().x, slider->getTransformPtr()->get_scale().y));
     float diff = getWidth() * 0.5f * (1 - fill);
 
-    slider->getTransformPtr()->set_position(-diff);
+    bool flip = this->getTransformPtr()->get_flipX();
+    slider->getTransformPtr()->set_position(diff * (flip ? 1.0f : -1.0f));
 }
 
 
