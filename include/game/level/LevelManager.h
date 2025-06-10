@@ -4,6 +4,7 @@
 #include "engine/object/Object.h"
 #include "game/player/PlayerCore.h"
 #include "game/ui/Notification.h"
+#include "game/scenes/PauseScene.h"
 
 class LevelGenerator;
 class Tilemap;
@@ -26,20 +27,33 @@ public:
 
     //link
     PlayerCore* player = nullptr;
+    PlayerHealthSystem* playerHS = nullptr;
     NotificationManager* notificationManager = nullptr;
 
     //entities
     vector<Entity*> enemies;
 
+    //info
+    int countKilldedEnemies() const;
+    bool isCompleted() const;
+
 private:
     LevelGenerator* levelGenerator = nullptr;
 
+    //flag
+    bool isFinished;
+
     //engine
+    virtual void onAwake() override;
     virtual void onStart() override;
+    virtual void onUpdate(float) override;
 
     //actions
     void loadLevel();
     void finishLevel();
+
+    //set scene
+    void displayPauseScene(const PauseSceneDataPack::Type&);
 };
 
 #endif // LEVELMANAGER_H

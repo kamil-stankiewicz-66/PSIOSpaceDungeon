@@ -70,6 +70,9 @@ class FinishPoint : public GameObject
     //link
     LevelManager* levelManager = nullptr;
 
+    //flag
+    bool flag;
+
     //components
     CircleCollider* collider = nullptr;
 

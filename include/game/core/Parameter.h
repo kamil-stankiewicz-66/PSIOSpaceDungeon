@@ -42,6 +42,9 @@ struct Parameters
     static float entity_lightAssasin_health;
     static float entity_lightAssasin_strength;
 
+    static int exp_perEnemyKill;
+    static float exp_bonusLevelCompleteMultiplier;
+
 
 
 public:
@@ -88,6 +91,8 @@ public:
     static const float& get_entity_lightAssasin_health();
     static const float& get_entity_lightAssasin_strength();
 
+    static const int& get_exp_perEnemyKill();
+    static const float& get_exp_bonusLevelCompleteMultiplier();
 };
 
 #endif // PARAMETER_H

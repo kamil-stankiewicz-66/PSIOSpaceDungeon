@@ -55,12 +55,16 @@ public:
 
 class Melee : public Weapon
 {
-    CircleCollider* collider;
+    CircleCollider* collider = nullptr;
 
     //definitions
     virtual void attackCore() override;
     virtual void aim(const Vector2& point) override;
     virtual void resetAim() override;
+
+public:
+    //setter
+    virtual void set(const WeaponData&, const string& targetTag) override;
 };
 
 

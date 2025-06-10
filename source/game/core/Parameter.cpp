@@ -37,6 +37,9 @@ float Parameters::entity_assasin_strength;
 float Parameters::entity_lightAssasin_health;
 float Parameters::entity_lightAssasin_strength;
 
+int Parameters::exp_perEnemyKill;
+float Parameters::exp_bonusLevelCompleteMultiplier;
+
 
 
 
@@ -48,7 +51,7 @@ void Parameters::init()
 {
     Parameters::player_moveSpeed = 8.0f;
     Parameters::player_baseHealth = 500.0f;
-    Parameters::player_regenerationRate = 0.01f;
+    Parameters::player_regenerationRate = 0.007f;
     Parameters::player_progressExp = 1000;
 
     Parameters::camera_viewSize = 1.2f;
@@ -81,6 +84,9 @@ void Parameters::init()
     Parameters::entity_assasin_strength = 30.0f;
     Parameters::entity_lightAssasin_health = 15.0f;
     Parameters::entity_lightAssasin_strength = 40.0f;
+
+    Parameters::exp_perEnemyKill = 5;
+    Parameters::exp_bonusLevelCompleteMultiplier = 3;
 }
 
 
@@ -232,4 +238,17 @@ const float& Parameters::get_entity_lightAssasin_health() {
 
 const float& Parameters::get_entity_lightAssasin_strength() {
     return entity_lightAssasin_strength;
+}
+
+
+///
+/// exp
+///
+
+const int& Parameters::get_exp_perEnemyKill() {
+    return exp_perEnemyKill;
+}
+
+const float& Parameters::get_exp_bonusLevelCompleteMultiplier() {
+    return exp_bonusLevelCompleteMultiplier;
 }

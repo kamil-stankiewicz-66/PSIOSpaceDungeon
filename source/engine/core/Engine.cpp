@@ -350,7 +350,6 @@ void Engine::loadScene()
         this->currentScene->dispose();
     }
 
-    sf::sleep(sf::milliseconds(1));
     this->currentScene = this->scenes[this->sceneLoadData.getName()].get();
 
     if (this->currentScene->isEmpty())

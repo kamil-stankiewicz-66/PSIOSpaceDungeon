@@ -3,6 +3,7 @@
 #include "engine/core/Input.h"
 #include "game/core/Parameter.h"
 #include "game/core/Tag.h"
+#include "game/level/LevelManager.h"
 
 void PlayerHealthSystem::onAwake()
 {
@@ -13,6 +14,8 @@ void PlayerHealthSystem::onAwake()
 
     setHealthBar(getGame()->get_currentScene()->findObject<Slider>(Tag::PLAYER_HEALTH_BAR.data()));
     setHealBar(getGame()->get_currentScene()->findObject<Slider>(Tag::PLAYER_HEAL_BAR.data()));
+
+    levelManager = getGame()->get_currentScene()->findObject<LevelManager>();
 }
 
 void PlayerHealthSystem::onUpdate(float dt)
@@ -33,7 +36,7 @@ void PlayerHealthSystem::onUpdate(float dt)
         m_isHealing = false;
     }
 
-    //auto regenration
+    //auto regeneration
     addHealth(dt * Parameters::get_player_regenerationRate());
 }
 

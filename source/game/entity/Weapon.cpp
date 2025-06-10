@@ -98,6 +98,13 @@ Weapon* Weapon::createWeapon(Scene* scene, const WeaponData& data, const string&
 /// Melee
 ///
 
+void Melee::set(const WeaponData& data, const string& targetTag)
+{
+    Weapon::set(data, targetTag);
+    collider = createComponent<CircleCollider>();
+    collider->set(40.f);
+}
+
 void Melee::attackCore()
 {
     if (!collider) {
@@ -105,14 +112,30 @@ void Melee::attackCore()
         return;
     }
 
+    //damage
     auto collisions = collider->getCollisions();
-
     for (auto it = collisions.begin(); it != collisions.end(); ++it)
     {
-        //Collider* coll = *it;
-        //* obj = coll->getObject();
+        Collider* coll = *it;
 
-        //add damage
+        if (!coll) {
+            continue;
+        }
+
+        Object* obj = coll->getObject();
+
+        if (!obj) {
+            continue;
+        }
+
+        //if this is not target skip
+        if (!obj->checkTag(this->getTargetTag())) {
+            continue;
+        }
+
+        if (auto healthSys = obj->getComponent<HealthSystem>(true)) {
+            healthSys->addDamage(getData().damage);
+        }
     }
 }
 

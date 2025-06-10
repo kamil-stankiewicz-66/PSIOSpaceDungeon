@@ -38,3 +38,7 @@ void MenuButton::setText(const string& text)
 
     textObj->getTextPtr()->setText(text);
 }
+
+TextObject* MenuButton::getTextObj() const {
+    return textObj;
+}

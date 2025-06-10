@@ -2,6 +2,7 @@
 #define PLAYERHEALTHSYSTEM_H
 
 #include "game/entity/HealthSystem.h"
+class LevelManager;
 
 class PlayerHealthSystem : public HealthSystem
 {
@@ -10,6 +11,9 @@ class PlayerHealthSystem : public HealthSystem
 private:
     float healPoints;
     float healPointsMax;
+
+    //manager
+    LevelManager* levelManager;
 
     //flag
     bool m_isHealing;
