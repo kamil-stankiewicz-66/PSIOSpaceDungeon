@@ -7,6 +7,7 @@ struct Parameters
 
 
     static float player_moveSpeed;
+    static int player_progressExp;
 
     static float camera_viewSize;
     static float camera_trackingOn;
@@ -50,6 +51,7 @@ public:
     //getters
 
     static const float& get_player_moveSpeed();
+    static const int& get_player_progressExp();
 
     static const float& get_camera_viewSize();
     static const float& get_camera_trackingOn();

@@ -1,6 +1,7 @@
 #include "game/scenes/MainScene.h"
 #include "game/core/Asset.h"
 #include "game/core/DataBlock.h"
+#include "game/core/Parameter.h"
 #include "game/ui/BasicButtons.h"
 #include "game/core/Game.h"
 #include "game/ui/Slider.h"
@@ -172,8 +173,8 @@ void MainScene::loadObjects()
         //slider
         auto slider = createObject<Slider>(11u, panelLevel);
         slider->init(true);
-        slider->setValueMax(1000.f);
-        slider->setValue(PlayerData::getExpPoints());
+        slider->setValueMax(static_cast<float>(Parameters::get_player_progressExp()));
+        slider->setValue(static_cast<float>(PlayerData::getExpPoints() - ((PlayerData::getExpLevel() -1u) * Parameters::get_player_progressExp())));
         slider->setFillColor(sf::Color(220, 245, 0));
         slider->setBackgroundColor(sf::Color(23, 26, 33));
         slider->scaleWidth(1.75f);

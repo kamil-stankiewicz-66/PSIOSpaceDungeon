@@ -1,4 +1,5 @@
 #include "game/core/DataBlock.h"
+#include "game/core/Parameter.h"
 #include <cmath>
 
 uint PlayerData::exp_points = 0u;
@@ -19,7 +20,8 @@ void PlayerData::setCoins(const unsigned int& value) {
     coins = value;
 }
 
-unsigned int PlayerData::getExpPoints() {
+
+uint PlayerData::getExpPoints() {
     return exp_points;
 }
 
@@ -34,7 +36,7 @@ unsigned int PlayerData::getCoins() {
 }
 
 uint PlayerData::getExpLevel() {
-    return 1u + (exp_points / 1000u);
+    return 1u + (exp_points / Parameters::get_player_progressExp());
 }
 
 float PlayerData::getMaxHealth() {

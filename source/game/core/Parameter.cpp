@@ -2,6 +2,7 @@
 
 
 float Parameters::player_moveSpeed;
+int Parameters::player_progressExp;
 
 float Parameters::camera_viewSize;
 float Parameters::camera_trackingOn;
@@ -44,6 +45,7 @@ float Parameters::entity_lightAssasin_strength;
 void Parameters::init()
 {
     Parameters::player_moveSpeed = 8.0f;
+    Parameters::player_progressExp = 1000;
 
     Parameters::camera_viewSize = 1.2f;
     Parameters::camera_trackingOn = 120.0f;
@@ -86,6 +88,10 @@ void Parameters::init()
 
 const float& Parameters::get_player_moveSpeed() {
     return player_moveSpeed;
+}
+
+const int& Parameters::get_player_progressExp() {
+    return player_progressExp;
 }
 
 
