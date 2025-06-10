@@ -270,6 +270,18 @@ Scene* Engine::get_currentScene() const {
     return currentScene;
 }
 
+Scene* Engine::get_scene(const string& _name) const
+{
+    auto it = this->scenes.find(_name);
+
+    if (it != this->scenes.end())
+    {
+        return it->second.get();
+    }
+
+    return nullptr;
+}
+
 
 ///
 /// scene manager
@@ -338,17 +350,13 @@ void Engine::loadScene()
         this->currentScene->dispose();
     }
 
+    sf::sleep(sf::milliseconds(1));
     this->currentScene = this->scenes[this->sceneLoadData.getName()].get();
 
     if (this->currentScene->isEmpty())
     {
         //load and start()
         this->currentScene->load();
-    }
-    else
-    {
-        //only start()
-        this->currentScene->callOnStartOnObjects();
     }
 
     //log

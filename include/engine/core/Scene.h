@@ -239,11 +239,12 @@ private:
 public:
     Scene();
     ~Scene();
-    void init(Engine* game, const string& name, unsigned int chunkSize);
+
+    void dispose();
 
 private:
+    void init(Engine* game, const string& name, unsigned int chunkSize);
     void load();
-    void dispose();
 
     //objects operations
     void forEachObject(const function<void(Object*)>& func);
