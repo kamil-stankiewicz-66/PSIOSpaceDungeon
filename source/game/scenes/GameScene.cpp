@@ -1,6 +1,5 @@
 #include "game/scenes/GameScene.h"
 #include "engine/core/Engine.h"
-#include "game/core/Parameter.h"
 #include "game/core/Tag.h"
 #include "game/level/LevelManager.h"
 #include "game/level/Tilemap.h"
@@ -14,9 +13,7 @@ void GameScene::loadObjects()
 
     //camera
     {
-        auto cam = createObject<TrackingCamera>();
-        cam->set_viewSize(Parameters::get_camera_viewSize());
-        set_mainCamera(cam);
+        createObject<CameraHolder>();
     }
 
     //tilemaps

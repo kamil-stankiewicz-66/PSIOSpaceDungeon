@@ -4,6 +4,7 @@
 #include "game/core/Tag.h"
 #include "game/physics/Rycast.h"
 #include "game/core/Asset.h"
+#include "game/player/PlayerCore.h"
 
 Entity::Entity() : rng(std::random_device{}())
 {}
@@ -27,32 +28,6 @@ void Entity::onAwake()
         VDebuger::print("<ERROR> ENTITY :: ON_AWAKE :: game or scene is nullptr");
         return;
     }
-
-
-    //particle effect
-    particleEfect = getGame()->get_currentScene()->createObject<ParticleEffect>(getRenderLayer() - 1u);
-
-    if (!particleTexture)
-    {
-        particleTexture = make_shared<sf::Texture>();
-
-        if (!particleTexture->loadFromFile(Asset::Graphics::PARTICLE.data())) {
-            VDebuger::print("<ERROR> ENTITY :: INIT :: cant load particle texture");
-        }
-    }
-
-    particleEfect->setTexture(particleTexture);
-
-    particleEfect->setColor(sf::Color::Red);
-    particleEfect->setScale(Vector2(0.2f, 0.2f));
-
-    particleEfect->setSpread(270.0f);
-
-    particleEfect->setSpeed(0.2f);
-    particleEfect->setSpeedDiff(0.2f);
-
-    particleEfect->setLifeTime(5000.0f);
-    particleEfect->setLifeTimeDiff(2500.0f);
 
 
 
@@ -85,12 +60,50 @@ void Entity::onAwake()
 
 
     //find objects
-    player = getGame()->get_currentScene()->findGameObject(Tag::PLAYER_RECT.data())->getTransformPtr();
-    tilemap = getGame()->get_currentScene()->findObject<Tilemap>(Tag::TILEMAP.data());
+
+    if (GameObject* playerRect = getGame()->get_currentScene()->findGameObject(Tag::PLAYER_RECT.data()))
+    {
+        player = playerRect->getTransformPtr();
+        tilemap = getGame()->get_currentScene()->findObject<Tilemap>(Tag::TILEMAP.data());
+    }
 
     if (!player || !tilemap) {
         VDebuger::print("<ERROR> :: ENTITY :: player or tilemap is nullptr");
     }
+
+
+
+    if (!player->getObject()) {
+        VDebuger::print("<ERROR> ENTITY :: ON_AWAKE :: player object is nullptr");
+        return;
+    }
+
+
+    //particle effect
+
+    particleEfect = getGame()->get_currentScene()->createObject<ParticleEffect>(25u);
+
+    if (!particleTexture)
+    {
+        particleTexture = make_shared<sf::Texture>();
+
+        if (!particleTexture->loadFromFile(Asset::Graphics::PARTICLE.data())) {
+            VDebuger::print("<ERROR> ENTITY :: INIT :: cant load particle texture");
+        }
+    }
+
+    particleEfect->setTexture(particleTexture);
+
+    particleEfect->setColor(sf::Color::Red);
+    particleEfect->setScale(Vector2(0.2f, 0.2f));
+
+    particleEfect->setSpread(360.0f);
+
+    particleEfect->setSpeed(0.2f);
+    particleEfect->setSpeedDiff(0.2f);
+
+    particleEfect->setLifeTime(5000.0f);
+    particleEfect->setLifeTimeDiff(2500.0f);
 }
 
 void Entity::onUpdate(float dt)

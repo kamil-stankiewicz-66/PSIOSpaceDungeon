@@ -6,6 +6,11 @@
 
 void PlayerEnemyDetector::onAwake()
 {
+
+}
+
+void PlayerEnemyDetector::onStart()
+{
     //find tilemap
     tilemap = getGame()->get_currentScene()->findObject<Tilemap>(Tag::TILEMAP.data());
 
@@ -51,15 +56,17 @@ void PlayerEnemyDetector::onAwake()
                      getGame()->get_window()->get_displaymode().height * camera->get_viewSize());
 }
 
-void PlayerEnemyDetector::onStart()
-{
-
-}
-
 void PlayerEnemyDetector::onUpdate(float)
 {
     //reset
     this->target = nullptr;
+
+
+    //block if player is healing
+    if (playerCore->healthSystem->isHealing()) {
+        return;
+    }
+
 
     if (!boxCollider || !tilemap) {
         return;

@@ -19,6 +19,11 @@ void PlayerMove::onUpdate(float dt)
     //set to (0,0)
     m_move_dir.clear();
 
+    //block if player is healing
+    if (playerCore->healthSystem->isHealing()) {
+        return;
+    }
+
     //get move direction
     if (Input::Keyboard::isKeyPressed(Input::Keyboard::Key::W)) {
         m_move_dir.y += 1.0f;

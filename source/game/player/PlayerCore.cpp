@@ -72,6 +72,9 @@ void PlayerCore::onAwake()
     healthSystem->setHealth(PlayerData::getMaxHealth());
     healthSystem->setHealPoints(PlayerData::getMaxHealth());
 
+    //player special effects
+    playerSpecialEffects = createComponent<PlayerSpecialEffects>();
+
 
     //player movement
     playerMove = _scenePtr->createObject<PlayerMove>();

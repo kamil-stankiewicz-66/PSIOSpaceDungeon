@@ -59,8 +59,12 @@ void PlayerAttack::onUpdate(float dt)
         weapon->resetAim();
     }
 
-    //attack
-    if (Input::Mouse::LEFT_BUTTON() || Input::Keyboard::isKeyPressed(Input::Keyboard::Key::Space)) {
-        weapon->attack();
+
+    if (!playerCore->healthSystem->isHealing())
+    {
+        //attack
+        if (Input::Mouse::LEFT_BUTTON() || Input::Keyboard::isKeyPressed(Input::Keyboard::Key::Space)) {
+            weapon->attack();
+        }
     }
 }

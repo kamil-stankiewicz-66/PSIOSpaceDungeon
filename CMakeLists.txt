@@ -107,6 +107,11 @@ add_executable(PSIOSpaceDungeon
     include/game/player/PlayerHealthSystem.h
     source/game/player/PlayerHealthSystem.cpp
     source/game/scenes/PauseScene.cpp
+    include/game/scenes/PauseScene.h
+    source/game/scenes/PauseScene.cpp
+    include/game/player/PlayerSpecialEffects.h
+    source/game/player/PlayerSpecialEffects.cpp
+    include/game/core/WeaponShop.h
 )
 
 set_target_properties(

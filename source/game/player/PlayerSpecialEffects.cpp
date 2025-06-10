@@ -1,0 +1,57 @@
+#include "game/player/PlayerSpecialEffects.h"
+#include "engine/core/Engine.h"
+#include "game/player/PlayerCore.h"
+
+void PlayerSpecialEffects::onAwake()
+{
+    playerCore = dynamic_cast<PlayerCore*>(getObject());
+
+    if (!playerCore)
+    {
+        VDebuger::print("<ERROR> PLAYER_SPECIAL_EFFECTS :: player core is nullptr");
+        return;
+    }
+
+
+    //particle effect
+
+    parEff = getGame()->get_currentScene()->createObject<ParticleEffect>(playerCore->getRenderLayer() -1u);
+    parEff->addTag("particle_effect");
+
+    auto particleTexture = make_shared<sf::Texture>();
+
+    if (!particleTexture->loadFromFile(Asset::Graphics::PARTICLE.data())) {
+        VDebuger::print("<ERROR> BULLET :: INIT :: cant load particle texture");
+    }
+
+    parEff->setTexture(particleTexture);
+
+    parEff->setColor(sf::Color::Yellow);
+    parEff->setScale(Vector2(0.08f, 0.02f));
+
+    parEff->setSpread(180.0f);
+
+    parEff->setSpeed(5.0f);
+    parEff->setSpeedDiff(3.5f);
+
+    parEff->setLifeTime(150.0f);
+    parEff->setLifeTimeDiff(30.0f);
+
+    parEff->setParticleNum(1u);
+    parEff->setParticleNumDiff(0u);
+}
+
+
+void PlayerSpecialEffects::onUpdate(float dt)
+{
+    if (!playerCore) {
+        return;
+    }
+
+    //particle effect
+    if (playerCore->healthSystem->isHealing())
+    {
+        parEff->getTransformPtr()->set_position(playerCore->playerRect->getTransformPtr()->get_position());
+        parEff->invoke(Vector2(0.0f, 1.0f), false);
+    }
+}

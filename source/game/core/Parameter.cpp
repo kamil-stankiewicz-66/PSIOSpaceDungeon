@@ -51,7 +51,7 @@ void Parameters::init()
 {
     Parameters::player_moveSpeed = 8.0f;
     Parameters::player_baseHealth = 500.0f;
-    Parameters::player_regenerationRate = 0.007f;
+    Parameters::player_regenerationRate = 0.005f;
     Parameters::player_progressExp = 1000;
 
     Parameters::camera_viewSize = 1.2f;

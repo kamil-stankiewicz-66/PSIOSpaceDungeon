@@ -16,6 +16,14 @@ void PlayerHealthSystem::onAwake()
     setHealBar(getGame()->get_currentScene()->findObject<Slider>(Tag::PLAYER_HEAL_BAR.data()));
 
     levelManager = getGame()->get_currentScene()->findObject<LevelManager>();
+
+
+    camera = getGame()->get_currentScene()->findObject<CameraHolder>();
+
+    if (!camera)
+    {
+        VDebuger::print("<ERROR> PLAYER_HEALTH_SYSTEM :: camera is nullptr");
+    }
 }
 
 void PlayerHealthSystem::onUpdate(float dt)
@@ -81,6 +89,16 @@ void PlayerHealthSystem::addHealPoints(const float& v)
     refreshHealBar();
 }
 
+void PlayerHealthSystem::addDamage(const float& v)
+{
+    HealthSystem::addDamage(v);
+
+    if (camera)
+    {
+        camera->shake();
+    }
+}
+
 void PlayerHealthSystem::subHealPoints(const float& v)
 {
     healPoints -= v;
@@ -99,4 +117,8 @@ const float& PlayerHealthSystem::getHealPoints() const {
 
 const float& PlayerHealthSystem::getHealPointsMax() const {
     return healPointsMax;
+}
+
+const bool PlayerHealthSystem::isHealing() const {
+    return m_isHealing;
 }

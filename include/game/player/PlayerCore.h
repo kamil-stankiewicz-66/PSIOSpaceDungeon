@@ -10,6 +10,7 @@
 #include "game/player/PlayerAttack.h"
 #include "game/player/PlayerHealthSystem.h"
 #include "game/player/PlayerMove.h"
+#include "game/player/PlayerSpecialEffects.h"
 
 ///
 /// The PlayerCore class.
@@ -22,6 +23,8 @@ class PlayerCore : public GameObject
     friend class PlayerMove;
     friend class PlayerAnim;
     friend class PlayerAttack;
+    friend class PlayerEnemyDetector;
+    friend class PlayerSpecialEffects;
 
 private:
     const string m_bodyTexture = Asset::Graphics::PLAYER_SKIN_02.data();
@@ -44,6 +47,7 @@ private:
     CircleCollider* collider = nullptr;
     Rigidbody* rb = nullptr;
     PlayerHealthSystem* healthSystem = nullptr;
+    PlayerSpecialEffects* playerSpecialEffects = nullptr;
 
 protected:
     virtual void onAwake() override;

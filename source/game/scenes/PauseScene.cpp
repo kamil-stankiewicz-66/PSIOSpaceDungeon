@@ -32,7 +32,7 @@ void PauseScene::loadObjects()
 
     //main panel
 
-    auto panelMain = createObject<UIObject>();
+    auto panelMain = createObject<UIObject>(10u);
     auto panelMainSprite = panelMain->getSpritePtr();
 
     if (!panelMainSprite)

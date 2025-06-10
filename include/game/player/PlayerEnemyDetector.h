@@ -5,6 +5,7 @@
 #include "engine/object/Camera.h"
 #include "game/entity/Entity.h"
 #include "game/level/Tilemap.h"
+#include "game/player/TrackingCamera.h"
 
 class PlayerCore;
 
@@ -19,6 +20,7 @@ class PlayerEnemyDetector : public GameObject
 private:
     PlayerCore* playerCore = nullptr;
     Camera* camera = nullptr;
+    CameraHolder* cameraHolder = nullptr;
     BoxCollider* boxCollider = nullptr;
     Tilemap* tilemap = nullptr;
 
