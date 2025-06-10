@@ -104,8 +104,7 @@ add_executable(PSIOSpaceDungeon
     source/game/entity/HealthSystem.cpp
     include/game/ui/Slider.h
     source/game/ui/Slider.cpp
-    include/game/player/PlayerHealthSystem.h
-    source/game/player/PlayerHealthSystem.cpp
+    source/game/scenes/PauseScene.cpp
 )
 
 set_target_properties(
