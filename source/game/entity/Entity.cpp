@@ -3,6 +3,7 @@
 #include "game/core/Parameter.h"
 #include "game/core/Tag.h"
 #include "game/physics/Rycast.h"
+#include "game/core/Asset.h"
 
 Entity::Entity() : rng(std::random_device{}())
 {}
@@ -19,6 +20,40 @@ void Entity::onAwake()
 
     //tag
     this->addTag(Tag::ENEMY.data());
+
+
+    if (!getGame() || !getGame()->get_currentScene())
+    {
+        VDebuger::print("<ERROR> ENTITY :: ON_AWAKE :: game or scene is nullptr");
+        return;
+    }
+
+
+    //particle effect
+    particleEfect = getGame()->get_currentScene()->createObject<ParticleEffect>(getRenderLayer() - 1u);
+
+    if (!particleTexture)
+    {
+        particleTexture = make_shared<sf::Texture>();
+
+        if (!particleTexture->loadFromFile(Asset::Graphics::PARTICLE.data())) {
+            VDebuger::print("<ERROR> ENTITY :: INIT :: cant load particle texture");
+        }
+    }
+
+    particleEfect->setTexture(particleTexture);
+
+    particleEfect->setColor(sf::Color::Red);
+    particleEfect->setScale(Vector2(0.2f, 0.2f));
+
+    particleEfect->setSpread(270.0f);
+
+    particleEfect->setSpeed(0.2f);
+    particleEfect->setSpeedDiff(0.2f);
+
+    particleEfect->setLifeTime(5000.0f);
+    particleEfect->setLifeTimeDiff(2500.0f);
+
 
 
     //parts
@@ -126,7 +161,11 @@ void Entity::onUpdate(float dt)
 
 void Entity::onDestroy()
 {
-
+    if (particleEfect && particleEfect->getTransformPtr())
+    {
+        particleEfect->getTransformPtr()->set_position(getTransformPtr()->get_position());
+        particleEfect->invoke(Vector2(0.0f, -1.0f), false);
+    }
 }
 
 
@@ -162,6 +201,14 @@ void Entity::set(const EntityData& data)
     else
     {
         VDebuger::print("<ERROR> ENTITY :: SET :: health system is nullptr");
+    }
+
+
+
+    if (particleEfect)
+    {
+        particleEfect->setParticleNum(healthSystem->getHealthMax() / 2.0f);
+        particleEfect->setParticleNumDiff(0u);
     }
 
 

@@ -3,6 +3,7 @@
 
 float Parameters::player_moveSpeed;
 float Parameters::player_baseHealth;
+float Parameters::player_regenerationRate;
 int Parameters::player_progressExp;
 
 float Parameters::camera_viewSize;
@@ -47,6 +48,7 @@ void Parameters::init()
 {
     Parameters::player_moveSpeed = 8.0f;
     Parameters::player_baseHealth = 500.0f;
+    Parameters::player_regenerationRate = 0.01f;
     Parameters::player_progressExp = 1000;
 
     Parameters::camera_viewSize = 1.2f;
@@ -94,6 +96,10 @@ const float& Parameters::get_player_moveSpeed() {
 
 const float& Parameters::get_player_baseHealth() {
     return player_baseHealth;
+}
+
+const float& Parameters::get_player_regenerationRate() {
+    return player_regenerationRate;
 }
 
 const int& Parameters::get_player_progressExp() {

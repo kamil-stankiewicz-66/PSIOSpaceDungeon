@@ -70,6 +70,7 @@ void PlayerCore::onAwake()
     //health system
     healthSystem = createComponent<PlayerHealthSystem>();
     healthSystem->setHealth(PlayerData::getMaxHealth());
+    healthSystem->setHealPoints(PlayerData::getMaxHealth());
 
 
     //player movement

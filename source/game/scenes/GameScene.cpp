@@ -54,6 +54,22 @@ void GameScene::loadObjects()
             const auto& display = getGame()->get_window()->get_displaymode();
             t->add_position(0.08f * display.width, -0.05f * display.height);
         }
+
+        //heal bar
+        auto healBar = getGame()->get_currentScene()->createObject<Slider>(2000u);
+        healBar->addTag(Tag::PLAYER_HEAL_BAR.data());
+        healBar->init(true);
+        healBar->setFillColor(sf::Color::Yellow);
+        healBar->setBackgroundColor(sf::Color(23, 26, 33));
+        healBar->scaleWidth(0.5);
+        healBar->scaleHeight(0.1f);
+
+        if (auto t = healBar->getTransformPtr())
+        {
+            t->set_position(getGame()->get_window()->get_cornerPositions().leftUp);
+            const auto& display = getGame()->get_window()->get_displaymode();
+            t->add_position(0.08f * display.width, (-0.05f * display.height) - healthBar->getHeight());
+        }
     }
 
     //player
