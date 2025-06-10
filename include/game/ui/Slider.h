@@ -17,9 +17,6 @@ private:
     //engine
     virtual void onAwake() override;
 
-    //update
-    void refresh();
-
 public:
 
     ///
@@ -28,6 +25,10 @@ public:
     ///
 
     void init(bool rect);
+
+
+    //update
+    void refresh();
 
 
     //setter

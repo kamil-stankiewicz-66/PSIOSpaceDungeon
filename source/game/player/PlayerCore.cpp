@@ -1,5 +1,6 @@
 #include "game/player/PlayerCore.h"
 #include "engine/core/Engine.h"
+#include "game/core/DataBlock.h"
 #include "game/core/Tag.h"
 
 ///
@@ -65,6 +66,11 @@ void PlayerCore::onAwake()
     //rigidbody
     rb = createComponent<Rigidbody>();
     rb->init(getTransformPtr(), playerRect->getTransformPtr());
+
+    //health system
+    healthSystem = createComponent<PlayerHealthSystem>();
+    healthSystem->setHealth(PlayerData::getMaxHealth());
+    healthSystem->setHealPoints(PlayerData::getMaxHealth());
 
 
     //player movement

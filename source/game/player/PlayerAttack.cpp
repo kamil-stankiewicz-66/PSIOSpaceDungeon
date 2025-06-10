@@ -24,6 +24,8 @@ void PlayerAttack::onAwake()
                                   Tag::ENEMY.data(),
                                   playerCore->getRenderLayer()+1u,
                                   playerCore->hand);
+
+    weapon->scaleDamage(PlayerData::getDamage());
 }
 
 void PlayerAttack::onUpdate(float dt)

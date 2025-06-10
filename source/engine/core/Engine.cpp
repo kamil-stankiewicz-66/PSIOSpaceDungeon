@@ -270,6 +270,18 @@ Scene* Engine::get_currentScene() const {
     return currentScene;
 }
 
+Scene* Engine::get_scene(const string& _name) const
+{
+    auto it = this->scenes.find(_name);
+
+    if (it != this->scenes.end())
+    {
+        return it->second.get();
+    }
+
+    return nullptr;
+}
+
 
 ///
 /// scene manager
@@ -344,11 +356,6 @@ void Engine::loadScene()
     {
         //load and start()
         this->currentScene->load();
-    }
-    else
-    {
-        //only start()
-        this->currentScene->callOnStartOnObjects();
     }
 
     //log

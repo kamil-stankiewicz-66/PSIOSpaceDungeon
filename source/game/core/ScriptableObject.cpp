@@ -60,7 +60,7 @@ void WeaponSO::init()
         fists->coins = 0u;
         fists->attackTimeOut = 1500.0f;
         fists->damage = 1.0f;
-        fists->range = 5.0f;
+        fists->range = 20.0f;
 
         WeaponSO::add(fists);
     }

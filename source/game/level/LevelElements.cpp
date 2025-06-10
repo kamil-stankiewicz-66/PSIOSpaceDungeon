@@ -310,6 +310,8 @@ void FinishPoint::onUpdate(float dt)
     }
 
 
+    bool isPlayerColliding = false;
+
     for (const auto& coll : collider->getCollisions())
     {
         if (!coll) {
@@ -325,8 +327,19 @@ void FinishPoint::onUpdate(float dt)
         //only for player
         if (obj->checkTag(Tag::PLAYER_CORE.data()))
         {
-            //finish
-            //levelManager->finishLevel();
+            isPlayerColliding = true;
         }
+    }
+
+    if (isPlayerColliding && !flag)
+    {
+        //finish
+        levelManager->finishLevel();
+        flag = true;
+    }
+
+    if (!isPlayerColliding)
+    {
+        flag = false;
     }
 }

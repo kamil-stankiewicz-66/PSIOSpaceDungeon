@@ -7,6 +7,8 @@
 #include "game/scenes/MainScene.h"
 #include "game/scenes/GameScene.h"
 #include "game/scenes/StoreScene.h"
+#include "game/scenes/PauseScene.h"
+
 
 Game::Game(string _title) : Engine(_title, false)
 {
@@ -29,6 +31,7 @@ Game::Game(string _title) : Engine(_title, false)
     this->createScene<MainScene>(MAIN_SCENE);
     this->createScene<GameScene>(GAME_SCENE);
     this->createScene<StoreScene>(STORE_SCENE);
+    this->createScene<PauseScene>(PAUSE_SCENE);
 
     //load main scene
     this->changeScene(MAIN_SCENE);

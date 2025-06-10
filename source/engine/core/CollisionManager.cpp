@@ -12,6 +12,7 @@ void CollisionManager::init(Scene* _scene, unsigned int _chunksSize)
 void CollisionManager::dispose()
 {
     this->m_chunks.clear();
+    this->collidersRegistry.clear();
 }
 
 void CollisionManager::updateAll()

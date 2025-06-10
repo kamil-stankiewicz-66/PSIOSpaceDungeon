@@ -7,6 +7,9 @@ struct Parameters
 
 
     static float player_moveSpeed;
+    static float player_baseHealth;
+    static float player_regenerationRate;
+    static int player_progressExp;
 
     static float camera_viewSize;
     static float camera_trackingOn;
@@ -39,6 +42,9 @@ struct Parameters
     static float entity_lightAssasin_health;
     static float entity_lightAssasin_strength;
 
+    static int exp_perEnemyKill;
+    static float exp_bonusLevelCompleteMultiplier;
+
 
 
 public:
@@ -50,6 +56,9 @@ public:
     //getters
 
     static const float& get_player_moveSpeed();
+    static const float& get_player_baseHealth();
+    static const float& get_player_regenerationRate();
+    static const int& get_player_progressExp();    
 
     static const float& get_camera_viewSize();
     static const float& get_camera_trackingOn();
@@ -82,6 +91,8 @@ public:
     static const float& get_entity_lightAssasin_health();
     static const float& get_entity_lightAssasin_strength();
 
+    static const int& get_exp_perEnemyKill();
+    static const float& get_exp_bonusLevelCompleteMultiplier();
 };
 
 #endif // PARAMETER_H

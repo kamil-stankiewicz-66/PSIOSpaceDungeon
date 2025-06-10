@@ -2,6 +2,9 @@
 
 
 float Parameters::player_moveSpeed;
+float Parameters::player_baseHealth;
+float Parameters::player_regenerationRate;
+int Parameters::player_progressExp;
 
 float Parameters::camera_viewSize;
 float Parameters::camera_trackingOn;
@@ -34,6 +37,9 @@ float Parameters::entity_assasin_strength;
 float Parameters::entity_lightAssasin_health;
 float Parameters::entity_lightAssasin_strength;
 
+int Parameters::exp_perEnemyKill;
+float Parameters::exp_bonusLevelCompleteMultiplier;
+
 
 
 
@@ -44,6 +50,9 @@ float Parameters::entity_lightAssasin_strength;
 void Parameters::init()
 {
     Parameters::player_moveSpeed = 8.0f;
+    Parameters::player_baseHealth = 500.0f;
+    Parameters::player_regenerationRate = 0.007f;
+    Parameters::player_progressExp = 1000;
 
     Parameters::camera_viewSize = 1.2f;
     Parameters::camera_trackingOn = 120.0f;
@@ -75,6 +84,9 @@ void Parameters::init()
     Parameters::entity_assasin_strength = 30.0f;
     Parameters::entity_lightAssasin_health = 15.0f;
     Parameters::entity_lightAssasin_strength = 40.0f;
+
+    Parameters::exp_perEnemyKill = 5;
+    Parameters::exp_bonusLevelCompleteMultiplier = 3;
 }
 
 
@@ -86,6 +98,18 @@ void Parameters::init()
 
 const float& Parameters::get_player_moveSpeed() {
     return player_moveSpeed;
+}
+
+const float& Parameters::get_player_baseHealth() {
+    return player_baseHealth;
+}
+
+const float& Parameters::get_player_regenerationRate() {
+    return player_regenerationRate;
+}
+
+const int& Parameters::get_player_progressExp() {
+    return player_progressExp;
 }
 
 
@@ -214,4 +238,17 @@ const float& Parameters::get_entity_lightAssasin_health() {
 
 const float& Parameters::get_entity_lightAssasin_strength() {
     return entity_lightAssasin_strength;
+}
+
+
+///
+/// exp
+///
+
+const int& Parameters::get_exp_perEnemyKill() {
+    return exp_perEnemyKill;
+}
+
+const float& Parameters::get_exp_bonusLevelCompleteMultiplier() {
+    return exp_bonusLevelCompleteMultiplier;
 }

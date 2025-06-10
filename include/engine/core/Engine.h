@@ -126,6 +126,7 @@ private:
 public:
     VWindow* get_window() const;
     Scene* get_currentScene() const;
+    Scene* get_scene(const string& name) const;
 
 
     //Scene manager.

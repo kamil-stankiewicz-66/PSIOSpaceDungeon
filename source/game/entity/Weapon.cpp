@@ -98,6 +98,13 @@ Weapon* Weapon::createWeapon(Scene* scene, const WeaponData& data, const string&
 /// Melee
 ///
 
+void Melee::set(const WeaponData& data, const string& targetTag)
+{
+    Weapon::set(data, targetTag);
+    collider = createComponent<CircleCollider>();
+    collider->set(40.f);
+}
+
 void Melee::attackCore()
 {
     if (!collider) {
@@ -105,14 +112,30 @@ void Melee::attackCore()
         return;
     }
 
+    //damage
     auto collisions = collider->getCollisions();
-
     for (auto it = collisions.begin(); it != collisions.end(); ++it)
     {
-        //Collider* coll = *it;
-        //* obj = coll->getObject();
+        Collider* coll = *it;
 
-        //add damage
+        if (!coll) {
+            continue;
+        }
+
+        Object* obj = coll->getObject();
+
+        if (!obj) {
+            continue;
+        }
+
+        //if this is not target skip
+        if (!obj->checkTag(this->getTargetTag())) {
+            continue;
+        }
+
+        if (auto healthSys = obj->getComponent<HealthSystem>(true)) {
+            healthSys->addDamage(getData().damage);
+        }
     }
 }
 
@@ -237,7 +260,7 @@ void Bullet::effect(const sf::Color& color)
     if (sf::Color::Red == color)
     {
         parEff->setColor(color);
-        parEff->setScale(Vector2(0.02, 0.08));
+        parEff->setScale(Vector2(0.02f, 0.08f));
 
         parEff->setSpread(90.0f);
 
@@ -253,7 +276,7 @@ void Bullet::effect(const sf::Color& color)
     else
     {
         parEff->setColor(color);
-        parEff->setScale(Vector2(0.02, 0.01));
+        parEff->setScale(Vector2(0.02f, 0.01f));
 
         parEff->setSpread(90.0f);
 

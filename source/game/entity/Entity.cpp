@@ -3,6 +3,7 @@
 #include "game/core/Parameter.h"
 #include "game/core/Tag.h"
 #include "game/physics/Rycast.h"
+#include "game/core/Asset.h"
 
 Entity::Entity() : rng(std::random_device{}())
 {}
@@ -21,11 +22,55 @@ void Entity::onAwake()
     this->addTag(Tag::ENEMY.data());
 
 
+    if (!getGame() || !getGame()->get_currentScene())
+    {
+        VDebuger::print("<ERROR> ENTITY :: ON_AWAKE :: game or scene is nullptr");
+        return;
+    }
+
+
+    //particle effect
+    particleEfect = getGame()->get_currentScene()->createObject<ParticleEffect>(getRenderLayer() - 1u);
+
+    if (!particleTexture)
+    {
+        particleTexture = make_shared<sf::Texture>();
+
+        if (!particleTexture->loadFromFile(Asset::Graphics::PARTICLE.data())) {
+            VDebuger::print("<ERROR> ENTITY :: INIT :: cant load particle texture");
+        }
+    }
+
+    particleEfect->setTexture(particleTexture);
+
+    particleEfect->setColor(sf::Color::Red);
+    particleEfect->setScale(Vector2(0.2f, 0.2f));
+
+    particleEfect->setSpread(270.0f);
+
+    particleEfect->setSpeed(0.2f);
+    particleEfect->setSpeedDiff(0.2f);
+
+    particleEfect->setLifeTime(5000.0f);
+    particleEfect->setLifeTimeDiff(2500.0f);
+
+
+
     //parts
     body = getGame()->get_currentScene()->createObject<GameObject>(getRenderLayer());
     this->addChild(body);
     hand = getGame()->get_currentScene()->createObject<GameObject>(getRenderLayer());
     body->addChild(hand);
+
+    //health bar
+    healthBar = getGame()->get_currentScene()->createObject<Slider>(getRenderLayer()+1u);
+    this->addChild(healthBar);
+    healthBar->init(false);
+    healthBar->setFillColor(sf::Color::Red);
+    healthBar->setBackgroundColor(sf::Color(23, 26, 33));
+    healthBar->scaleWidth(0.2);
+    healthBar->scaleHeight(0.25f);
+
 
 
     //componets
@@ -106,11 +151,21 @@ void Entity::onUpdate(float dt)
         getTransformPtr()->set_flip_x(flip);
         weaponCore->getTransformPtr()->set_flip_x(!flip);
     }
+
+    if (healthBar && healthBar->getTransformPtr())
+    {
+        healthBar->getTransformPtr()->set_flip_x(getTransformPtr()->get_flipX());
+        healthBar->refresh();
+    }
 }
 
 void Entity::onDestroy()
 {
-
+    if (particleEfect && particleEfect->getTransformPtr())
+    {
+        particleEfect->getTransformPtr()->set_position(getTransformPtr()->get_position());
+        particleEfect->invoke(Vector2(0.0f, -1.0f), false);
+    }
 }
 
 
@@ -150,6 +205,14 @@ void Entity::set(const EntityData& data)
 
 
 
+    if (particleEfect)
+    {
+        particleEfect->setParticleNum(healthSystem->getHealthMax() / 2.0f);
+        particleEfect->setParticleNumDiff(0u);
+    }
+
+
+
     if (!getGame()) {
         VDebuger::print("<ERROR> ENTITY :: SET :: object is not inited");
     }
@@ -171,7 +234,7 @@ void Entity::set(const EntityData& data)
     if (weaponCore)
     {
         uniform_real_distribution<float> rndStrength(strength - (0.1 * strength), strength + (0.1 * strength));
-        weaponCore->scaleDamage(rndStrength(rng));
+        weaponCore->scaleDamage(rndStrength(rng) / weaponCore->getData().damage);
     }
     else
     {
@@ -186,6 +249,25 @@ void Entity::set(const EntityData& data)
 
     this->collider->set(body->getSpritePtr()->getTextureRect().width * body->getTransformPtr()->get_scale().x,
                         body->getSpritePtr()->getTextureRect().height * body->getTransformPtr()->get_scale().y);
+
+
+
+
+    if (healthBar)
+    {
+        healthBar->setValueMax(healthSystem->getHealthMax());
+        healthBar->setValue(healthSystem->getHealth());
+
+        auto t = healthBar->getTransformPtr();
+        if (t && body && body->getSpritePtr())
+        {
+            t->add_position(Vector2(0.0f, 15.0f + (body->getSpritePtr()->getTextureRect().height) * this->entityData.scale));
+        }
+    }
+    else
+    {
+        VDebuger::print("<ERROR> ENTITY :: SET :: healthBar is nullptr");
+    }
 
 
 

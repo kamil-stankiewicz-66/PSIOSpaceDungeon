@@ -37,6 +37,41 @@ void GameScene::loadObjects()
         fgtilemap->setData(cellSize, scale);
     }
 
+    //ui
+    {
+        //health bar
+        auto healthBar = getGame()->get_currentScene()->createObject<Slider>(2000u);
+        healthBar->addTag(Tag::PLAYER_HEALTH_BAR.data());
+        healthBar->init(true);
+        healthBar->setFillColor(sf::Color::Red);
+        healthBar->setBackgroundColor(sf::Color(23, 26, 33));
+        healthBar->scaleWidth(0.5);
+        healthBar->scaleHeight(0.7f);
+
+        if (auto t = healthBar->getTransformPtr())
+        {
+            t->set_position(getGame()->get_window()->get_cornerPositions().leftUp);
+            const auto& display = getGame()->get_window()->get_displaymode();
+            t->add_position(0.08f * display.width, -0.05f * display.height);
+        }
+
+        //heal bar
+        auto healBar = getGame()->get_currentScene()->createObject<Slider>(2000u);
+        healBar->addTag(Tag::PLAYER_HEAL_BAR.data());
+        healBar->init(true);
+        healBar->setFillColor(sf::Color::Yellow);
+        healBar->setBackgroundColor(sf::Color(23, 26, 33));
+        healBar->scaleWidth(0.5);
+        healBar->scaleHeight(0.1f);
+
+        if (auto t = healBar->getTransformPtr())
+        {
+            t->set_position(getGame()->get_window()->get_cornerPositions().leftUp);
+            const auto& display = getGame()->get_window()->get_displaymode();
+            t->add_position(0.08f * display.width, (-0.05f * display.height) - healthBar->getHeight());
+        }
+    }
+
     //player
     {
         createObject<PlayerCore>(50);
