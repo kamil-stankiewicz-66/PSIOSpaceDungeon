@@ -12,7 +12,7 @@ void Notification::onAwake()
         return;
     }
 
-    text->setFont(Asset::Fonts::LIBERATION_SANS.data());
+    text->setFont(FontBase::get(Asset::Fonts::LIBERATION_SANS.data()));
     //text->setCharacterSize(50);
 }
 

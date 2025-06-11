@@ -8,7 +8,6 @@
 #include "game/scenes/GameScene.h"
 #include "game/scenes/StoreScene.h"
 #include "game/scenes/PauseScene.h"
-#include "game/core/Asset.h"
 
 
 Game::Game(string _title) : Engine(_title, false)
@@ -24,8 +23,6 @@ Game::Game(string _title) : Engine(_title, false)
     PlayerData::setCoins(data.coins);
 
     //init
-    TextureBase::preloadAll();
-    SoundBase::preloadAll();
     Parameters::init();
     WeaponSO::init();
     EntitySO::init();

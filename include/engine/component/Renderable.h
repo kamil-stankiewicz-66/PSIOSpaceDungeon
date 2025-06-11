@@ -26,7 +26,6 @@ class VRenderable : public Component
     bool m_renderWithLocalFlip = false;
 
 protected:
-    string m_assetRef;
 
     //engine methods
     bool init(Engine* engine, Object* parent) override; //This method is called by the engine.
@@ -50,9 +49,6 @@ public:
 
     //render with local or parent dependent reflection
     void setRenderWithLocalFlip(const bool);
-
-    //getter
-    const string_view getAssetRef() const;
 };
 
 
@@ -66,8 +62,7 @@ class VSprite : public VRenderable
 
 private:
     sf::Sprite m_sprite;
-    sf::Texture m_texture;
-    bool m_isInited;
+    sf::Texture* m_texture;
 
 public:
     virtual void render(const Engine* game, const Vector2& position, const Vector2& scale, const float& rotationZ, const bool flipX, const bool isRect) override;
@@ -93,7 +88,7 @@ class VText : public VRenderable
 
 private:
     sf::Text m_text;
-    unique_ptr<sf::Font> m_font;
+    sf::Font* m_font;
 
 public:
     virtual void render(const Engine* game, const Vector2& position, const Vector2& scale, const float& rotationZ, const bool flipX, const bool isRect) override;
@@ -103,7 +98,7 @@ public:
 
     //text api setters
     void setText(const string& text);
-    void setFont(const string& asser_ref);
+    void setFont(sf::Font*);
     void setStyle(const sf::Text::Style&);
     void setCharacterSize(const Uint8&);
     void setLetterSpacing(const float&);
