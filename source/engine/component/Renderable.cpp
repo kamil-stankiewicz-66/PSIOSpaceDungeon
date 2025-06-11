@@ -98,18 +98,12 @@ void VRenderable::generateMatrix(const Engine* game, sf::Transform& sftransform,
 
 void VRenderable::dispose()
 {
-    m_assetRef.clear();
+
 }
 
 
 void VRenderable::setRenderWithLocalFlip(const bool b) {
     this->m_renderWithLocalFlip = b;
-}
-
-
-const string_view VRenderable::getAssetRef() const
-{
-    return this->m_assetRef;
 }
 
 
@@ -144,7 +138,7 @@ void VSprite::render(const Engine* game, const Vector2& position, const Vector2&
 
 const bool VSprite::isInited() const
 {
-    return m_isInited;
+    return m_texture;
 }
 
 
@@ -152,8 +146,7 @@ void VSprite::dispose()
 {
     VRenderable::dispose();
     m_sprite = sf::Sprite();
-    m_texture = sf::Texture();
-    m_isInited = false;
+    m_texture = nullptr;
 }
 
 void VSprite::setTexture(sf::Texture* texture)
@@ -164,9 +157,8 @@ void VSprite::setTexture(sf::Texture* texture)
 
     this->dispose();
 
-    m_texture = *texture;
-    m_sprite.setTexture(m_texture);
-    m_isInited = true;
+    m_texture = texture;
+    m_sprite.setTexture(*m_texture);
 }
 
 void VSprite::setColor(const sf::Color& _c)
@@ -219,7 +211,7 @@ void VText::render(const Engine* game, const Vector2& position, const Vector2& s
 
 const bool VText::isInited() const
 {
-    return m_font.get();
+    return m_font;
 }
 
 
@@ -236,22 +228,16 @@ void VText::setText(const string& text)
     this->m_text.setString(text);
 }
 
-void VText::setFont(const string& asset_ref)
+void VText::setFont(sf::Font* font)
 {
-    if (this->m_assetRef == asset_ref) {
+    if (!font) {
         return;
     }
 
-    if (!m_font) {
-        m_font = make_unique<sf::Font>();
-    }
+    this->dispose();
 
-    if (!m_font->loadFromFile(asset_ref)) {
-        VDebuger::print("SPRITE :: TEXTURE :: ERROR - loading font:", asset_ref);
-    }
-
-    this->m_text.setFont(*m_font);
-    this->m_assetRef = asset_ref;
+    m_font = font;
+    m_text.setFont(*m_font);
 }
 
 void VText::setStyle(const sf::Text::Style& style)

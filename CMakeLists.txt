@@ -111,7 +111,6 @@ add_executable(PSIOSpaceDungeon
     source/game/scenes/PauseScene.cpp
     include/game/player/PlayerSpecialEffects.h
     source/game/player/PlayerSpecialEffects.cpp
-    include/game/core/WeaponShop.h
     source/game/core/Asset.cpp
     include/game/effect/AudioPlayer.h
     source/game/effect/AudioPlayer.cpp

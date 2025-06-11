@@ -24,7 +24,7 @@ void StoreScene::loadObjects()
 
         if (textPtr)
         {
-            textPtr->setFont(Asset::Fonts::LIBERATION_SANS.data());
+            textPtr->setFont(FontBase::get(Asset::Fonts::LIBERATION_SANS.data()));
             textPtr->setCharacterSize(50);
             textPtr->setFillColor(sf::Color::Yellow);
 
