@@ -282,6 +282,10 @@ Scene* Engine::get_scene(const string& _name) const
     return nullptr;
 }
 
+bool Engine::isRunning() const {
+    return m_isRunning;
+}
+
 
 ///
 /// scene manager

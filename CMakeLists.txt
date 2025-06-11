@@ -112,6 +112,9 @@ add_executable(PSIOSpaceDungeon
     include/game/player/PlayerSpecialEffects.h
     source/game/player/PlayerSpecialEffects.cpp
     include/game/core/WeaponShop.h
+    source/game/core/Asset.cpp
+    include/game/effect/AudioPlayer.h
+    source/game/effect/AudioPlayer.cpp
 )
 
 set_target_properties(
@@ -130,4 +133,5 @@ target_link_libraries(PSIOSpaceDungeon
     sfml-graphics
     sfml-window
     sfml-system
+    sfml-audio
 )

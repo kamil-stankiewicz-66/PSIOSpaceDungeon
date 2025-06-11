@@ -8,8 +8,8 @@ void Slider::onAwake()
     background = getGame()->get_currentScene()->createObject<SpriteObject>(getRenderLayer());
     slider = getGame()->get_currentScene()->createObject<SpriteObject>(getRenderLayer()+1u);
 
-    background->getSpritePtr()->setTexture(Asset::Graphics::HEALTHBAR.data());
-    slider->getSpritePtr()->setTexture(Asset::Graphics::HEALTHBAR.data());
+    background->getSpritePtr()->setTexture(TextureBase::get(Asset::Graphics::HEALTHBAR.data()));
+    slider->getSpritePtr()->setTexture(TextureBase::get(Asset::Graphics::HEALTHBAR.data()));
 
     background->getSpritePtr()->setRenderWithLocalFlip(true);
     slider->getSpritePtr()->setRenderWithLocalFlip(true);

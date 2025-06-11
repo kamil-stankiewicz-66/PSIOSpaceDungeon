@@ -35,6 +35,7 @@ struct WeaponData : ScriptableObject
     float range;
     float damage;
     float attackTimeOut;
+    string attackSoundRef;
 };
 
 class WeaponSO

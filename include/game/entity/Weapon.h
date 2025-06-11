@@ -1,6 +1,7 @@
 #ifndef WEAPON_H
 #define WEAPON_H
 
+#include "SFML/Audio/Sound.hpp"
 #include "engine/component/Collider.h"
 #include "engine/core/Scene.h"
 #include "engine/object/Object.h"
@@ -81,7 +82,6 @@ class Gun : public Weapon
     Tilemap* tilemap = nullptr;
 
     //vars
-    shared_ptr<sf::Texture> bulletTxt = nullptr;
     Vector2 aimDir;
 
 public:
@@ -106,9 +106,6 @@ class Bullet : public GameObject
 
     //link
     Tilemap* tilemap = nullptr;
-
-    //cache
-    static shared_ptr<sf::Texture> particleTexture;
 
     float damage;
     Vector2 dir;

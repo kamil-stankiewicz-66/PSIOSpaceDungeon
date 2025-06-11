@@ -4,6 +4,7 @@
 #include "engine/component/AnimationController.h"
 #include "engine/component/Collider.h"
 #include "engine/object/Object.h"
+#include "game/effect/AudioPlayer.h"
 #include "game/effect/ParticleEffect.h"
 #include "game/entity/HealthSystem.h"
 #include "game/physics/Rigidbody.h"
@@ -35,8 +36,8 @@ private:
     Tilemap* tilemap = nullptr;
 
     //effect
-    shared_ptr<sf::Texture> particleTexture;
     ParticleEffect* particleEfect = nullptr;
+    AudioPlayer* audioPlayer = nullptr;
 
     //anims
     uint ANIM_IDLE;

@@ -9,19 +9,19 @@
 /// \brief Change texture after duration time.
 ///
 
-class AnimationTextureMove : public AnimationStep
+class AnimationTextureStep : public AnimationStep
 {
     //accumulation
     float timeAcc;
 
     //data
     VSprite* sprite = nullptr;
-    shared_ptr<sf::Texture> nextTxt;
+    sf::Texture* nextTxt;
     sf::IntRect nextRect;
 
 public:
-    AnimationTextureMove(VSprite* sprite,
-                         const shared_ptr<sf::Texture>& nextTexture,
+    AnimationTextureStep(VSprite* sprite,
+                         sf::Texture* nextTexture,
                          const sf::IntRect& nextRect,
                          const float& duration);
 

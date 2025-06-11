@@ -44,7 +44,7 @@ void MainScene::loadObjects()
         return;
     }
 
-    panelMainSprite->setTexture(Asset::Graphics::PANEL.data());
+    panelMainSprite->setTexture(TextureBase::get(Asset::Graphics::PANEL.data()));
     panelMainSprite->setColor(sf::Color(7, 13, 22));
 
     float panelMain_scaleX = (0.9f * display.width) / panelMainSprite->getTextureRect().width;
@@ -73,7 +73,7 @@ void MainScene::loadObjects()
             return;
         }
 
-        panelPlayerDataSprite->setTexture(Asset::Graphics::PANEL.data());
+        panelPlayerDataSprite->setTexture(TextureBase::get(Asset::Graphics::PANEL.data()));
         panelPlayerDataSprite->setColor(sf::Color(16, 21, 30));
 
         float panelPlayerData_scaleX = (0.15f * display.width) / panelPlayerDataSprite->getTextureRect().width;

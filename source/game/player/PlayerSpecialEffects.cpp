@@ -18,16 +18,10 @@ void PlayerSpecialEffects::onAwake()
     parEff = getGame()->get_currentScene()->createObject<ParticleEffect>(playerCore->getRenderLayer() -1u);
     parEff->addTag("particle_effect");
 
-    auto particleTexture = make_shared<sf::Texture>();
-
-    if (!particleTexture->loadFromFile(Asset::Graphics::PARTICLE.data())) {
-        VDebuger::print("<ERROR> BULLET :: INIT :: cant load particle texture");
-    }
-
-    parEff->setTexture(particleTexture);
+    parEff->setTexture(Asset::Graphics::PARTICLE);
 
     parEff->setColor(sf::Color::Yellow);
-    parEff->setScale(Vector2(0.08f, 0.02f));
+    parEff->setScale(Vector2(0.07f, 0.07f));
 
     parEff->setSpread(180.0f);
 

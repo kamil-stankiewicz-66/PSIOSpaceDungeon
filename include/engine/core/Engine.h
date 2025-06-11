@@ -128,6 +128,8 @@ public:
     Scene* get_currentScene() const;
     Scene* get_scene(const string& name) const;
 
+    bool isRunning() const;
+
 
     //Scene manager.
     //Part of the class for managing scenes.

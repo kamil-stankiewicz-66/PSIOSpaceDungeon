@@ -3,6 +3,7 @@
 #include "game/core/Asset.h"
 #include "game/core/Parameter.h"
 #include "game/core/Tag.h"
+#include "game/effect/AudioPlayer.h"
 #include "game/effect/ParticleEffect.h"
 #include "game/entity/HealthSystem.h"
 #include <cmath>
@@ -22,9 +23,15 @@ void Weapon::onUpdate(float dt)
 
 void Weapon::attack()
 {
-    if (data.attackTimeOut <= timeAcc) {
+    if (data.attackTimeOut <= timeAcc)
+    {
         this->attackCore();
         timeAcc = 0.0f;
+
+        //sound
+        auto audioPlayer = getGame()->get_currentScene()->createObject<AudioPlayer>();
+        audioPlayer->init(data.attackSoundRef, Parameters::get_sound_volume_effects(), true);
+        audioPlayer->play();
     }
 }
 
@@ -32,7 +39,11 @@ void Weapon::attack()
 void Weapon::set(const WeaponData& data, const string& targetTag)
 {
     this->data = data;
-    getSpritePtr()->setTexture(data.textureRef);
+
+    if (!data.textureRef.empty()) {
+        getSpritePtr()->setTexture(TextureBase::get(data.textureRef));
+    }
+
     this->targetTag = targetTag;
 }
 
@@ -102,7 +113,7 @@ void Melee::set(const WeaponData& data, const string& targetTag)
 {
     Weapon::set(data, targetTag);
     collider = createComponent<CircleCollider>();
-    collider->set(40.f);
+    collider->set(data.range);
 }
 
 void Melee::attackCore()
@@ -170,7 +181,7 @@ void Gun::attackCore()
     bullet->getTransformPtr()->set_flip_x(getTransformPtr()->get_localFlipX());
 
     //add texture
-    bullet->getSpritePtr()->setTexture(bulletTxt);
+    bullet->getSpritePtr()->setTexture(TextureBase::get(Asset::Graphics::LASER_BULLET.data()));
     bullet->getSpritePtr()->setRenderWithLocalFlip(true);
 
     //init
@@ -180,11 +191,6 @@ void Gun::attackCore()
 void Gun::set(const WeaponData& data, const string& targetTag)
 {
     Weapon::set(data, targetTag);
-
-    bulletTxt = make_shared<sf::Texture>();
-    if (!bulletTxt->loadFromFile(Asset::Graphics::LASER_BULLET.data())) {
-        VDebuger::print("<ERROR> :: GUN :: texture load error");
-    }
 
     tilemap = getGame()->get_currentScene()->findObject<Tilemap>(Tag::TILEMAP.data());
     if (!tilemap) {
@@ -214,8 +220,6 @@ void Gun::resetAim() {
 
 //bullet
 
-shared_ptr<sf::Texture> Bullet::particleTexture = nullptr;
-
 void Bullet::init(const float& damage, const Vector2& dir, const string& targetTag, Tilemap* tilemap)
 {
     this->damage = damage;
@@ -228,16 +232,6 @@ void Bullet::init(const float& damage, const Vector2& dir, const string& targetT
 
     collider = createComponent<CircleCollider>();
     collider->set(10.0f);
-
-    //texture
-    if (!particleTexture)
-    {
-        particleTexture = make_shared<sf::Texture>();
-
-        if (!particleTexture->loadFromFile(Asset::Graphics::PARTICLE.data())) {
-            VDebuger::print("<ERROR> BULLET :: INIT :: cant load particle texture");
-        }
-    }
 }
 
 void Bullet::destroy(const sf::Color& color)
@@ -255,7 +249,7 @@ void Bullet::effect(const sf::Color& color)
     parEff->addTag("particle_effect");
     parEff->getTransformPtr()->set_position(getTransformPtr()->get_position());
 
-    parEff->setTexture(this->particleTexture);
+    parEff->setTexture(Asset::Graphics::PARTICLE.data());
 
     if (sf::Color::Red == color)
     {

@@ -64,7 +64,8 @@ void WeaponSO::init()
         fists->coins = 0u;
         fists->attackTimeOut = 1500.0f;
         fists->damage = 50.0f;
-        fists->range = 50.0f;
+        fists->range = 80.0f;
+        fists->attackSoundRef = Asset::Audio::BITE.data();
 
         WeaponSO::add(fists);
     }
@@ -81,7 +82,8 @@ void WeaponSO::init()
         rifle->coins = 10u;
         rifle->attackTimeOut = 500.0f;
         rifle->damage = 10.0f;
-        rifle->range = 400.0f;
+        rifle->range = 800.0f;
+        rifle->attackSoundRef = Asset::Audio::GUN.data();
 
         WeaponSO::add(rifle);
     }
@@ -96,8 +98,9 @@ void WeaponSO::init()
         shotgun->type = WeaponData::Type::Gun;
         shotgun->coins = 25u;
         shotgun->attackTimeOut = 800.0f;
-        shotgun->damage = 20.0f;
+        shotgun->damage = 60.0f;
         shotgun->range = 200.0f;
+        shotgun->attackSoundRef = Asset::Audio::GUN_SHOTGUN.data();
 
         WeaponSO::add(shotgun);
     }
@@ -114,7 +117,8 @@ void WeaponSO::init()
         machine->coins = 20u;
         machine->attackTimeOut = 150.0f;
         machine->damage = 5.0f;
-        machine->range = 200.0f;
+        machine->range = 400.0f;
+        machine->attackSoundRef = Asset::Audio::GUN_MACHINE.data();
 
         WeaponSO::add(machine);
     }
@@ -209,13 +213,13 @@ void EntitySO::init()
     {
         EntityData* zombie = new EntityData;
 
-        zombie->id = 0u;
+        zombie->id = entities.size();
         zombie->name = "Zombie";
         zombie->textureRef = Asset::Graphics::ZOMBIE_BASIC.data();
 
         zombie->type = EntityData::Type::Basic;
         zombie->attribute = EntityData::Attribute::Medium;
-        zombie->level = 1u;
+        zombie->level = 3u;
         zombie->weaponID = 0u;
         zombie->walkSpeed = 2.0f;
         zombie->runSpeed = 3.0f;
@@ -228,13 +232,13 @@ void EntitySO::init()
     {
         EntityData* zombieGreen = new EntityData;
 
-        zombieGreen->id = 1u;
+        zombieGreen->id = entities.size();
         zombieGreen->name = "Green Zombie";
         zombieGreen->textureRef = Asset::Graphics::ZOMBIE_GREEN.data();
 
         zombieGreen->type = EntityData::Type::Basic;
         zombieGreen->attribute = EntityData::Attribute::Tank;
-        zombieGreen->level = 2u;
+        zombieGreen->level = 4u;
         zombieGreen->weaponID = 0u;
         zombieGreen->walkSpeed = 1.0f;
         zombieGreen->runSpeed = 3.0f;
@@ -247,7 +251,7 @@ void EntitySO::init()
     {
         EntityData* zombieShort = new EntityData;
 
-        zombieShort->id = 2u;
+        zombieShort->id = entities.size();
         zombieShort->name = "Short Zombie";
         zombieShort->textureRef = Asset::Graphics::ZOMBIE_SHORT.data();
 
@@ -266,7 +270,7 @@ void EntitySO::init()
     {
         EntityData* zombieSmall = new EntityData;
 
-        zombieSmall->id = 3u;
+        zombieSmall->id = entities.size();
         zombieSmall->name = "Small Zombie";
         zombieSmall->textureRef = Asset::Graphics::ZOMBIE_SMALL.data();
 
@@ -285,7 +289,7 @@ void EntitySO::init()
     {
         EntityData* zombieTall = new EntityData;
 
-        zombieTall->id = 4u;
+        zombieTall->id = entities.size();
         zombieTall->name = "Tall Zombie";
         zombieTall->textureRef = Asset::Graphics::ZOMBIE_TALL.data();
 
@@ -304,7 +308,7 @@ void EntitySO::init()
     {
         EntityData* skeleton = new EntityData;
 
-        skeleton->id = 5u;
+        skeleton->id = entities.size();
         skeleton->name = "Skeleton";
         skeleton->textureRef = Asset::Graphics::ZOMBIE_SKELETON.data();
 
@@ -323,7 +327,7 @@ void EntitySO::init()
     {
         EntityData* orc = new EntityData;
 
-        orc->id = 6u;
+        orc->id = entities.size();
         orc->name = "Orc";
         orc->textureRef = Asset::Graphics::ORC_BASIC.data();
 
@@ -342,7 +346,7 @@ void EntitySO::init()
     {
         EntityData* orcArmored = new EntityData;
 
-        orcArmored->id = 7u;
+        orcArmored->id = entities.size();
         orcArmored->name = "Armored Orc";
         orcArmored->textureRef = Asset::Graphics::ORC_ARMORED.data();
 
@@ -361,7 +365,7 @@ void EntitySO::init()
     {
         EntityData* orcMasked = new EntityData;
 
-        orcMasked->id = 8u;
+        orcMasked->id = entities.size();
         orcMasked->name = "Masked Orc";
         orcMasked->textureRef = Asset::Graphics::ORC_MASKED.data();
 
@@ -380,7 +384,7 @@ void EntitySO::init()
     {
         EntityData* orcShaman = new EntityData;
 
-        orcShaman->id = 9u;
+        orcShaman->id = entities.size();
         orcShaman->name = "Orc Shaman";
         orcShaman->textureRef = Asset::Graphics::ORC_SHAMAN.data();
 
@@ -399,7 +403,7 @@ void EntitySO::init()
     {
         EntityData* orcVeteran = new EntityData;
 
-        orcVeteran->id = 10u;
+        orcVeteran->id = entities.size();
         orcVeteran->name = "Orc Veteran";
         orcVeteran->textureRef = Asset::Graphics::ORC_VETERAN.data();
 
