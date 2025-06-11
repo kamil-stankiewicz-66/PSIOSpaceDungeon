@@ -61,6 +61,13 @@ public:
     ///
 
     void addListener(const std::function<void()>& newListener);
+
+
+    ///
+    /// \brief Reset.
+    ///
+
+    void dispose();
 };
 
 #endif // BUTTON_H

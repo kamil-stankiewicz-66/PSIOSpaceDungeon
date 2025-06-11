@@ -58,11 +58,15 @@ void StoreScene::loadObjects()
                 PlayerData::removeCoins(data->coins);
                 VDebuger::print("<STORE> Weapon purchased:", data->name);
 
-                //use weapon
-                PlayerData::setWeaponID(id);
+                //buy and use
+                if (id != PlayerData::getWeaponID())
+                {
+                    //use weapon
+                    PlayerData::setWeaponID(id);
 
-                //refresh
-                this->refresh();
+                    //refresh
+                    this->refresh();
+                }
             }
             else
             {

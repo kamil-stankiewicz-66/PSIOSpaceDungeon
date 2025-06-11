@@ -105,3 +105,7 @@ void Button::onClick(float) {
 void Button::addListener(const std::function<void()>& newListener) {
     VEvent::addListener(newListener);
 }
+
+void Button::dispose() {
+    VEvent::dispose();
+}

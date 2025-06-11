@@ -6,6 +6,22 @@
 #include "game/core/Game.h"
 #include "game/ui/Slider.h"
 
+void MainSceneManager::onAwake()
+{
+    if (getGame())
+    {
+        scene = dynamic_cast<MainScene*>(getGame()->get_currentScene());
+    }
+}
+
+void MainSceneManager::onUpdate(float)
+{
+    if (scene)
+    {
+        scene->refresh();
+    }
+}
+
 void MainScene::loadObjects()
 {
     if (!getGame() || !getGame()->get_window())
@@ -107,12 +123,15 @@ void MainScene::loadObjects()
 
             texts[1]->setText("Health: " + std::to_string(static_cast<int>(PlayerData::getMaxHealth())));
             texts[1]->setFillColor(sf::Color::White);
+            texts[1]->getObject()->addTag(TAG_HEALTH.data());
 
             texts[2]->setText("Damage: x" + std::to_string(PlayerData::getDamage()));
             texts[2]->setFillColor(sf::Color::White);
+            texts[2]->getObject()->addTag(TAG_DAMAGE.data());
 
             texts[3]->setText("Coins: " + std::to_string(PlayerData::getCoins()));
             texts[3]->setFillColor(sf::Color::Yellow);
+            texts[3]->getObject()->addTag(TAG_COINS.data());
 
 
 
@@ -145,6 +164,7 @@ void MainScene::loadObjects()
 
         //text with level info
         auto textLevel = createObject<TextObject>(11u, panelLevel);
+        textLevel->addTag(TAG_LEVEL.data());
 
         if (auto text = textLevel->getTextPtr())
         {
@@ -162,6 +182,7 @@ void MainScene::loadObjects()
 
         //slider
         auto slider = createObject<Slider>(11u, panelLevel);
+        slider->addTag(TAG_SLIDER.data());
         slider->init(true);
         slider->setValueMax(static_cast<float>(Parameters::get_player_progressExp()));
         slider->setValue(static_cast<float>(PlayerData::getExpPoints() - ((PlayerData::getExpLevel() -1u) * Parameters::get_player_progressExp())));
@@ -178,6 +199,8 @@ void MainScene::loadObjects()
 
         //exp text
         auto textExp = createObject<TextObject>(20u, panelLevel);
+        textExp->addTag(TAG_EXP.data());
+
 
         if (auto text = textExp->getTextPtr())
         {
@@ -201,7 +224,7 @@ void MainScene::loadObjects()
         play_button->setText("Play");
 
         play_button->addListener([this](){
-            this->getGame()->changeScene(GAME_SCENE);
+            this->getGame()->changeScene(GAME_SCENE, true);
         });
 
 
@@ -209,7 +232,7 @@ void MainScene::loadObjects()
         store_button->setText("Store");
 
         store_button->addListener([this](){
-            this->getGame()->changeScene(STORE_SCENE);
+            this->getGame()->changeScene(STORE_SCENE, true);
         });
 
 
@@ -225,5 +248,95 @@ void MainScene::loadObjects()
 
             buttons[i]->getTransformPtr()->set_position(panelMain_leftDown + Vector2(space*(i+1)));
         }
+    }
+
+
+
+    //manager
+    createObject<MainSceneManager>();
+}
+
+void MainScene::refresh()
+{
+    //max health
+
+    VText* text_health = nullptr;
+
+    if (auto obj = getGame()->get_currentScene()->findObject<TextObject>(TAG_HEALTH.data())) {
+        text_health = obj->getTextPtr();
+    }
+
+    if (text_health)
+    {
+        text_health->setText("Health: " + std::to_string(static_cast<int>(PlayerData::getMaxHealth())));
+    }
+
+
+
+    //damage
+
+    VText* text_damage = nullptr;
+
+    if (auto obj = getGame()->get_currentScene()->findObject<TextObject>(TAG_DAMAGE.data())) {
+        text_damage = obj->getTextPtr();
+    }
+
+    if (text_damage)
+    {
+        text_damage->setText("Damage: x" + std::to_string(PlayerData::getDamage()));
+    }
+
+
+
+    //coins
+
+    VText* text_coins = nullptr;
+
+    if (auto obj = getGame()->get_currentScene()->findObject<TextObject>(TAG_COINS.data())) {
+        text_coins = obj->getTextPtr();
+    }
+
+    if (text_coins)
+    {
+        text_coins->setText("Coins: " + std::to_string(PlayerData::getCoins()));
+    }
+
+
+
+    //level
+
+    VText* text_level = nullptr;
+
+    if (auto obj = getGame()->get_currentScene()->findObject<TextObject>(TAG_LEVEL.data())) {
+        text_level = obj->getTextPtr();
+    }
+
+    if (text_level)
+    {
+        text_level->setText("PLAYER LEVEL: " + std::to_string(PlayerData::getExpLevel()));
+    }
+
+
+
+    //slider
+
+    if (auto obj = getGame()->get_currentScene()->findObject<Slider>(TAG_SLIDER.data()))
+    {
+        obj->setValue(static_cast<float>(PlayerData::getExpPoints() - ((PlayerData::getExpLevel() -1u) * Parameters::get_player_progressExp())));
+    }
+
+
+
+    //exp
+
+    VText* text_exp = nullptr;
+
+    if (auto obj = getGame()->get_currentScene()->findObject<TextObject>(TAG_EXP.data())) {
+        text_exp = obj->getTextPtr();
+    }
+
+    if (text_exp)
+    {
+        text_exp->setText("exp: " + std::to_string(PlayerData::getExpPoints()));
     }
 }

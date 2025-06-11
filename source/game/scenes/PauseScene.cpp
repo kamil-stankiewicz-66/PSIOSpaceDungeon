@@ -14,6 +14,23 @@ int PauseSceneDataPack::allEnemies;
 bool PauseSceneDataPack::isCompleted;
 
 
+void PauseSceneManager::onAwake()
+{
+    if (getGame())
+    {
+        scene = dynamic_cast<PauseScene*>(getGame()->get_currentScene());
+    }
+}
+
+void PauseSceneManager::onUpdate(float)
+{
+    if (scene)
+    {
+        scene->refresh();
+    }
+}
+
+
 //load scene
 void PauseScene::loadObjects()
 {
@@ -60,10 +77,11 @@ void PauseScene::loadObjects()
     Vector2 panelMain_rightTop(panelMain_size * 0.5f);
 
 
-    //text with level info
-    auto textLevel = createObject<TextObject>(10u, panelMain);
+    //title
+    auto textTitle = createObject<TextObject>(10u, panelMain);
+    textTitle->addTag(TAG_TITLE.data());
 
-    if (auto text = textLevel->getTextPtr())
+    if (auto text = textTitle->getTextPtr())
     {
         text->setFont(Asset::Fonts::BANGERS.data());
         text->setCharacterSize(100);
@@ -76,7 +94,7 @@ void PauseScene::loadObjects()
         }
     }
 
-    if (auto t = textLevel->getTransformPtr())
+    if (auto t = textTitle->getTransformPtr())
     {
         t->set_position(Vector2(0.f, panelMain_rightTop.y - (panelMain_size.y * 0.1f)));
     }
@@ -108,6 +126,10 @@ void PauseScene::loadObjects()
 
         texts.emplace_back(textObj);
     }
+
+
+    texts[1]->addTag(TAG_ENEMIES.data());
+    texts[3]->addTag(TAG_COMPLETE.data());
 
 
     std::string killedEnemiesStr = std::to_string(PauseSceneDataPack::killedEnemies) + "/" +
@@ -151,6 +173,7 @@ void PauseScene::loadObjects()
     //exp info
     {
         auto textObj = createObject<TextObject>(20u, progressPanel);
+        textObj->addTag(TAG_EXP.data());
         auto vText = textObj->getTextPtr();
 
         if (!vText)
@@ -177,44 +200,125 @@ void PauseScene::loadObjects()
 
 
 
+    //button
 
-    //buttons
-
-    vector<MenuButton*> buttons;
-
-    for (int i = 0; i < 2; ++i)
+    auto button = createObject<MenuButton>(200u);
+    if (auto t = button->getTransformPtr())
     {
-        auto button = createObject<MenuButton>(200u);
-        if (auto t = button->getTransformPtr())
-        {
-            t->set_position(panelMain_rightTop.x, panelMain_leftDown.y);
-            t->add_position((-0.1f * panelMain_size.x), (0.1f * panelMain_size.y));
-            t->add_position(-0.15f * i * panelMain_size.x);
-            t->set_scale(Vector2(0.5f, 0.6f));
-            int w = button->getSpritePtr()->getTextureRect().width;
-            int h = button->getSpritePtr()->getTextureRect().height;
-            button->set_reactionAreaSize(w * t->get_scale().x, h * t->get_scale().y);
-        }
-
-        button->getTextObj()->getTextPtr()->setCharacterSize(30.f);
-        buttons.emplace_back(button);
+        t->set_position(panelMain_rightTop.x, panelMain_leftDown.y);
+        t->add_position((-0.1f * panelMain_size.x), (0.1f * panelMain_size.y));
+        t->set_scale(Vector2(0.5f, 0.6f));
+        int w = button->getSpritePtr()->getTextureRect().width;
+        int h = button->getSpritePtr()->getTextureRect().height;
+        button->set_reactionAreaSize(w * t->get_scale().x, h * t->get_scale().y);
     }
 
-    buttons[0]->setText("Exit");
-    buttons[0]->addListener([this](){
-        this->exit();
-    });
-
-    buttons[1]->setText("Resume");
-    buttons[1]->addListener([this](){
-        this->getGame()->changeScene(GAME_SCENE);
-    });
+    button->getTextObj()->getTextPtr()->setCharacterSize(30.f);
+    button->addTag(TAG_BUTTON.data());
 
 
-    //if not pause, destroy button
-    if (PauseSceneDataPack::type != PauseSceneDataPack::Type::Pause)
+
+
+    //scene manager
+    createObject<PauseSceneManager>();
+}
+
+void PauseScene::refresh()
+{
+    //title
+
+    VText* text_title = nullptr;
+
+    if (auto obj = getGame()->get_currentScene()->findObject<TextObject>(TAG_TITLE.data())) {
+        text_title = obj->getTextPtr();
+    }
+
+    if (text_title)
     {
-        buttons[1]->destroy(true);
+        switch (PauseSceneDataPack::type) {
+        case PauseSceneDataPack::Type::Completed: text_title->setText("COMPLETED!"); text_title->setFillColor(sf::Color::Yellow); break;
+        case PauseSceneDataPack::Type::Pause: text_title->setText("PAUSE"); text_title->setFillColor(sf::Color::White); break;
+        case PauseSceneDataPack::Type::Dead: text_title->setText("DEAD"); text_title->setFillColor(sf::Color::Red); break;
+        default: text_title->setText("ERROR"); break;
+        }
+    }
+
+
+
+    //enemies
+
+    VText* text_enemies = nullptr;
+
+    if (auto obj = getGame()->get_currentScene()->findObject<TextObject>(TAG_ENEMIES.data())) {
+        text_enemies = obj->getTextPtr();
+    }
+
+    if (text_enemies)
+    {
+        std::string killedEnemiesStr = std::to_string(PauseSceneDataPack::killedEnemies) + "/" +
+                                       std::to_string(PauseSceneDataPack::allEnemies);
+
+        text_enemies->setText(killedEnemiesStr);
+    }
+
+
+
+    //enemies
+
+    VText* text_complete = nullptr;
+
+    if (auto obj = getGame()->get_currentScene()->findObject<TextObject>(TAG_COMPLETE.data())) {
+        text_complete = obj->getTextPtr();
+    }
+
+    if (text_complete)
+    {
+        std::string isCompletedStr = std::to_string(PauseSceneDataPack::isCompleted) + "/1";
+
+        text_complete->setText(isCompletedStr);
+    }
+
+
+
+    //exp
+
+    VText* test_exp = nullptr;
+
+    if (auto obj = getGame()->get_currentScene()->findObject<TextObject>(TAG_EXP.data())) {
+        test_exp = obj->getTextPtr();
+    }
+
+    if (test_exp)
+    {
+        test_exp->setText("exp: +" + std::to_string(countExp()));
+    }
+
+
+
+    //buttons
+    MenuButton* button = nullptr;
+    button = getGame()->get_currentScene()->findObject<MenuButton>(TAG_BUTTON.data());
+
+    bool resume = PauseSceneDataPack::type == PauseSceneDataPack::Type::Pause;
+
+    if (button)
+    {
+        button->dispose();
+
+        if (resume)
+        {
+            button->setText("Resume");
+            button->addListener([this](){
+                this->getGame()->changeScene(GAME_SCENE, true);
+            });
+        }
+        else
+        {
+            button->setText("Exit");
+            button->addListener([this](){
+                this->exit();
+            });
+        }
     }
 }
 
@@ -231,7 +335,7 @@ void PauseScene::exit()
         VDebuger::print("<ERROR> PAUSE_SCENE :: scene is nullptr");
     }
 
-    getGame()->changeScene(MAIN_SCENE);
+    getGame()->changeScene(MAIN_SCENE, true);
 }
 
 uint PauseScene::countExp() const
