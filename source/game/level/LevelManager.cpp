@@ -2,6 +2,7 @@
 #include "engine/core/Engine.h"
 #include "engine/core/Input.h"
 #include "game/core/Game.h"
+#include "game/core/Parameter.h"
 #include "game/core/Tag.h"
 #include "game/level/LevelGenerator.h"
 #include "game/level/Tilemap.h"
@@ -75,6 +76,20 @@ void LevelManager::onStart()
 
     //find all enemies
     enemies = getGame()->get_currentScene()->findObjects<Entity>(Tag::ENEMY.data(), true);
+
+
+    //play soundtrack
+    if (sfmusic.openFromFile(Asset::Audio::FROM_THE_DARK_PAST.data()))
+    {
+        sfmusic.setVolume(Parameters::get_sound_volume_music());
+        sfmusic.setLoop(true);
+        sfmusic.play();
+    }
+    else
+    {
+        VDebuger::print("<ERROR> LEVEL_MANAGER :: soundtrack error");
+    }
+
 }
 
 void LevelManager::onUpdate(float dt)

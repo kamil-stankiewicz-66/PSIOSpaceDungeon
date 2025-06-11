@@ -45,6 +45,9 @@ struct Parameters
     static int exp_perEnemyKill;
     static float exp_bonusLevelCompleteMultiplier;
 
+    static float sound_volume_effects;
+    static float sound_volume_music;
+
 
 
 public:
@@ -93,6 +96,9 @@ public:
 
     static const int& get_exp_perEnemyKill();
     static const float& get_exp_bonusLevelCompleteMultiplier();
+
+    static const float& get_sound_volume_effects();
+    static const float& get_sound_volume_music();
 };
 
 #endif // PARAMETER_H

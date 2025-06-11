@@ -5,6 +5,7 @@
 #include "game/player/PlayerCore.h"
 #include "game/ui/Notification.h"
 #include "game/scenes/PauseScene.h"
+#include "SFML/Audio/Music.hpp"
 
 class LevelGenerator;
 class Tilemap;
@@ -36,6 +37,9 @@ public:
     //info
     int countKilldedEnemies() const;
     bool isCompleted() const;
+
+    //soundtrack
+    sf::Music sfmusic;
 
 private:
     LevelGenerator* levelGenerator = nullptr;

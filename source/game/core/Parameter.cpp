@@ -40,6 +40,9 @@ float Parameters::entity_lightAssasin_strength;
 int Parameters::exp_perEnemyKill;
 float Parameters::exp_bonusLevelCompleteMultiplier;
 
+float Parameters::sound_volume_effects;
+float Parameters::sound_volume_music;
+
 
 
 
@@ -75,18 +78,21 @@ void Parameters::init()
 
     Parameters::entity_rndMoveIntense = 4000.0f;
     Parameters::entity_heavyTank_health = 200.0f;
-    Parameters::entity_heavyTank_strength = 150.0f;
+    Parameters::entity_heavyTank_strength = 200.0f;
     Parameters::entity_tank_health = 120.0f;
-    Parameters::entity_tank_strength = 80.0f;
+    Parameters::entity_tank_strength = 120.0f;
     Parameters::entity_medium_health = 100.0f;
-    Parameters::entity_medium_strength = 40.0f;
+    Parameters::entity_medium_strength = 80.0f;
     Parameters::entity_assasin_health = 50.0f;
-    Parameters::entity_assasin_strength = 30.0f;
+    Parameters::entity_assasin_strength = 70.0f;
     Parameters::entity_lightAssasin_health = 15.0f;
-    Parameters::entity_lightAssasin_strength = 40.0f;
+    Parameters::entity_lightAssasin_strength = 60.0f;
 
     Parameters::exp_perEnemyKill = 5;
     Parameters::exp_bonusLevelCompleteMultiplier = 3;
+
+    Parameters::sound_volume_effects = 100.0f;
+    Parameters::sound_volume_music = 20.0f;
 }
 
 
@@ -111,6 +117,7 @@ const float& Parameters::get_player_regenerationRate() {
 const int& Parameters::get_player_progressExp() {
     return player_progressExp;
 }
+
 
 
 ///
@@ -251,4 +258,17 @@ const int& Parameters::get_exp_perEnemyKill() {
 
 const float& Parameters::get_exp_bonusLevelCompleteMultiplier() {
     return exp_bonusLevelCompleteMultiplier;
+}
+
+
+///
+/// sound
+///
+
+const float& Parameters::get_sound_volume_effects() {
+    return sound_volume_effects;
+}
+
+const float& Parameters::get_sound_volume_music() {
+    return sound_volume_music;
 }

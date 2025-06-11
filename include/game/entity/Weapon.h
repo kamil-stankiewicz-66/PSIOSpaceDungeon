@@ -1,6 +1,7 @@
 #ifndef WEAPON_H
 #define WEAPON_H
 
+#include "SFML/Audio/Sound.hpp"
 #include "engine/component/Collider.h"
 #include "engine/core/Scene.h"
 #include "engine/object/Object.h"

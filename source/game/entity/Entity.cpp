@@ -95,6 +95,27 @@ void Entity::onAwake()
 
     particleEfect->setLifeTime(5000.0f);
     particleEfect->setLifeTimeDiff(2500.0f);
+
+
+    //audio player
+
+    audioPlayer = getGame()->get_currentScene()->createObject<AudioPlayer>();
+
+    vector<string> deathSounds
+    {
+        Asset::Audio::HIT_FINISHER_73.data(),
+        Asset::Audio::HIT_FINISHER_61.data(),
+        Asset::Audio::HIT_FINISHER_52.data(),
+        Asset::Audio::HIT_FINISHER_40.data(),
+        Asset::Audio::HIT_FINISHER_23.data(),
+        Asset::Audio::HIT_FINISHER_19.data()
+    };
+
+    uniform_int_distribution<> dist(0, deathSounds.size()-1);
+
+    if (!deathSounds.empty()) {
+        audioPlayer->init(deathSounds[dist(rng)], Parameters::get_sound_volume_effects(), true);
+    }
 }
 
 void Entity::onUpdate(float dt)
@@ -169,6 +190,11 @@ void Entity::onDestroy()
     {
         particleEfect->getTransformPtr()->set_position(getTransformPtr()->get_position());
         particleEfect->invoke(Vector2(0.0f, -1.0f), false);
+    }
+
+    if (audioPlayer)
+    {
+        audioPlayer->play();
     }
 }
 

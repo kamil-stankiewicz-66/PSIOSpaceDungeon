@@ -25,6 +25,7 @@ Game::Game(string _title) : Engine(_title, false)
 
     //init
     TextureBase::preloadAll();
+    SoundBase::preloadAll();
     Parameters::init();
     WeaponSO::init();
     EntitySO::init();

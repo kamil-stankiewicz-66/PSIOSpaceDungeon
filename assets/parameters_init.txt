@@ -1,5 +1,8 @@
 # Player
 player_moveSpeed = 8.0f
+player_baseHealth = 500.0f
+player_regenerationRate = 0.005f
+player_progressExp = 1000
 
 # Camera
 camera_viewSize = 1.2f
@@ -9,17 +12,37 @@ camera_speed = 12.0f
 
 # Level generator
 levelGenerator_levelNumberMultiplier = 5
-levelGenerator_roomsNumber_min = 5
-levelGenerator_roomsNumber_max = 10
+levelGenerator_roomsNumber_min = 6
+levelGenerator_roomsNumber_max = 15
 levelGenerator_roomSize_min = 14
 levelGenerator_roomSize_max = 20
 levelGenerator_corridorLength_min = 3
 levelGenerator_corridorLength_max = 8
 levelGenerator_corridor_width = 5
-levelGenerator_enemiesFrequency = 3
+levelGenerator_enemiesFrequency = 0.05f
+levelGenerator_chestsFrequency = 0.05f
+levelGenerator_chestsCoinsMultiplier = 3
 
 # Bullet
 bullet_speed = 30.0f
 
 # Entity
 entity_rndMoveIntense = 4000.0f
+entity_heavyTank_health = 200.0f
+entity_heavyTank_strength = 200.0f
+entity_tank_health = 120.0f
+entity_tank_strength = 120.0f
+entity_medium_health = 100.0f
+entity_medium_strength = 80.0f
+entity_assasin_health = 50.0f
+entity_assasin_strength = 70.0f
+entity_lightAssasin_health = 15.0f
+entity_lightAssasin_strength = 60.0f
+
+# Exp
+exp_perEnemyKill = 5
+exp_bonusLevelCompleteMultiplier = 3
+
+# Sound
+sound_volume_effects = 100.0f
+sound_volume_music = 20.0f

@@ -3,6 +3,7 @@
 #include "game/core/Asset.h"
 #include "game/core/Parameter.h"
 #include "game/core/Tag.h"
+#include "game/effect/AudioPlayer.h"
 #include "game/effect/ParticleEffect.h"
 #include "game/entity/HealthSystem.h"
 #include <cmath>
@@ -22,9 +23,15 @@ void Weapon::onUpdate(float dt)
 
 void Weapon::attack()
 {
-    if (data.attackTimeOut <= timeAcc) {
+    if (data.attackTimeOut <= timeAcc)
+    {
         this->attackCore();
         timeAcc = 0.0f;
+
+        //sound
+        auto audioPlayer = getGame()->get_currentScene()->createObject<AudioPlayer>();
+        audioPlayer->init(data.attackSoundRef, Parameters::get_sound_volume_effects(), true);
+        audioPlayer->play();
     }
 }
 

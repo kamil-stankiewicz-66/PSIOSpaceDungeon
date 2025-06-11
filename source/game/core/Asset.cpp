@@ -38,7 +38,7 @@ sf::Texture* TextureBase::get(const std::string& assetPath)
 
 void TextureBase::preloadAll()
 {
-    // chest
+    //chest
     get(Asset::Graphics::CHEST_CLOSED.data());
     get(Asset::Graphics::CHEST_GOLDEN_CLOSED.data());
     get(Asset::Graphics::CHEST_GOLDEN_OPEN_EMPTY.data());
@@ -46,17 +46,17 @@ void TextureBase::preloadAll()
     get(Asset::Graphics::CHEST_OPEN_EMPTY.data());
     get(Asset::Graphics::CHEST_OPEN_FULL.data());
 
-    // entities
+    //entities
     get(Asset::Graphics::HEALTHBAR.data());
 
-    // orcs
+    //orcs
     get(Asset::Graphics::ORC_ARMORED.data());
     get(Asset::Graphics::ORC_BASIC.data());
     get(Asset::Graphics::ORC_MASKED.data());
     get(Asset::Graphics::ORC_SHAMAN.data());
     get(Asset::Graphics::ORC_VETERAN.data());
 
-    // zombies
+    //zombies
     get(Asset::Graphics::ZOMBIE_SKELETON.data());
     get(Asset::Graphics::ZOMBIE_BASIC.data());
     get(Asset::Graphics::ZOMBIE_GREEN.data());
@@ -64,20 +64,20 @@ void TextureBase::preloadAll()
     get(Asset::Graphics::ZOMBIE_SMALL.data());
     get(Asset::Graphics::ZOMBIE_TALL.data());
 
-    // GUI
+    //GUI
     get(Asset::Graphics::LEFTRIGHT_ARROWS.data());
     get(Asset::Graphics::BUTTON.data());
     get(Asset::Graphics::PANEL.data());
 
-    // particle
+    //particle
     get(Asset::Graphics::PARTICLE.data());
 
-    // player
+    //player
     get(Asset::Graphics::CAPE_BASE.data());
     get(Asset::Graphics::PLAYER_SKIN_01.data());
     get(Asset::Graphics::PLAYER_SKIN_02.data());
 
-    // tilesets
+    //tilesets
     get(Asset::Graphics::BOXES.data());
     get(Asset::Graphics::COLUMNS.data());
     get(Asset::Graphics::DOOR.data());
@@ -98,7 +98,7 @@ void TextureBase::preloadAll()
     get(Asset::Graphics::WALL_PIPES.data());
     get(Asset::Graphics::WALL_SLIME.data());
 
-    // weapons
+    //weapons
     get(Asset::Graphics::LASER_BULLET.data());
     get(Asset::Graphics::MASHINE_PISTOL_01.data());
     get(Asset::Graphics::ASSAULT_RIFLE_01.data());
@@ -129,12 +129,12 @@ sf::SoundBuffer* SoundBase::get(const std::string& assetPath)
         sf::SoundBuffer* bufPtr = buffer.get();
         soundBuffers[assetPath] = std::move(buffer);
 
-        // log
+        //log
         VDebuger::print("AUDIO_BASE :: audio loading successful:", assetPath.c_str());
         return bufPtr;
     }
 
-    // log
+    //log
     VDebuger::print("<ERROR> AUDIO_BASE :: audio loading error:", assetPath.c_str());
 
     return nullptr;
@@ -145,8 +145,13 @@ void SoundBase::preloadAll()
     get(Asset::Audio::END_LEVEL.data());
     get(Asset::Audio::BITE.data());
     get(Asset::Audio::GUN.data());
-    get(Asset::Audio::SCREAM.data());
-    get(Asset::Audio::GOBLINS_DANCE_BATTLE.data());
+    get(Asset::Audio::GUN_MACHINE.data());
+    get(Asset::Audio::HIT_FINISHER_19.data());
+    get(Asset::Audio::HIT_FINISHER_23.data());
+    get(Asset::Audio::HIT_FINISHER_40.data());
+    get(Asset::Audio::HIT_FINISHER_52.data());
+    get(Asset::Audio::HIT_FINISHER_61.data());
+    get(Asset::Audio::HIT_FINISHER_73.data());
     get(Asset::Audio::PLAYER_DAMAGE_GRUNT_01.data());
     get(Asset::Audio::PLAYER_DAMAGE_GRUNT_02.data());
     get(Asset::Audio::PLAYER_DAMAGE_GRUNT_03.data());

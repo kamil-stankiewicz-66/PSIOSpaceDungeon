@@ -93,22 +93,30 @@ struct Asset
     struct Audio
     {
         //effect
-        static constexpr std::string_view END_LEVEL = "assets/Audio/Effect/end-level.wav";
+        static constexpr std::string_view END_LEVEL = "assets/Audio/Effect/end-level.ogg";
 
         //entity
-        static constexpr std::string_view BITE = "assets/Audio/Entity/bite.mp3";
-        static constexpr std::string_view GUN = "assets/Audio/Entity/gun.mp3";
-        static constexpr std::string_view SCREAM = "assets/Audio/Entity/scream.wav";
+        static constexpr std::string_view BITE = "assets/Audio/Entity/bite.ogg";
+        static constexpr std::string_view GUN = "assets/Audio/Entity/gun.ogg";
+        static constexpr std::string_view GUN_MACHINE = "assets/Audio/Entity/gun_machine.ogg";
+        static constexpr std::string_view GUN_SHOTGUN = "assets/Audio/Entity/gun_shotgun.ogg";
+        static constexpr std::string_view HIT_FINISHER_73 = "assets/Audio/Entity/hit_finisher_73.wav";
+        static constexpr std::string_view HIT_FINISHER_61 = "assets/Audio/Entity/hit_finisher_61.wav";
+        static constexpr std::string_view HIT_FINISHER_52 = "assets/Audio/Entity/hit_finisher_52.wav";
+        static constexpr std::string_view HIT_FINISHER_40 = "assets/Audio/Entity/hit_finisher_40.wav";
+        static constexpr std::string_view HIT_FINISHER_23 = "assets/Audio/Entity/hit_finisher_23.wav";
+        static constexpr std::string_view HIT_FINISHER_19 = "assets/Audio/Entity/hit_finisher_19.wav";
 
         //music
         static constexpr std::string_view GOBLINS_DANCE_BATTLE = "assets/Audio/Music/Goblins_Dance_(Battle).wav";
+        static constexpr std::string_view FROM_THE_DARK_PAST = "assets/Audio/Music/From_the_Dark_Past.ogg";
 
         //player
         static constexpr std::string_view PLAYER_DAMAGE_GRUNT_01 = "assets/Audio/Player/01_Damage_Grunt.wav";
         static constexpr std::string_view PLAYER_DAMAGE_GRUNT_02 = "assets/Audio/Player/02_Damage_Grunt.wav";
         static constexpr std::string_view PLAYER_DAMAGE_GRUNT_03 = "assets/Audio/Player/03_Damage_Grunt.wav";
-        static constexpr std::string_view PLAYER_DAMAGE_GRUNT_05 = "assets/Audio/Player/05_Damage_Grunt.wav";
-        static constexpr std::string_view PLAYER_DAMAGE_GRUNT_06 = "assets/Audio/Player/06_Damage_Grunt.wav";
+        static constexpr std::string_view PLAYER_DAMAGE_GRUNT_05 = "assets/Audio/Player/05_Damage_Grunt.ogg";
+        static constexpr std::string_view PLAYER_DAMAGE_GRUNT_06 = "assets/Audio/Player/06_Damage_Grunt.ogg";
     };
 };
 
@@ -117,16 +125,20 @@ struct Asset
 /// \brief Preloaded textures base.
 ///
 
-struct TextureBase
+class TextureBase
 {
-    // static texture base [path, texture]
+    friend class Game;
+
+    //static texture base [path, texture]
     static std::map<std::string, std::unique_ptr<sf::Texture>> textures;
 
-    // get texture
-    static sf::Texture* get(const std::string& assetPath);
-
-    // preload all textures
+    //preload all textures
     static void preloadAll();
+
+public:
+
+    //get texture
+    static sf::Texture* get(const std::string& assetPath);
 };
 
 
@@ -134,16 +146,20 @@ struct TextureBase
 /// \brief Preloaded sound buffers base.
 ///
 
-struct SoundBase
+class SoundBase
 {
-    // static sound buffer base [path, sound buffer]
+    friend class Game;
+
+    //static sound buffer base [path, sound buffer]
     static std::map<std::string, std::unique_ptr<sf::SoundBuffer>> soundBuffers;
 
-    // get sound buffer
-    static sf::SoundBuffer* get(const std::string& assetPath);
-
-    // preload all known sounds
+    //preload all known sounds
     static void preloadAll();
+
+public:
+
+    //get sound buffer
+    static sf::SoundBuffer* get(const std::string& assetPath);
 };
 
 #endif // ASSET_H

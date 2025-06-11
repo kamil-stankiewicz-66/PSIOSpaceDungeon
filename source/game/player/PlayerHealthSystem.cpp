@@ -35,7 +35,7 @@ void PlayerHealthSystem::onUpdate(float dt)
     {
         m_isHealing = true;
 
-        float value = dt * 10.0f * Parameters::get_player_regenerationRate();
+        float value = dt * 10.0f * Parameters::get_player_regenerationRate() * getHealthMax() * 0.001f;
         subHealPoints(value);
         addHealth(value);
     }
@@ -45,7 +45,7 @@ void PlayerHealthSystem::onUpdate(float dt)
     }
 
     //auto regeneration
-    addHealth(dt * Parameters::get_player_regenerationRate());
+    addHealth(dt * Parameters::get_player_regenerationRate() * getHealthMax() * 0.001f);
 }
 
 

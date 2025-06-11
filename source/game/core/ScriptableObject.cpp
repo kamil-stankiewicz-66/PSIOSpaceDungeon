@@ -65,6 +65,7 @@ void WeaponSO::init()
         fists->attackTimeOut = 1500.0f;
         fists->damage = 50.0f;
         fists->range = 80.0f;
+        fists->attackSoundRef = Asset::Audio::BITE.data();
 
         WeaponSO::add(fists);
     }
@@ -81,7 +82,8 @@ void WeaponSO::init()
         rifle->coins = 10u;
         rifle->attackTimeOut = 500.0f;
         rifle->damage = 10.0f;
-        rifle->range = 400.0f;
+        rifle->range = 800.0f;
+        rifle->attackSoundRef = Asset::Audio::GUN.data();
 
         WeaponSO::add(rifle);
     }
@@ -96,8 +98,9 @@ void WeaponSO::init()
         shotgun->type = WeaponData::Type::Gun;
         shotgun->coins = 25u;
         shotgun->attackTimeOut = 800.0f;
-        shotgun->damage = 20.0f;
+        shotgun->damage = 60.0f;
         shotgun->range = 200.0f;
+        shotgun->attackSoundRef = Asset::Audio::GUN_SHOTGUN.data();
 
         WeaponSO::add(shotgun);
     }
@@ -114,7 +117,8 @@ void WeaponSO::init()
         machine->coins = 20u;
         machine->attackTimeOut = 150.0f;
         machine->damage = 5.0f;
-        machine->range = 200.0f;
+        machine->range = 400.0f;
+        machine->attackSoundRef = Asset::Audio::GUN_MACHINE.data();
 
         WeaponSO::add(machine);
     }

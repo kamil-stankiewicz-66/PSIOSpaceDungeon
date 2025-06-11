@@ -21,7 +21,7 @@ void PlayerSpecialEffects::onAwake()
     parEff->setTexture(Asset::Graphics::PARTICLE);
 
     parEff->setColor(sf::Color::Yellow);
-    parEff->setScale(Vector2(0.08f, 0.02f));
+    parEff->setScale(Vector2(0.07f, 0.07f));
 
     parEff->setSpread(180.0f);
 
