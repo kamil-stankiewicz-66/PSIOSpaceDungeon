@@ -103,6 +103,7 @@ void Parameters::init()
 void Parameters::initFromTxt(const std::string& filename)
 {
     init();
+
     std::ifstream file(filename);
     if (!file.is_open())
     {

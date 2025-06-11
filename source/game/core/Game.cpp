@@ -1,5 +1,6 @@
 #include "game/core/Game.h"
 #include "engine/core/Input.h"
+#include "game/core/Asset.h"
 #include "game/core/DataBlock.h"
 #include "game/core/Parameter.h"
 #include "game/core/ScriptableObject.h"
@@ -23,7 +24,7 @@ Game::Game(string _title) : Engine(_title, false)
     PlayerData::setCoins(data.coins);
 
     //init
-    Parameters::init();
+    Parameters::initFromTxt(Asset::INIT_FILE.data());
     WeaponSO::init();
     EntitySO::init();
 

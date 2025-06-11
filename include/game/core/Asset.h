@@ -17,6 +17,8 @@ using namespace std;
 
 struct Asset
 {
+    static constexpr string_view INIT_FILE = "assets/parameters_init.txt";
+
     struct Graphics
     {
         //chest
