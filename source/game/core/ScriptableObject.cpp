@@ -31,6 +31,10 @@ const WeaponData* WeaponSO::get(const uint& id)
     }
 }
 
+const map<uint, unique_ptr<WeaponData>>& WeaponSO::getAll() {
+    return WeaponSO::weapons;
+}
+
 
 //add
 
@@ -59,8 +63,8 @@ void WeaponSO::init()
         fists->type = WeaponData::Type::Melee;
         fists->coins = 0u;
         fists->attackTimeOut = 1500.0f;
-        fists->damage = 1.0f;
-        fists->range = 20.0f;
+        fists->damage = 50.0f;
+        fists->range = 50.0f;
 
         WeaponSO::add(fists);
     }
@@ -82,15 +86,13 @@ void WeaponSO::init()
         WeaponSO::add(rifle);
     }
 
-    // Nowe bron do systemu bronii
-
     //shotgun
     {
         WeaponData* shotgun = new WeaponData;
 
         shotgun->id = 2u;
         shotgun->name = "Shotgun";
-        shotgun->textureRef = Asset::Graphics::ASSAULT_RIFLE_01.data();
+        shotgun->textureRef = Asset::Graphics::SHOTGUN_01.data();
         shotgun->type = WeaponData::Type::Gun;
         shotgun->coins = 25u;
         shotgun->attackTimeOut = 800.0f;
@@ -101,7 +103,21 @@ void WeaponSO::init()
     }
 
 
+    //machine pistol
+    {
+        WeaponData* machine = new WeaponData;
 
+        machine->id = 3u;
+        machine->name = "Machine Pistol";
+        machine->textureRef = Asset::Graphics::MASHINE_PISTOL_01.data();
+        machine->type = WeaponData::Type::Gun;
+        machine->coins = 20u;
+        machine->attackTimeOut = 150.0f;
+        machine->damage = 5.0f;
+        machine->range = 200.0f;
+
+        WeaponSO::add(machine);
+    }
 }
 
 
@@ -333,7 +349,7 @@ void EntitySO::init()
         orcArmored->type = EntityData::Type::Basic;        
         orcArmored->attribute = EntityData::Attribute::Tank;
         orcArmored->level = 3u;
-        orcArmored->weaponID = 1u;
+        orcArmored->weaponID = 2u;
         orcArmored->walkSpeed = 2.0f;
         orcArmored->runSpeed = 4.0f;
         orcArmored->scale = 2.4f;
@@ -371,7 +387,7 @@ void EntitySO::init()
         orcShaman->type = EntityData::Type::Basic;
         orcShaman->attribute = EntityData::Attribute::Medium;
         orcShaman->level = 1u;
-        orcShaman->weaponID = 1u;
+        orcShaman->weaponID = 2u;
         orcShaman->walkSpeed = 2.0f;
         orcShaman->runSpeed = 4.5f;
         orcShaman->scale = 2.0f;
@@ -390,7 +406,7 @@ void EntitySO::init()
         orcVeteran->type = EntityData::Type::Basic;
         orcVeteran->attribute = EntityData::Attribute::Assasin;
         orcVeteran->level = 3u;
-        orcVeteran->weaponID = 1u;
+        orcVeteran->weaponID = 3u;
         orcVeteran->walkSpeed = 2.8f;
         orcVeteran->runSpeed = 5.5f;
         orcVeteran->scale = 2.3f;

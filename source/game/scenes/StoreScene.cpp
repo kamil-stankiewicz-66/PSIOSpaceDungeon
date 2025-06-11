@@ -11,7 +11,7 @@
 void StoreScene::loadObjects()
 {
 
-    vector<uint> weaponIDs = {0, 1, 2};
+    //vector<uint> weaponIDs = {0, 1, 2};
 
     float x = 0.f;
     float y = 200.f;
@@ -20,6 +20,7 @@ void StoreScene::loadObjects()
     {
         auto coinsText = createObject<TextObject>(1u);
         auto textPtr = coinsText->getTextPtr();
+        coinsText->addTag("coinsTextObj");
 
         if (textPtr)
         {
@@ -27,9 +28,7 @@ void StoreScene::loadObjects()
             textPtr->setCharacterSize(50);
             textPtr->setFillColor(sf::Color::Yellow);
 
-            std::ostringstream os;
-            os << "Coins: " << PlayerData::getCoins();
-            textPtr->setText(os.str());
+            textPtr->setText("Coins: " + std::to_string(PlayerData::getCoins()));
 
             if (auto t = coinsText->getTransformPtr())
                 t->set_position(Vector2(-300.f, y + 80.f));
@@ -38,9 +37,11 @@ void StoreScene::loadObjects()
 
 
     //Przycisk kupowania
-    for (uint id : weaponIDs)
+    for (const auto& dataPtr : WeaponSO::getAll())
     {
-        const WeaponData* data = WeaponSO::get(id);
+        uint id = dataPtr.first;
+        const WeaponData* data = dataPtr.second.get();
+
         if (!data)
         {
             VDebuger::print("<STORE> No data for weapon ID", id);
@@ -51,11 +52,17 @@ void StoreScene::loadObjects()
         button->setText(data->name + " - " + std::to_string(data->coins) + "c");
         button->getTextObj()->getTextPtr()->setCharacterSize(30.f);
 
-        button->addListener([id, data]() {
+        button->addListener([id, data, this]() {
             if (PlayerData::getCoins() >= data->coins)
             {
                 PlayerData::removeCoins(data->coins);
                 VDebuger::print("<STORE> Weapon purchased:", data->name);
+
+                //use weapon
+                PlayerData::setWeaponID(id);
+
+                //refresh
+                this->refresh();
             }
             else
             {
@@ -83,5 +90,19 @@ void StoreScene::loadObjects()
     if (auto t = back->getTransformPtr())
     {
         t->set_position(Vector2(0.f, y - 100.f));
+    }
+}
+
+void StoreScene::refresh()
+{
+    VText* text = nullptr;
+
+    if (auto obj = getGame()->get_currentScene()->findObject<TextObject>("coinsTextObj")) {
+        text = obj->getTextPtr();
+    }
+
+    if (text)
+    {
+        text->setText("Coins: " + std::to_string(PlayerData::getCoins()));
     }
 }

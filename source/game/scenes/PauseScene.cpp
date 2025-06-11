@@ -30,9 +30,10 @@ void PauseScene::loadObjects()
 
 
 
+
     //main panel
 
-    auto panelMain = createObject<UIObject>(10u);
+    auto panelMain = createObject<UIObject>(0u);
     auto panelMainSprite = panelMain->getSpritePtr();
 
     if (!panelMainSprite)
@@ -42,7 +43,7 @@ void PauseScene::loadObjects()
     }
 
     panelMainSprite->setTexture(Asset::Graphics::PANEL.data());
-    panelMainSprite->setColor(sf::Color(7, 13, 22));
+    panelMainSprite->setColor(sf::Color(7, 13, 22, 255));
 
     float panelMain_scaleX = (0.6f * display.width) / panelMainSprite->getTextureRect().width;
     float panelMain_scaleY = (0.6f * display.height) / panelMainSprite->getTextureRect().height;
@@ -60,7 +61,7 @@ void PauseScene::loadObjects()
 
 
     //text with level info
-    auto textLevel = createObject<TextObject>(11u, panelMain);
+    auto textLevel = createObject<TextObject>(10u, panelMain);
 
     if (auto text = textLevel->getTextPtr())
     {
@@ -103,23 +104,23 @@ void PauseScene::loadObjects()
 
         vText->setFont(Asset::Fonts::LIBERATION_SANS.data());
         vText->setCharacterSize(40u);
-        vText->setFillColor(sf::Color(220, 220, 220));
+        vText->setFillColor(sf::Color(220, 220, 220, 255));
 
         texts.emplace_back(textObj);
     }
 
 
-    ostringstream os_ke;
-    os_ke << PauseSceneDataPack::killedEnemies << "/" << PauseSceneDataPack::allEnemies;
+    std::string killedEnemiesStr = std::to_string(PauseSceneDataPack::killedEnemies) + "/" +
+                                   std::to_string(PauseSceneDataPack::allEnemies);
 
-    ostringstream os_s;
-    os_s << PauseSceneDataPack::isCompleted << "/" << 1;
+    std::string isCompletedStr = std::to_string(PauseSceneDataPack::isCompleted) + "/1";
+
 
 
     texts[0]->getTextPtr()->setText("Killed Enemies");
-    texts[1]->getTextPtr()->setText(os_ke.str());
+    texts[1]->getTextPtr()->setText(killedEnemiesStr);
     texts[2]->getTextPtr()->setText("Story");
-    texts[3]->getTextPtr()->setText(os_s.str());
+    texts[3]->getTextPtr()->setText(isCompletedStr);
 
 
     texts[0]->getTransformPtr()->set_position(panelMain_leftDown.x);
@@ -160,14 +161,11 @@ void PauseScene::loadObjects()
 
         vText->setFont(Asset::Fonts::LIBERATION_SANS.data());
         vText->setCharacterSize(40u);
-        vText->setFillColor(sf::Color(220, 220, 220));
+        vText->setFillColor(sf::Color(220, 220, 220, 255));
 
         textObj->getTransformPtr()->set_position(panelMain_rightTop.x, -160.f);
 
-        ostringstream os_exp;
-        os_exp << "exp: +" << countExp();
-
-        vText->setText(os_exp.str());
+        vText->setText("exp: +" + std::to_string(countExp()));
 
 
         if (auto t = textObj->getTransformPtr())
@@ -183,11 +181,10 @@ void PauseScene::loadObjects()
     //buttons
 
     vector<MenuButton*> buttons;
-    texts.reserve(2);
 
     for (int i = 0; i < 2; ++i)
     {
-        auto button = createObject<MenuButton>();
+        auto button = createObject<MenuButton>(200u);
         if (auto t = button->getTransformPtr())
         {
             t->set_position(panelMain_rightTop.x, panelMain_leftDown.y);

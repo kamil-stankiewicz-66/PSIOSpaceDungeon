@@ -23,7 +23,7 @@ void MenuButton::onAwake()
 
 
     //text
-    textObj = this->getGame()->get_currentScene()->createObject<TextObject>();
+    textObj = this->getGame()->get_currentScene()->createObject<TextObject>(getRenderLayer()+1u);
     this->addChild(textObj);
 
     textObj->getTextPtr()->setFont(Asset::Fonts::BANGERS.data());

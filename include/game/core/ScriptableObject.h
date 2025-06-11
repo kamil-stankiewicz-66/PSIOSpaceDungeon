@@ -46,6 +46,7 @@ class WeaponSO
 
 public:
     static const WeaponData* get(const uint& id);
+    static const map<uint, unique_ptr<WeaponData>>& getAll();
 
 private:
     static void add(WeaponData*);

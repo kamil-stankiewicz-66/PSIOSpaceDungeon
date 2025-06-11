@@ -9,7 +9,7 @@
 
 class MenuButton : public Button
 {
-    TextObject* textObj;
+    TextObject* textObj = nullptr;
 
 protected:
     virtual void onAwake() override;

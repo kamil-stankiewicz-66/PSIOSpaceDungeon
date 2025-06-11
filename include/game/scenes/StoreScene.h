@@ -7,6 +7,7 @@ class StoreScene : public Scene
 {
 protected:
     virtual void loadObjects() override;
+    void refresh();
 };
 
 #endif // STORESCENE_H

@@ -105,23 +105,15 @@ void MainScene::loadObjects()
 
             texts[0]->setFillColor(sf::Color(144, 127, 127));
 
-            std::ostringstream os_health;
-            os_health << "Health: " << PlayerData::getMaxHealth();
-
-            texts[1]->setText(os_health.str());
+            texts[1]->setText("Health: " + std::to_string(static_cast<int>(PlayerData::getMaxHealth())));
             texts[1]->setFillColor(sf::Color::White);
 
-            std::ostringstream os_damage;
-            os_damage << "Damage: x" << PlayerData::getDamage();
-
-            texts[2]->setText(os_damage.str());
+            texts[2]->setText("Damage: x" + std::to_string(PlayerData::getDamage()));
             texts[2]->setFillColor(sf::Color::White);
 
-            std::ostringstream os_coins;
-            os_coins << "Coins: " << PlayerData::getCoins();
-
-            texts[3]->setText(os_coins.str());
+            texts[3]->setText("Coins: " + std::to_string(PlayerData::getCoins()));
             texts[3]->setFillColor(sf::Color::Yellow);
+
 
 
             for (int i = 1; i < 4; ++i)
@@ -159,9 +151,7 @@ void MainScene::loadObjects()
             text->setFont(Asset::Fonts::BANGERS.data());
             text->setCharacterSize(100);
 
-            std::ostringstream os_playerLevel;
-            os_playerLevel << "PLAYER LEVEL: " << PlayerData::getExpLevel();
-            text->setText(os_playerLevel.str());
+            text->setText("PLAYER LEVEL: " + std::to_string(PlayerData::getExpLevel()));
         }
 
         if (auto t = textLevel->getTransformPtr())
@@ -194,9 +184,7 @@ void MainScene::loadObjects()
             text->setFont(Asset::Fonts::LIBERATION_SANS.data());
             text->setFillColor(sf::Color(144, 127, 127));
 
-            std::ostringstream os_expPoints;
-            os_expPoints << "exp: " << PlayerData::getExpPoints();
-            text->setText(os_expPoints.str());
+            text->setText("exp: " + std::to_string(PlayerData::getExpPoints()));
 
             if (auto t = textExp->getTransformPtr())
             {

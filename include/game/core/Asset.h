@@ -69,7 +69,9 @@ struct Asset
 
         //weapons
         static constexpr std::string_view LASER_BULLET = "assets/Graphics/Weapons/laser_bullet.png";
+        static constexpr std::string_view MASHINE_PISTOL_01 = "assets/Graphics/Weapons/Guns/machine_pistol_01.png";
         static constexpr std::string_view ASSAULT_RIFLE_01 = "assets/Graphics/Weapons/Guns/assault_rifle_01.png";
+        static constexpr std::string_view SHOTGUN_01 = "assets/Graphics/Weapons/Guns/shotgun_01.png";
         static constexpr std::string_view ASSAULT_RIFLE_01_SHOP = "assets/Graphics/Weapons/Guns/assault_rifle_01_shop.png";
     };
 
