@@ -4,7 +4,6 @@
 #include "game/core/Tag.h"
 #include "game/physics/Rycast.h"
 #include "game/core/Asset.h"
-#include "game/player/PlayerCore.h"
 
 Entity::Entity() : rng(std::random_device{}())
 {}
@@ -69,6 +68,7 @@ void Entity::onAwake()
 
     if (!player || !tilemap) {
         VDebuger::print("<ERROR> :: ENTITY :: player or tilemap is nullptr");
+        return;
     }
 
 
@@ -83,16 +83,7 @@ void Entity::onAwake()
 
     particleEfect = getGame()->get_currentScene()->createObject<ParticleEffect>(25u);
 
-    if (!particleTexture)
-    {
-        particleTexture = make_shared<sf::Texture>();
-
-        if (!particleTexture->loadFromFile(Asset::Graphics::PARTICLE.data())) {
-            VDebuger::print("<ERROR> ENTITY :: INIT :: cant load particle texture");
-        }
-    }
-
-    particleEfect->setTexture(particleTexture);
+    particleEfect->setTexture(Asset::Graphics::PARTICLE.data());
 
     particleEfect->setColor(sf::Color::Red);
     particleEfect->setScale(Vector2(0.2f, 0.2f));
@@ -232,7 +223,7 @@ void Entity::set(const EntityData& data)
 
 
 
-    body->getSpritePtr()->setTexture(data.textureRef);
+    body->getSpritePtr()->setTexture(TextureBase::get(data.textureRef));
 
     weaponCore = Weapon::createWeapon(getGame()->get_currentScene(),
                                       *WeaponSO::get(data.weaponID),

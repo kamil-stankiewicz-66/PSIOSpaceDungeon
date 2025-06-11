@@ -35,7 +35,6 @@ private:
     Tilemap* tilemap = nullptr;
 
     //effect
-    shared_ptr<sf::Texture> particleTexture;
     ParticleEffect* particleEfect = nullptr;
 
     //anims

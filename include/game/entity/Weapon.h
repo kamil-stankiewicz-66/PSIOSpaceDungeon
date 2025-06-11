@@ -107,9 +107,6 @@ class Bullet : public GameObject
     //link
     Tilemap* tilemap = nullptr;
 
-    //cache
-    static shared_ptr<sf::Texture> particleTexture;
-
     float damage;
     Vector2 dir;
 

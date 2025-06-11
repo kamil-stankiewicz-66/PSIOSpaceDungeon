@@ -12,8 +12,6 @@
 /// Chest
 ///
 
-shared_ptr<sf::Texture> Chest::particleTexture = nullptr;
-
 void Chest::onAwake()
 {
     //tag
@@ -45,16 +43,7 @@ void Chest::onAwake()
     parEff->addTag("particle_effect_chest");
     this->addChild(parEff);
 
-    if (!particleTexture)
-    {
-        particleTexture = make_shared<sf::Texture>();
-
-        if (!particleTexture->loadFromFile(Asset::Graphics::PARTICLE.data())) {
-            VDebuger::print("<ERROR> CHEST :: ON_AWAKE :: cant load particle texture");
-        }
-    }
-
-    parEff->setTexture(particleTexture);
+    parEff->setTexture(Asset::Graphics::PARTICLE.data());
 
     parEff->setColor(sf::Color::Yellow);
     parEff->setScale(Vector2(0.15f, 0.15f));
@@ -162,17 +151,11 @@ void Chest::set(const string_view txt_close_ref,
 
 
     //main
-    body->getSpritePtr()->setTexture(txt_close_ref.data());
+    body->getSpritePtr()->setTexture(TextureBase::get(txt_close_ref.data()));
 
     //other
-    shared_ptr<sf::Texture> txt_open_full = make_shared<sf::Texture>();
-    shared_ptr<sf::Texture> txt_open_empty = make_shared<sf::Texture>();
-
-    if (!txt_open_full->loadFromFile(txt_open_full_ref.data()) ||
-        !txt_open_empty->loadFromFile(txt_open_empty_ref.data()))
-    {
-        VDebuger::print("<ERROR> CHEST :: load texture error");
-    }
+    shared_ptr<sf::Texture> txt_open_full = TextureBase::get(txt_open_full_ref.data());
+    shared_ptr<sf::Texture> txt_open_empty = TextureBase::get(txt_open_empty_ref.data());
 
 
     //animations
@@ -295,7 +278,7 @@ void FinishPoint::onAwake()
 
     //texture
 
-    getSpritePtr()->setTexture(Asset::Graphics::FLOOR_LADDER.data());
+    getSpritePtr()->setTexture(TextureBase::get(Asset::Graphics::FLOOR_LADDER.data()));
 
 
     //scale

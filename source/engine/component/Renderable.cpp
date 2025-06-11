@@ -156,25 +156,25 @@ void VSprite::dispose()
 }
 
 
-void VSprite::setTexture(const string& asset_ref)
-{
-    if (this->m_assetRef == asset_ref) {
-        return;
-    }
+// void VSprite::setTexture(const string& asset_ref)
+// {
+//     if (this->m_assetRef == asset_ref) {
+//         return;
+//     }
 
-    if (!m_texture) {
-        m_texture = make_shared<sf::Texture>();
-    }
+//     if (!m_texture) {
+//         m_texture = make_shared<sf::Texture>();
+//     }
 
-    if (!m_texture->loadFromFile(asset_ref)) {
-        VDebuger::print("SPRITE :: TEXTURE :: ERROR - loading sprite:", asset_ref);
-    }
+//     if (!m_texture->loadFromFile(asset_ref)) {
+//         VDebuger::print("SPRITE :: TEXTURE :: ERROR - loading sprite:", asset_ref);
+//     }
 
-    this->m_sprite.setTexture(*m_texture);
-    this->m_assetRef = asset_ref;
-}
+//     this->m_sprite.setTexture(*m_texture);
+//     this->m_assetRef = asset_ref;
+// }
 
-void VSprite::setTexture(shared_ptr<sf::Texture>& texture)
+void VSprite::setTexture(shared_ptr<sf::Texture> texture)
 {
     if (!texture) {
         return;

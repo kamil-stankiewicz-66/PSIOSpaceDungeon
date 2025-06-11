@@ -3,7 +3,6 @@
 
 #include "engine/component/AnimationController.h"
 #include "engine/object/Object.h"
-#include "game/player/PlayerCore.h"
 #include "game/ui/Notification.h"
 
 using uint = unsigned int;
@@ -31,9 +30,6 @@ class Chest : public GameObject
     //parts
     GameObject* body = nullptr;
     ParticleEffect* parEff = nullptr;
-
-    //textures
-    static shared_ptr<sf::Texture> particleTexture;
 
     //anims
     uint ANIM_OPEN;

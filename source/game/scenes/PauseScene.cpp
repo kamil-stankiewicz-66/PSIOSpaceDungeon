@@ -59,7 +59,7 @@ void PauseScene::loadObjects()
         return;
     }
 
-    panelMainSprite->setTexture(Asset::Graphics::PANEL.data());
+    panelMainSprite->setTexture(TextureBase::get(Asset::Graphics::PANEL.data()));
     panelMainSprite->setColor(sf::Color(7, 13, 22, 255));
 
     float panelMain_scaleX = (0.6f * display.width) / panelMainSprite->getTextureRect().width;

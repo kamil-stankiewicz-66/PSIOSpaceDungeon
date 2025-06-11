@@ -1,6 +1,9 @@
 #ifndef ASSET_H
 #define ASSET_H
 
+#include "SFML/Graphics/Texture.hpp"
+#include <map>
+#include <memory>
 #include <string_view>
 
 struct Asset
@@ -86,6 +89,27 @@ struct Asset
         static constexpr std::string_view ROBOTO_BOLD = "assets/Fonts/Roboto-Bold.ttf";
     };
 
+    struct Audio
+    {
+        static constexpr std::string_view GUN = "assets/Audio/gun.mp3";
+    };
+};
+
+
+///
+/// \brief Preloaded textures base.
+///
+
+struct TextureBase
+{
+    //static texture base [path, texture]
+    static std::map<std::string, std::shared_ptr<sf::Texture>> textures;
+
+    //get texture
+    static std::shared_ptr<sf::Texture> get(std::string assetPath);
+
+    //preload all textures
+    static void preloadAll();
 };
 
 #endif // ASSET_H

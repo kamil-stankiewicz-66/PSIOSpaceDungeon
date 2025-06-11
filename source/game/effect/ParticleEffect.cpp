@@ -1,5 +1,6 @@
 #include "game/effect/ParticleEffect.h"
 #include "engine/core/Engine.h"
+#include "game/core/Asset.h"
 
 
 
@@ -132,21 +133,24 @@ void ParticleEffect::invoke(const Vector2& dir, bool autoDestroy)
 ///
 
 
-void ParticleEffect::setTexture(const string_view tex) {
-    texture = make_shared<sf::Texture>();
-
-    if (!texture->loadFromFile(tex.data())) {
-        VDebuger::print("<ERROR> :: PARTICLE_EFFECT :: SET_TEXTURE:: cant load texture");
-        texture = nullptr;
-    }
-}
-
-void ParticleEffect::setTexture(shared_ptr<sf::Texture>& texture)
+void ParticleEffect::setTexture(const string_view tex)
 {
-    if (texture) {
-        this->texture = texture;
-    }
+    // texture = make_shared<sf::Texture>();
+
+    // if (!texture->loadFromFile(tex.data())) {
+    //     VDebuger::print("<ERROR> :: PARTICLE_EFFECT :: SET_TEXTURE:: cant load texture");
+    //     texture = nullptr;
+    // }
+
+    texture = TextureBase::get(tex.data());
 }
+
+// void ParticleEffect::setTexture(shared_ptr<sf::Texture>& texture)
+// {
+//     if (texture) {
+//         this->texture = texture;
+//     }
+// }
 
 void ParticleEffect::setColor(const sf::Color& color) {
     this->color = color;

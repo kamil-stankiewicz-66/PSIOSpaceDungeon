@@ -75,8 +75,8 @@ public:
     virtual void dispose() override;
 
     //sprite api
-    void setTexture(const string& asset_ref);
-    void setTexture(shared_ptr<sf::Texture>&);
+    //void setTexture(const string& asset_ref);
+    void setTexture(shared_ptr<sf::Texture>);
     void setColor(const sf::Color&);
     void setTextureRect(const sf::IntRect&);
     const sf::IntRect& getTextureRect() const;

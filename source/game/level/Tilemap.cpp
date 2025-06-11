@@ -30,7 +30,7 @@ vtptr2 make_pallet(string_view asset, const float& factor, const int& size_x, co
         for (int _y = 0; _y < size_y; ++_y)
         {
             auto tile = make_shared<Tile>(factor);
-            tile->setTexture(asset.data());
+            tile->setTexture(TextureBase::get(asset.data()));
             tile->setTextureRect(sf::IntRect(_x*16, _y*16, 16, 16));
 
             temp1.emplace_back(tile);
@@ -54,20 +54,20 @@ void TilePallet::init()
 
     //main floor
     floor_main = make_shared<Tile>(1.0f);
-    floor_main->setTexture(Asset::Graphics::FLOOR_MAIN.data());
+    floor_main->setTexture(TextureBase::get(Asset::Graphics::FLOOR_MAIN.data()));
 
     //wall
     wall = make_pallet(Asset::Graphics::WALL_MAIN, 0.0f, 3, 4);
 
     //light floor
     floor_light_main = make_shared<Tile>(0.25f);
-    floor_light_main->setTexture(Asset::Graphics::FLOOR_LIGHT.data());
+    floor_light_main->setTexture(TextureBase::get(Asset::Graphics::FLOOR_LIGHT.data()));
     floor_light_main->setTextureRect(sf::IntRect(4*16, 0, 16, 16));
     floor_light = make_pallet(Asset::Graphics::FLOOR_LIGHT, 0.25f, 4, 3);
 
     //empty
     empty = make_shared<Tile>(0.0f);
-    empty->setTexture(Asset::Graphics::EMPTY.data());
+    empty->setTexture(TextureBase::get(Asset::Graphics::EMPTY.data()));
 }
 
 

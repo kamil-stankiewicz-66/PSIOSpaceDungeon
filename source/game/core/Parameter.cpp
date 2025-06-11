@@ -60,8 +60,8 @@ void Parameters::init()
     Parameters::camera_speed = 12.0f;
 
     Parameters::levelGenerator_levelNumberMultiplier = 5;
-    Parameters::levelGenerator_roomsNumber_min = 5;
-    Parameters::levelGenerator_roomsNumber_max = 10;
+    Parameters::levelGenerator_roomsNumber_min = 6;
+    Parameters::levelGenerator_roomsNumber_max = 15;
     Parameters::levelGenerator_roomSize_min = 14;
     Parameters::levelGenerator_roomSize_max = 20;
     Parameters::levelGenerator_corridorLength_min = 3;

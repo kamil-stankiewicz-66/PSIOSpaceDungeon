@@ -64,7 +64,7 @@ public:
 
     //setters
     void setTexture(const string_view textureRef);
-    void setTexture(shared_ptr<sf::Texture>& texture);
+    //void setTexture(shared_ptr<sf::Texture>& texture);
     void setColor(const sf::Color& color);
     void setScale(const Vector2& scale);
     void setSpread(const float& spread);

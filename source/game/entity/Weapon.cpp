@@ -32,7 +32,11 @@ void Weapon::attack()
 void Weapon::set(const WeaponData& data, const string& targetTag)
 {
     this->data = data;
-    getSpritePtr()->setTexture(data.textureRef);
+
+    if (!data.textureRef.empty()) {
+        getSpritePtr()->setTexture(TextureBase::get(data.textureRef));
+    }
+
     this->targetTag = targetTag;
 }
 
@@ -102,7 +106,7 @@ void Melee::set(const WeaponData& data, const string& targetTag)
 {
     Weapon::set(data, targetTag);
     collider = createComponent<CircleCollider>();
-    collider->set(40.f);
+    collider->set(data.range);
 }
 
 void Melee::attackCore()
@@ -214,8 +218,6 @@ void Gun::resetAim() {
 
 //bullet
 
-shared_ptr<sf::Texture> Bullet::particleTexture = nullptr;
-
 void Bullet::init(const float& damage, const Vector2& dir, const string& targetTag, Tilemap* tilemap)
 {
     this->damage = damage;
@@ -228,16 +230,6 @@ void Bullet::init(const float& damage, const Vector2& dir, const string& targetT
 
     collider = createComponent<CircleCollider>();
     collider->set(10.0f);
-
-    //texture
-    if (!particleTexture)
-    {
-        particleTexture = make_shared<sf::Texture>();
-
-        if (!particleTexture->loadFromFile(Asset::Graphics::PARTICLE.data())) {
-            VDebuger::print("<ERROR> BULLET :: INIT :: cant load particle texture");
-        }
-    }
 }
 
 void Bullet::destroy(const sf::Color& color)
@@ -255,7 +247,7 @@ void Bullet::effect(const sf::Color& color)
     parEff->addTag("particle_effect");
     parEff->getTransformPtr()->set_position(getTransformPtr()->get_position());
 
-    parEff->setTexture(this->particleTexture);
+    parEff->setTexture(Asset::Graphics::PARTICLE.data());
 
     if (sf::Color::Red == color)
     {
