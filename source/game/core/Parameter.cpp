@@ -1,5 +1,9 @@
 #include "game/core/Parameter.h"
-
+#include <fstream>
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <unordered_map>
 
 float Parameters::player_moveSpeed;
 float Parameters::player_baseHealth;
@@ -50,6 +54,7 @@ float Parameters::sound_volume_music;
 /// init
 ///
 
+
 void Parameters::init()
 {
     Parameters::player_moveSpeed = 8.0f;
@@ -95,6 +100,107 @@ void Parameters::init()
     Parameters::sound_volume_music = 20.0f;
 }
 
+void Parameters::initFromTxt(const std::string& filename)
+{
+    init();
+    std::ifstream file(filename);
+    if (!file.is_open())
+    {
+        std::cerr << "[Parameters] Nie mozna otworzyc pliku: " << filename << '\n';
+        return;
+    }
+
+    std::unordered_map<std::string, std::string> raw;
+    std::string line;
+    while (std::getline(file, line))
+    {
+        if (line.empty() || line[0] == '#')
+            continue;
+
+        std::istringstream iss(line);
+        std::string key, eq, val;
+        if (iss >> key >> eq >> val && eq == "=")
+            raw[key] = val;
+    }
+
+    auto strip_f = [](std::string& v) {
+        if (!v.empty() && (v.back() == 'f' || v.back() == 'F'))
+            v.pop_back();
+    };
+
+
+    const std::unordered_map<std::string, float*> floatMap{
+        { "player_moveSpeed", &player_moveSpeed },
+        { "player_baseHealth", &player_baseHealth },
+        { "player_regenerationRate", &player_regenerationRate },
+
+        { "camera_viewSize", &camera_viewSize },
+        { "camera_trackingOn", &camera_trackingOn },
+        { "camera_trackingOff", &camera_trackingOff },
+        { "camera_speed", &camera_speed },
+
+        { "levelGenerator_enemiesFrequency", &levelGenerator_enemiesFrequency },
+        { "levelGenerator_chestsFrequency", &levelGenerator_chestsFrequency },
+
+        { "bullet_speed", &bullet_speed },
+
+        { "entity_rndMoveIntense", &entity_rndMoveIntense },
+        { "entity_heavyTank_health", &entity_heavyTank_health },
+        { "entity_heavyTank_strength", &entity_heavyTank_strength },
+        { "entity_tank_health", &entity_tank_health },
+        { "entity_tank_strength", &entity_tank_strength },
+        { "entity_medium_health", &entity_medium_health },
+        { "entity_medium_strength", &entity_medium_strength },
+        { "entity_assasin_health", &entity_assasin_health },
+        { "entity_assasin_strength", &entity_assasin_strength },
+        { "entity_lightAssasin_health", &entity_lightAssasin_health },
+        { "entity_lightAssasin_strength", &entity_lightAssasin_strength },
+
+        { "exp_bonusLevelCompleteMultiplier", &exp_bonusLevelCompleteMultiplier },
+
+        { "sound_volume_effects", &sound_volume_effects },
+        { "sound_volume_music", &sound_volume_music }
+    };
+
+    const std::unordered_map<std::string, int*> intMap{
+        { "player_progressExp", &player_progressExp },
+
+        { "levelGenerator_levelNumberMultiplier", &levelGenerator_levelNumberMultiplier },
+        { "levelGenerator_roomsNumber_min", &levelGenerator_roomsNumber_min },
+        { "levelGenerator_roomsNumber_max", &levelGenerator_roomsNumber_max },
+        { "levelGenerator_roomSize_min", &levelGenerator_roomSize_min },
+        { "levelGenerator_roomSize_max", &levelGenerator_roomSize_max },
+        { "levelGenerator_corridorLength_min", &levelGenerator_corridorLength_min },
+        { "levelGenerator_corridorLength_max", &levelGenerator_corridorLength_max },
+        { "levelGenerator_corridor_width", &levelGenerator_corridor_width },
+        { "levelGenerator_chestsCoinsMultiplier", &levelGenerator_chestsCoinsMultiplier },
+
+        { "exp_perEnemyKill", &exp_perEnemyKill }
+    };
+
+
+    for (const auto& [key, ptr] : floatMap)
+    {
+        if (auto it = raw.find(key); it != raw.end())
+        {
+            std::string val = it->second;
+            strip_f(val);
+            try { *ptr = std::stof(val); }
+            catch (...) { std::cerr << "[Parameters] Błąd konwersji float: " << key << '\n'; }
+        }
+    }
+
+    for (const auto& [key, ptr] : intMap)
+    {
+        if (auto it = raw.find(key); it != raw.end())
+        {
+            std::string val = it->second;
+            strip_f(val);
+            try { *ptr = std::stoi(val); }
+            catch (...) { std::cerr << "[Parameters] Błąd konwersji int: " << key << '\n'; }
+        }
+    }
+}
 
 
 

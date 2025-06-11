@@ -1,5 +1,6 @@
 #ifndef PARAMETER_H
 #define PARAMETER_H
+#include <string>
 
 struct Parameters
 {
@@ -54,6 +55,8 @@ public:
 
     //init method
     static void init();
+    static void initFromTxt(const std::string& filename);
+
 
 
     //getters
@@ -99,6 +102,7 @@ public:
 
     static const float& get_sound_volume_effects();
     static const float& get_sound_volume_music();
+
 };
 
 #endif // PARAMETER_H
