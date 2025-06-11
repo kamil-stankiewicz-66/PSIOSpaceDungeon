@@ -1,5 +1,6 @@
 #include "engine/object/Button.h"
 #include "engine/component/Collider.h"
+#include "engine/core/Engine.h"
 #include "engine/core/Input.h"
 #include "engine/component/Renderable.h"
 
@@ -41,6 +42,7 @@ void AbstractButton::onUpdate(float deltaTime)
         else if (m_isPressed)
         {
             this->onClick(deltaTime);
+            m_isPressed = false;
         }
     }
     else

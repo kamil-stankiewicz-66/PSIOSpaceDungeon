@@ -155,6 +155,6 @@ void LevelManager::displayPauseScene(const PauseSceneDataPack::Type& type)
     PauseSceneDataPack::killedEnemies = countKilldedEnemies();
     PauseSceneDataPack::allEnemies = enemies.size();
     PauseSceneDataPack::isCompleted = isCompleted() && isFinished;
-    getGame()->changeScene(PAUSE_SCENE, true);
+    getGame()->changeScene(PAUSE_SCENE, type == PauseSceneDataPack::Type::Pause);
 }
 

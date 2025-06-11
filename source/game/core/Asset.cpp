@@ -1,30 +1,37 @@
 #include "game/core/Asset.h"
 #include "engine/core/Debuger.h"
 
-std::map<std::string, std::shared_ptr<sf::Texture>> TextureBase::textures;
 
-std::shared_ptr<sf::Texture> TextureBase::get(std::string assetPath)
+
+///
+/// TextureBase
+///
+
+
+std::map<std::string, std::unique_ptr<sf::Texture>> TextureBase::textures;
+
+sf::Texture* TextureBase::get(const std::string& assetPath)
 {
-    auto it = textures.find(assetPath.data());
-
+    auto it = textures.find(assetPath);
     if (it != textures.end())
     {
-        return it->second;
+        return it->second.get();
     }
 
-    auto tex = std::make_shared<sf::Texture>();
+    auto tex = std::make_unique<sf::Texture>();
     if (tex->loadFromFile(assetPath))
     {
-        textures.emplace(assetPath, tex);
+        sf::Texture* texPtr = tex.get();
+        textures.emplace(assetPath, std::move(tex));
 
-        //log
-        VDebuger::print("TEXTURE_BASE :: texture loading successful:", assetPath.data());
+        // log
+        VDebuger::print("TEXTURE_BASE :: texture loading successful:", assetPath.c_str());
 
-        return tex;
+        return texPtr;
     }
 
-    //log
-    VDebuger::print("<ERROR> TEXTURE_BASE :: texture loading error:", assetPath.data());
+    // log
+    VDebuger::print("<ERROR> TEXTURE_BASE :: texture loading error:", assetPath.c_str());
 
     return nullptr;
 }
@@ -97,4 +104,52 @@ void TextureBase::preloadAll()
     get(Asset::Graphics::ASSAULT_RIFLE_01.data());
     get(Asset::Graphics::SHOTGUN_01.data());
     get(Asset::Graphics::ASSAULT_RIFLE_01_SHOP.data());
+}
+
+
+
+
+///
+/// SoundBase
+///
+
+std::map<std::string, std::unique_ptr<sf::SoundBuffer>> SoundBase::soundBuffers;
+
+sf::SoundBuffer* SoundBase::get(const std::string& assetPath)
+{
+    auto it = soundBuffers.find(assetPath);
+    if (it != soundBuffers.end())
+    {
+        return it->second.get();
+    }
+
+    auto buffer = std::make_unique<sf::SoundBuffer>();
+    if (buffer->loadFromFile(assetPath))
+    {
+        sf::SoundBuffer* bufPtr = buffer.get();
+        soundBuffers[assetPath] = std::move(buffer);
+
+        // log
+        VDebuger::print("AUDIO_BASE :: audio loading successful:", assetPath.c_str());
+        return bufPtr;
+    }
+
+    // log
+    VDebuger::print("<ERROR> AUDIO_BASE :: audio loading error:", assetPath.c_str());
+
+    return nullptr;
+}
+
+void SoundBase::preloadAll()
+{
+    get(Asset::Audio::END_LEVEL.data());
+    get(Asset::Audio::BITE.data());
+    get(Asset::Audio::GUN.data());
+    get(Asset::Audio::SCREAM.data());
+    get(Asset::Audio::GOBLINS_DANCE_BATTLE.data());
+    get(Asset::Audio::PLAYER_DAMAGE_GRUNT_01.data());
+    get(Asset::Audio::PLAYER_DAMAGE_GRUNT_02.data());
+    get(Asset::Audio::PLAYER_DAMAGE_GRUNT_03.data());
+    get(Asset::Audio::PLAYER_DAMAGE_GRUNT_05.data());
+    get(Asset::Audio::PLAYER_DAMAGE_GRUNT_06.data());
 }

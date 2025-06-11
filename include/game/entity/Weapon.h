@@ -81,7 +81,6 @@ class Gun : public Weapon
     Tilemap* tilemap = nullptr;
 
     //vars
-    shared_ptr<sf::Texture> bulletTxt = nullptr;
     Vector2 aimDir;
 
 public:

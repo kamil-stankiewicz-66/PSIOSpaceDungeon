@@ -54,6 +54,11 @@ Collider::~Collider()
         return;
     }
 
+    if (!getGame()->isRunning())
+    {
+        return;
+    }
+
     auto& _collidersRegistry = getGame()->get_currentScene()->get_collisionManager()->collidersRegistry;
 
     auto it = std::find(_collidersRegistry.begin(), _collidersRegistry.end(), this);

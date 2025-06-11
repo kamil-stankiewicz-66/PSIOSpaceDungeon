@@ -2,6 +2,7 @@
 #define ASSET_H
 
 #include "SFML/Graphics/Texture.hpp"
+#include <SFML/Audio/SoundBuffer.hpp>
 #include <map>
 #include <memory>
 #include <string_view>
@@ -91,7 +92,23 @@ struct Asset
 
     struct Audio
     {
-        static constexpr std::string_view GUN = "assets/Audio/gun.mp3";
+        //effect
+        static constexpr std::string_view END_LEVEL = "assets/Audio/Effect/end-level.wav";
+
+        //entity
+        static constexpr std::string_view BITE = "assets/Audio/Entity/bite.mp3";
+        static constexpr std::string_view GUN = "assets/Audio/Entity/gun.mp3";
+        static constexpr std::string_view SCREAM = "assets/Audio/Entity/scream.wav";
+
+        //music
+        static constexpr std::string_view GOBLINS_DANCE_BATTLE = "assets/Audio/Music/Goblins_Dance_(Battle).wav";
+
+        //player
+        static constexpr std::string_view PLAYER_DAMAGE_GRUNT_01 = "assets/Audio/Player/01_Damage_Grunt.wav";
+        static constexpr std::string_view PLAYER_DAMAGE_GRUNT_02 = "assets/Audio/Player/02_Damage_Grunt.wav";
+        static constexpr std::string_view PLAYER_DAMAGE_GRUNT_03 = "assets/Audio/Player/03_Damage_Grunt.wav";
+        static constexpr std::string_view PLAYER_DAMAGE_GRUNT_05 = "assets/Audio/Player/05_Damage_Grunt.wav";
+        static constexpr std::string_view PLAYER_DAMAGE_GRUNT_06 = "assets/Audio/Player/06_Damage_Grunt.wav";
     };
 };
 
@@ -102,13 +119,30 @@ struct Asset
 
 struct TextureBase
 {
-    //static texture base [path, texture]
-    static std::map<std::string, std::shared_ptr<sf::Texture>> textures;
+    // static texture base [path, texture]
+    static std::map<std::string, std::unique_ptr<sf::Texture>> textures;
 
-    //get texture
-    static std::shared_ptr<sf::Texture> get(std::string assetPath);
+    // get texture
+    static sf::Texture* get(const std::string& assetPath);
 
-    //preload all textures
+    // preload all textures
+    static void preloadAll();
+};
+
+
+///
+/// \brief Preloaded sound buffers base.
+///
+
+struct SoundBase
+{
+    // static sound buffer base [path, sound buffer]
+    static std::map<std::string, std::unique_ptr<sf::SoundBuffer>> soundBuffers;
+
+    // get sound buffer
+    static sf::SoundBuffer* get(const std::string& assetPath);
+
+    // preload all known sounds
     static void preloadAll();
 };
 

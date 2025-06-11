@@ -113,7 +113,7 @@ void ParticleEffect::invoke(const Vector2& dir, bool autoDestroy)
     {
         auto particle = make_unique<Particle>();
 
-        particle->setTexture(this->texture);
+        particle->setTexture(TextureBase::get(this->texture_ref));
         particle->setColor(this->color);
 
         particle->dir = getRndDir(dir);
@@ -133,24 +133,9 @@ void ParticleEffect::invoke(const Vector2& dir, bool autoDestroy)
 ///
 
 
-void ParticleEffect::setTexture(const string_view tex)
-{
-    // texture = make_shared<sf::Texture>();
-
-    // if (!texture->loadFromFile(tex.data())) {
-    //     VDebuger::print("<ERROR> :: PARTICLE_EFFECT :: SET_TEXTURE:: cant load texture");
-    //     texture = nullptr;
-    // }
-
-    texture = TextureBase::get(tex.data());
+void ParticleEffect::setTexture(const string_view tex) {
+    texture_ref = tex.data();
 }
-
-// void ParticleEffect::setTexture(shared_ptr<sf::Texture>& texture)
-// {
-//     if (texture) {
-//         this->texture = texture;
-//     }
-// }
 
 void ParticleEffect::setColor(const sf::Color& color) {
     this->color = color;

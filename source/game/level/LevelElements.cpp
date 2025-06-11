@@ -154,8 +154,8 @@ void Chest::set(const string_view txt_close_ref,
     body->getSpritePtr()->setTexture(TextureBase::get(txt_close_ref.data()));
 
     //other
-    shared_ptr<sf::Texture> txt_open_full = TextureBase::get(txt_open_full_ref.data());
-    shared_ptr<sf::Texture> txt_open_empty = TextureBase::get(txt_open_empty_ref.data());
+    sf::Texture* txt_open_full = TextureBase::get(txt_open_full_ref.data());
+    sf::Texture* txt_open_empty = TextureBase::get(txt_open_empty_ref.data());
 
 
     //animations
@@ -168,7 +168,7 @@ void Chest::set(const string_view txt_close_ref,
 
             //texture change
 
-            auto am_open_txt1 = make_shared<AnimationTextureMove>(body->getSpritePtr(),
+            auto am_open_txt1 = make_shared<AnimationTextureStep>(body->getSpritePtr(),
                                                                   txt_open_full,
                                                                   body->getSpritePtr()->getTextureRect(),
                                                                   d_move * d_move_n);
@@ -214,7 +214,7 @@ void Chest::set(const string_view txt_close_ref,
 
         //empty
         {
-            auto am_open_txt = make_shared<AnimationTextureMove>(body->getSpritePtr(),
+            auto am_open_txt = make_shared<AnimationTextureStep>(body->getSpritePtr(),
                                                                  txt_open_empty,
                                                                  body->getSpritePtr()->getTextureRect(),
                                                                  0.1f);

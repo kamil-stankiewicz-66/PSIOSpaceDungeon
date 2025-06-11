@@ -174,7 +174,7 @@ void Gun::attackCore()
     bullet->getTransformPtr()->set_flip_x(getTransformPtr()->get_localFlipX());
 
     //add texture
-    bullet->getSpritePtr()->setTexture(bulletTxt);
+    bullet->getSpritePtr()->setTexture(TextureBase::get(Asset::Graphics::LASER_BULLET.data()));
     bullet->getSpritePtr()->setRenderWithLocalFlip(true);
 
     //init
@@ -184,11 +184,6 @@ void Gun::attackCore()
 void Gun::set(const WeaponData& data, const string& targetTag)
 {
     Weapon::set(data, targetTag);
-
-    bulletTxt = make_shared<sf::Texture>();
-    if (!bulletTxt->loadFromFile(Asset::Graphics::LASER_BULLET.data())) {
-        VDebuger::print("<ERROR> :: GUN :: texture load error");
-    }
 
     tilemap = getGame()->get_currentScene()->findObject<Tilemap>(Tag::TILEMAP.data());
     if (!tilemap) {

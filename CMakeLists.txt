@@ -131,4 +131,5 @@ target_link_libraries(PSIOSpaceDungeon
     sfml-graphics
     sfml-window
     sfml-system
+    sfml-audio
 )

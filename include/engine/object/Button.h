@@ -21,7 +21,7 @@ private:
     Color pressedColor;
     Color highlightedColor;
 
-    bool m_isPressed;
+    bool m_isPressed = false;
 
 protected:
     void onAwake() override;

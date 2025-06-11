@@ -1,7 +1,7 @@
 #include "game/effect/CustomAnimation.h"
 
-AnimationTextureMove::AnimationTextureMove(VSprite* sprite,
-                                           const shared_ptr<sf::Texture>& nextTexture,
+AnimationTextureStep::AnimationTextureStep(VSprite* sprite,
+                                           sf::Texture* nextTexture,
                                            const sf::IntRect& nextRect,
                                            const float& duration) : AnimationStep(duration)
 {
@@ -10,7 +10,7 @@ AnimationTextureMove::AnimationTextureMove(VSprite* sprite,
     this->nextRect = nextRect;
 }
 
-bool AnimationTextureMove::update(const float& dt)
+bool AnimationTextureStep::update(const float& dt)
 {
     bool flag = false;
 
@@ -26,7 +26,7 @@ bool AnimationTextureMove::update(const float& dt)
     return flag;
 }
 
-void AnimationTextureMove::reset()
+void AnimationTextureStep::reset()
 {
     this->timeAcc = 0.f;
 }

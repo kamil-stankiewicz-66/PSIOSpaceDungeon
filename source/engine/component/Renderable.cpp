@@ -144,7 +144,7 @@ void VSprite::render(const Engine* game, const Vector2& position, const Vector2&
 
 const bool VSprite::isInited() const
 {
-    return m_texture.get();
+    return m_isInited;
 }
 
 
@@ -152,29 +152,11 @@ void VSprite::dispose()
 {
     VRenderable::dispose();
     m_sprite = sf::Sprite();
-    m_texture = nullptr;
+    m_texture = sf::Texture();
+    m_isInited = false;
 }
 
-
-// void VSprite::setTexture(const string& asset_ref)
-// {
-//     if (this->m_assetRef == asset_ref) {
-//         return;
-//     }
-
-//     if (!m_texture) {
-//         m_texture = make_shared<sf::Texture>();
-//     }
-
-//     if (!m_texture->loadFromFile(asset_ref)) {
-//         VDebuger::print("SPRITE :: TEXTURE :: ERROR - loading sprite:", asset_ref);
-//     }
-
-//     this->m_sprite.setTexture(*m_texture);
-//     this->m_assetRef = asset_ref;
-// }
-
-void VSprite::setTexture(shared_ptr<sf::Texture> texture)
+void VSprite::setTexture(sf::Texture* texture)
 {
     if (!texture) {
         return;
@@ -182,8 +164,9 @@ void VSprite::setTexture(shared_ptr<sf::Texture> texture)
 
     this->dispose();
 
-    m_texture = texture;
-    this->m_sprite.setTexture(*m_texture);
+    m_texture = *texture;
+    m_sprite.setTexture(m_texture);
+    m_isInited = true;
 }
 
 void VSprite::setColor(const sf::Color& _c)
