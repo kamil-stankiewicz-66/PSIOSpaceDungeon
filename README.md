@@ -40,7 +40,6 @@ SFML-2.5.1-windows-gcc-7.3.0-mingw-64-bit;
   Dodano paski zdrowia i system walki
 
 - **11.06 22:58** - `ostatni milestone`
-  Ostatni milestone
 
 ---
 
