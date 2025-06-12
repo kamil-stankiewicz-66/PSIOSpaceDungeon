@@ -143,7 +143,7 @@ void LevelGenerator::generateCorridors()
     }
 
     //add finish point
-    auto finishPoint = getGame()->get_currentScene()->createObject<FinishPoint>(40u);
+    auto finishPoint = getGame()->get_currentScene()->createObject<FinishPoint>(21u);
     finishPoint->getTransformPtr()->set_position(levelManager->tilemap->tile2realPos(lastRoom.first, lastRoom.second));
 }
 
