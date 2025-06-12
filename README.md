@@ -20,16 +20,16 @@
 
 ---
 
-## Rozgrywka
+## 🕹️ Rozgrywka
 
 - **Generator**  
-  Poziomy generowane sa przez proceduralny generator, ktory bazuje na ustawieniach podanych w pliku `parameters_init.txt` oraz na aktualnym poziomie gracza. Wraz ze zdobywaniem kolejnych poziomow doswiadczenia beda pojawiac sie nowe typy przeciwnikow i zwiekszac sie ilosc monet w skrzyniach.  
+  Poziomy generowane sa przez proceduralny generator, ktory bazuje na ustawieniach podanych w pliku `parameters_init.txt` oraz na aktualnym poziomie gracza. Wraz ze zdobywaniem kolejnych poziomow doswiadczenia beda pojawiac sie nowe typy przeciwnikow i zwiekszy sie ilosc monet w skrzyniach.  
   
 - **Punkty doswiadczenia**  
-  Punkty doswiadczenia zdobywa sie za pokonywanie wrogow. Przyrost PD jest kwadratowy (za kazda kolejna eliminacje otrzymuje sie coraz wiecej PD). Za wyeliminowanie wszystkich przeciwnikow i ukonczenie poziomu zdobyte PD sa dodatkowo mnozone. Ilosc otrzymanego PD za przeciwnika i mnoznik za ukonczenie poziomu mozna zmienic w pliku `parameters_init.txt`.  
+  Punkty doswiadczenia zdobywa sie za pokonywanie wrogow. Przyrost PD jest kwadratowy (za kazda kolejna eliminacje otrzymuje sie coraz wiecej PD). Za wyeliminowanie wszystkich przeciwnikow i ukonczenie poziomu zdobyte PD sa dodatkowo mnozone. Ilosc otrzymanego PD za przeciwnika i mnoznik za ukonczenie poziomu mozna zmieniac poprzez plik `parameters_init.txt`.  
   
 - **Rozwoj postaci**  
-  Zdobywajac kolejne poziomy doswiadczenie zwieksza sie ilosc maksymalnego poziomu zdrowia i mnoznik obrazen (obrazenia aktualnie uzywanej broni sa mnozone przez ta wartosc).  
+  Zdobywajac kolejne poziomy doswiadczenia, zwieksza sie maksymalna liczba punktow zdrowia oraz zadawane obrazenia. Bazowa liczbe PZ mozna zmienic w pliku `parameters_init.txt`. Obrazenia zadawane przeciwnikom to suma obrazen aktualnie wyposazonej broni oraz wartosci wynikajacej z poziomu postaci.  
 
 - **Tempo rozgrywki**  
   Ilosc pojawiajacych sie przeciwnikow, predkosc poruszania sie postaci, predkosc pociskow, zasieg widoku kamery, ilosc zdobywanych PD i wiele wiecej parametrow mozna zmieniac poprzez plik `parameters_init.txt`.
@@ -60,6 +60,9 @@
   Dodano paski zdrowia i system walki.
 
 - **11.06.2025 22:58** - `milestone 7`  
+  Finalna wersja gry (prawie).
+
+- **12.06.2025 - `milestone 7.1`  
   Finalna wersja gry.
 
 ---
@@ -78,6 +81,6 @@ Assety:
 
 ## 🎥 Nagranie
 
-[GAMEPLAY](https://youtu.be/pq0R720sOPs)
+[GAMEPLAY](https://youtu.be/KVrBpx0nRoo)
 
 ---
