@@ -147,8 +147,8 @@ void PauseScene::loadObjects()
     {
         if (auto t = texts[i]->getTransformPtr())
         {
-            t->add_position(Vector2(texts[i]->getTextPtr()->getLocalBounds().width * 0.5f));
-            t->add_position(Vector2(panelMain_size.x * -0.07f));
+            t->add_position(Vector2(texts[i]->getTextPtr()->getLocalBounds().width * -0.5f));
+            t->add_position(Vector2(panelMain_size.x * -0.025f));
         }
     }
 
