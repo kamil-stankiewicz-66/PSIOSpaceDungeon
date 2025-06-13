@@ -85,7 +85,7 @@ public:
     static const EntityData* get(const uint& id);
     static const map<uint, unique_ptr<EntityData>>& getAll();
 
-    static void getStats(const EntityData::Attribute&, float& health, float& strength);
+    static void getStats(const EntityData::Attribute&, float& health, float& strength, const uint& level);
 
 private:
     static void add(EntityData*);

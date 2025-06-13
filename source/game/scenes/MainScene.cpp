@@ -109,7 +109,7 @@ void MainScene::loadObjects()
             texts[1]->setFillColor(sf::Color::White);
             texts[1]->getObject()->addTag(TAG_HEALTH.data());
 
-            texts[2]->setText("Damage: x" + std::to_string(PlayerData::getDamage()));
+            texts[2]->setText("Damage: +" + std::to_string(PlayerData::getDamage()));
             texts[2]->setFillColor(sf::Color::White);
             texts[2]->getObject()->addTag(TAG_DAMAGE.data());
 

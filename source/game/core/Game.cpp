@@ -50,7 +50,7 @@ Game::~Game()
 
 void Game::onUpdate(float deltatime)
 {
-    //exit
+    //change window style
     if (Input::Keyboard::isKeyPressed(Input::Keyboard::Key::Escape))
     {
         if(!m_isFullScreenButtonPressed && this->get_window())

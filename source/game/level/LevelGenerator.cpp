@@ -367,15 +367,13 @@ void LevelGenerator::generateWalls()
 /// Generate random positions
 ///
 
-vector<Vector2> LevelGenerator::getRealRndPositionsInRoom(const tilePos& leftDown, const tilePos& rightTop,
+vector<Vector2> LevelGenerator::getRealRndPositionsInRoom(const tilePos& leftDown, const tilePos& rightTop, const int& border,
                                                           const int& number, const int& minDistance, const int& maxAttemptsNum)
 {
     vector<Vector2> realPositions;
     vector<tilePos> tilePositions;
     realPositions.reserve(number);
     tilePositions.reserve(number);
-
-    int border = 2;
 
     for (int attemt = 0; (attemt < maxAttemptsNum && realPositions.size() < number); ++attemt)
     {
@@ -421,7 +419,7 @@ void LevelGenerator::generateChestsInRoom(const tilePos& leftDown, const tilePos
 
     //generate positions
     int chestNumber = Parameters::get_levelGenerator_chestsFrequency() * size;
-    vector<Vector2> chestPositions = getRealRndPositionsInRoom(leftDown, rightTop, chestNumber, 2, 50);
+    vector<Vector2> chestPositions = getRealRndPositionsInRoom(leftDown, rightTop, 2, chestNumber, 2, 300);
 
     //create objects
     for (const auto& pos : chestPositions)
@@ -455,12 +453,12 @@ void LevelGenerator::generateEntitiesInRoom(const tilePos& leftDown, const tileP
 
     //generate positions
     int entitiesNumber = static_cast<int>(Parameters::get_levelGenerator_enemiesFrequency() * size);
-    vector<Vector2> entitiesPositions = getRealRndPositionsInRoom(leftDown, rightTop, entitiesNumber, 3, 100);
+    vector<Vector2> entitiesPositions = getRealRndPositionsInRoom(leftDown, rightTop, 2, entitiesNumber, 3, 100);
 
     //create objects
     for (const auto& pos : entitiesPositions)
     {
-        int rndID = getRndInt(0, PlayerData::getExpLevel() + 6);
+        int rndID = getRndInt(PlayerData::getExpLevel() - 15, PlayerData::getExpLevel() + 6);
         rndID = VMath::clamp<int>(rndID, 0, EntitySO::getAll().size()-1);
 
         auto entity = createEntity(getGame()->get_currentScene(), *EntitySO::get(rndID), 80u, nullptr);

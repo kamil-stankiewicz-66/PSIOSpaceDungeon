@@ -46,7 +46,7 @@ private:
     void generateWalls();
 
     //other generators
-    vector<Vector2> getRealRndPositionsInRoom(const tilePos& leftDown, const tilePos& rightTop,
+    vector<Vector2> getRealRndPositionsInRoom(const tilePos& leftDown, const tilePos& rightTop, const int& border,
                                               const int& number, const int& minDistance, const int& maxAttemptsNum);
     void generateChestsInRoom(const tilePos& leftDown, const tilePos& rightTop);
     void generateEntitiesInRoom(const tilePos& leftDown, const tilePos& rightTop);

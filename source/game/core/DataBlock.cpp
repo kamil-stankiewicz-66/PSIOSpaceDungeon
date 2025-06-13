@@ -2,9 +2,9 @@
 #include "game/core/Parameter.h"
 #include <cmath>
 
-uint PlayerData::exp_points = 0u;
-uint PlayerData::weapon_id = 1u;
-uint PlayerData::coins = 0u;
+uint PlayerData::exp_points;
+uint PlayerData::weapon_id;
+uint PlayerData::coins;
 
 
 

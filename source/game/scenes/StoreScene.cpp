@@ -55,12 +55,12 @@ void StoreScene::loadObjects()
         button->addListener([id, data, this]() {
             if (PlayerData::getCoins() >= data->coins)
             {
-                PlayerData::removeCoins(data->coins);
-                VDebuger::print("<STORE> Weapon purchased:", data->name);
-
                 //buy and use
                 if (id != PlayerData::getWeaponID())
                 {
+                    PlayerData::removeCoins(data->coins);
+                    VDebuger::print("<STORE> Weapon purchased:", data->name);
+
                     //use weapon
                     PlayerData::setWeaponID(id);
 

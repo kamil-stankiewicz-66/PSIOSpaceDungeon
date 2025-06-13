@@ -21,7 +21,7 @@ struct Asset
 
     struct Graphics
     {
-        //chest
+        //chests
         static constexpr string_view CHEST_CLOSED = "assets/Graphics/Chest/chest_closed.png";
         static constexpr string_view CHEST_GOLDEN_CLOSED = "assets/Graphics/Chest/chest_golden_closed.png";
         static constexpr string_view CHEST_GOLDEN_OPEN_EMPTY = "assets/Graphics/Chest/chest_golden_open_empty.png";
@@ -29,28 +29,47 @@ struct Asset
         static constexpr string_view CHEST_OPEN_EMPTY = "assets/Graphics/Chest/chest_open_empty.png";
         static constexpr string_view CHEST_OPEN_FULL = "assets/Graphics/Chest/chest_open_full.png";
 
-        //entities
-        static constexpr string_view HEALTHBAR = "assets/Graphics/Entities/HealthBar.png";
+        //zombies
+        static constexpr string_view ZOMBIE_BASIC = "assets/Graphics/Entities/monster_zombie.png";
+        static constexpr string_view ZOMBIE_GREEN = "assets/Graphics/Entities/monster_zombie_green.png";
+        static constexpr string_view ZOMBIE_SHORT = "assets/Graphics/Entities/monster_zombie_short.png";
+        static constexpr string_view ZOMBIE_SMALL = "assets/Graphics/Entities/monster_zombie_small.png";
+        static constexpr string_view ZOMBIE_TALL = "assets/Graphics/Entities/monster_zombie_tall.png";
+        static constexpr string_view ZOMBIE_SKELET = "assets/Graphics/Entities/monster_skelet.png";
 
         //orcs
-        static constexpr string_view ORC_ARMORED = "assets/Graphics/Entities/orcs/armored.png";
-        static constexpr string_view ORC_BASIC = "assets/Graphics/Entities/orcs/orc.png";
-        static constexpr string_view ORC_MASKED = "assets/Graphics/Entities/orcs/orc_masked.png";
-        static constexpr string_view ORC_SHAMAN = "assets/Graphics/Entities/orcs/orc_shaman.png";
-        static constexpr string_view ORC_VETERAN = "assets/Graphics/Entities/orcs/orc_veteran.png";
+        static constexpr string_view ORC_BASIC = "assets/Graphics/Entities/monster_orc.png";
+        static constexpr string_view ORC_ARMORED = "assets/Graphics/Entities/monster_orc_armored.png";
+        static constexpr string_view ORC_MASKED = "assets/Graphics/Entities/monster_orc_masked.png";
+        static constexpr string_view ORC_SHAMAN = "assets/Graphics/Entities/monster_orc_shaman.png";
+        static constexpr string_view ORC_VETERAN = "assets/Graphics/Entities/monster_orc_veteran.png";
 
-        //zombies
-        static constexpr string_view ZOMBIE_SKELETON = "assets/Graphics/Entities/zombies/monster_skelet.png";
-        static constexpr string_view ZOMBIE_BASIC = "assets/Graphics/Entities/zombies/monster_zombie.png";
-        static constexpr string_view ZOMBIE_GREEN = "assets/Graphics/Entities/zombies/monster_zombie_green.png";
-        static constexpr string_view ZOMBIE_SHORT = "assets/Graphics/Entities/zombies/monster_zombie_short.png";
-        static constexpr string_view ZOMBIE_SMALL = "assets/Graphics/Entities/zombies/monster_zombie_small.png";
-        static constexpr string_view ZOMBIE_TALL = "assets/Graphics/Entities/zombies/monster_zombie_tall.png";
+        //elementals
+        static constexpr string_view ELEMENTAL_AIR = "assets/Graphics/Entities/monster_elemental_air.png";
+        static constexpr string_view ELEMENTAL_GOLD_SHORT = "assets/Graphics/Entities/monster_elemental_gold_short.png";
+        static constexpr string_view ELEMENTAL_GOLD_TALL = "assets/Graphics/Entities/monster_elemental_gold_tall.png";
+        static constexpr string_view ELEMENTAL_GOO = "assets/Graphics/Entities/monster_elemental_goo.png";
+        static constexpr string_view ELEMENTAL_GOO_SMALL = "assets/Graphics/Entities/monster_elemental_goo_small.png";
+        static constexpr string_view ELEMENTAL_PLANT = "assets/Graphics/Entities/monster_elemental_plant.png";
+        static constexpr string_view ELEMENTAL_PLANT_SMALL = "assets/Graphics/Entities/monster_elemental_plant_small.png";
+
+        //monsters
+        static constexpr string_view MONSTER_BIES = "assets/Graphics/Entities/monster_bies.png";
+        static constexpr string_view MONSTER_CHORT = "assets/Graphics/Entities/monster_chort.png";
+        static constexpr string_view MONSTER_DARK_KNIGHT = "assets/Graphics/Entities/monster_dark_knight.png";
+        static constexpr string_view MONSTER_DEMONOLOG = "assets/Graphics/Entities/monster_demonolog.png";
+        static constexpr string_view MONSTER_ROKITA = "assets/Graphics/Entities/monster_rokita.png";
+        static constexpr string_view MONSTER_WOGOLO = "assets/Graphics/Entities/monster_wogol.png";
+        static constexpr string_view MONSTER_NECROMANCER = "assets/Graphics/Entities/monster_necromancer.png";
+        static constexpr string_view MONSTER_IMP = "assets/Graphics/Entities/monster_imp.png";
+        static constexpr string_view MONSTER_GOBLIN = "assets/Graphics/Entities/monster_goblin.png";
+        static constexpr string_view MONSTER_OGRE = "assets/Graphics/Entities/monster_ogre.png";
 
         //GUI
         static constexpr string_view LEFTRIGHT_ARROWS = "assets/Graphics/GUI/leftRightArrows.png";
         static constexpr string_view BUTTON = "assets/Graphics/GUI/button.png";
         static constexpr string_view PANEL = "assets/Graphics/GUI/panel.png";
+        static constexpr string_view HEALTHBAR = "assets/Graphics/GUI/HealthBar.png";
 
         //particles
         static constexpr string_view PARTICLE = "assets/Graphics/Particles/particle.png";
@@ -87,6 +106,7 @@ struct Asset
         static constexpr string_view ASSAULT_RIFLE_01 = "assets/Graphics/Weapons/Guns/assault_rifle_01.png";
         static constexpr string_view SHOTGUN_01 = "assets/Graphics/Weapons/Guns/shotgun_01.png";
         static constexpr string_view ASSAULT_RIFLE_01_SHOP = "assets/Graphics/Weapons/Guns/assault_rifle_01_shop.png";
+        static constexpr string_view PISTOL = "assets/Graphics/weapons/Guns/pistol_01.png";
     };
 
     struct Fonts

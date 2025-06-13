@@ -52,7 +52,7 @@ public:
 struct SPlayerData
 {
     uint exp_points = 0u;
-    uint weapon_id = 1u;
+    uint weapon_id = 2u;
     uint coins = 0u;
 };
 #pragma pack(pop)

@@ -212,12 +212,12 @@ int Engine::run(const unsigned int MAX_FPS)
         //clear window
         window->clear();
 
-        //update silnika
+        //engine update
         Input::update();
         this->taskHandling();
         this->onUpdate(deltaTime);
 
-        //update sceny
+        //scene update
         if (this->currentScene)
         {
             this->currentScene->update(deltaTime);

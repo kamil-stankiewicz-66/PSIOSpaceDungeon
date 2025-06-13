@@ -1,9 +1,12 @@
 #include "game/entity/Entity.h"
 #include "engine/core/Engine.h"
+#include "engine/core/VMath.h"
 #include "game/core/Parameter.h"
 #include "game/core/Tag.h"
 #include "game/physics/Rycast.h"
 #include "game/core/Asset.h"
+#include "game/player/PlayerCore.h"
+#include "game/player/PlayerHealthSystem.h"
 
 Entity::Entity() : rng(std::random_device{}())
 {}
@@ -196,6 +199,14 @@ void Entity::onDestroy()
     {
         audioPlayer->play();
     }
+
+    if (auto playerCore = getGame()->get_currentScene()->findObject<PlayerCore>())
+    {
+        if (auto hs = playerCore->getComponent<PlayerHealthSystem>(true))
+        {
+            hs->addHealPoints(0.05f * hs->getHealPointsMax());
+        }
+    }
 }
 
 
@@ -216,7 +227,7 @@ void Entity::set(const EntityData& data)
 
     float health = 0.0f;
     float strength = 0.0f;
-    EntitySO::getStats(data.attribute, health, strength);
+    EntitySO::getStats(data.attribute, health, strength, data.level);
 
     if (health == 0.0f || strength == 0.0f) {
         VDebuger::print("<ERROR> ENTITY :: SET :: loading attributes error");
@@ -237,7 +248,7 @@ void Entity::set(const EntityData& data)
 
     if (particleEfect)
     {
-        particleEfect->setParticleNum(healthSystem->getHealthMax() / 2.0f);
+        particleEfect->setParticleNum(VMath::clamp((healthSystem->getHealthMax() / 10.0f), 0.0f, 50.0f));
         particleEfect->setParticleNumDiff(0u);
     }
 

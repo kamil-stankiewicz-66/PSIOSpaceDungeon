@@ -50,7 +50,7 @@ void Weapon::set(const WeaponData& data, const string& targetTag)
 
 void Weapon::scaleDamage(const float& factor)
 {
-    data.damage *= factor;
+    data.damage += factor;
 }
 
 
