@@ -4,9 +4,9 @@
 
 ---
 
-## 🛠 Wersja SFML
+## 🎥 Nagranie
 
-`SFML-2.5.1-windows-gcc-7.3.0-mingw-64-bit`
+[GAMEPLAY](https://youtu.be/KVrBpx0nRoo)
 
 ---
 
@@ -67,6 +67,12 @@
 
 ---
 
+## 🛠 Wersja SFML
+
+`SFML-2.5.1-windows-gcc-7.3.0-mingw-64-bit`
+
+---
+
 ## 📁 Pliki
 
 Wszystkie sciezki do zasobow znajduja sie w pliku:  
@@ -76,11 +82,3 @@ Assety:
 - [TEXTURES](https://0x72.itch.io/16x16-dungeon-tileset)
 - [SOUNDTRACK](https://davidkbd.itch.io/purgatory-extreme-metal-music-pack)
 - [SFX](https://f8studios.itch.io/snakes-authentic-gun-sounds)
-
----
-
-## 🎥 Nagranie
-
-[GAMEPLAY](https://youtu.be/KVrBpx0nRoo)
-
----
